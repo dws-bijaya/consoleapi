@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <!-- view-source:demo.bootstraptemple.com/blackandwhite/
+    https://bbbootstrap.com/snippets/bootstrap-ecommerce-product-grid-view-card-19577966
+        -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DNS Lookpup: consoleAPI</title>
+    <meta name="description" content="Cloud Platform lets you test everything">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap and Font Awesome css-->
+    <!-- we use cdn but you can also include local files located in css directory-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Google fonts - Montserrat for headings, Cardo for copy-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Cardo:400,400italic,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="static/css/style.default.css" id="theme-stylesheet">
+    <!-- ekko lightbox-->
+    <link rel="stylesheet" href="static/css/ekko-lightbox.css">
+    <!-- Custom stylesheet - for your changes-->
+    <!-- <link rel="stylesheet" href="static/css/custom.css"> -->
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="favicon.png">
+    <!-- Tweaks for older IEs-->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+
+</head>
+
+<body data-spy="scroll" data-target="#navigation" data-offset="120">
+
+
+    <!-- navbar-->
+    <header class="header">
+        <div class="sticky-wrapper">
+            <div role="navigation" class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <b>ConsoleAPI</b>
+                    </div>
+
+                    <div id="navigation" class="collapse navbar-collapse navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#intro">Library</a></li>
+                            <li><a href="#about">Documention </a></li>
+                            <li><a href="#services">APIs</a></li>
+                            <li><a href="#contact">Sign UP/In</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- /.navbar-->
+    <!-- about-->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                {% include "_sections/navigation.html" %}
+            </div>
+            <div class="col-sm-7">
+
+
+                <h6 class="heading">About What is My IP</h6>
+                <div> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> <i
+                        class="fa fa-star star"></i> </div>
+                <p>An Internet Protocol address (IP address) is a numerical label assigned to
+                    each device connected to a computer network that uses the Internet Protocol for
+                    communication.[1][2] An IP address serves two main functions: host or network interface
+                    identification and location addressing.</p>
+                <p></p>
+
+
+                <div class="table-responsive">
+
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">
+                                    Data<br>
+                                    <small></small>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">IP</th>
+                                <td colspan="5"> {{IPAddress}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap" scope="row">IP Type</th>
+                                <td colspan="5">IP4</td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap" scope="row">Local</th>
+                                <td colspan="5">{{is_local}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Multicast</th>
+                                <td colspan="5">{{is_multicast}}</td>
+                            </tr>
+
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Global
+                                </th>
+                                <td colspan="5">{{is_global}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Loopback
+                                </th>
+                                <td colspan="5">{{is_loopback}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Binary
+                                </th>
+                                <td colspan="5">10110110 . 01000000 . 10111011 . 01000111</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Binary
+                                </th>
+                                <td colspan="5">3057695559</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <div class="col-sm-3">.col-sm-3</div>
+    </div>
+    </div>
+
+
+    <footer style="background-color: #111;" class="section-inverse">
+        <div class="container">
+            <div class="row copyright">
+                <div class="col-md-6">
+                    <p>&copy;2021 consoleapi.com</p>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Javascript files-->
+    <!-- jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+    <!-- Bootstrap CDN-->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- jQuery Cookie - For Demo Purpose-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- Lightbox-->
+    <script src="js/ekko-lightbox.js"> </script>
+    <!-- Sticky + Scroll To scripts for navbar-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <!-- google maps-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+    <!-- <script src="js/gmaps.js"></script> -->
+    <!-- main script-->
+    <script src="js/front.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S8KEW16MJY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-S8KEW16MJY');
+    </script>
+</body>
+
+</html>
