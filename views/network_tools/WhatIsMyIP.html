@@ -100,9 +100,28 @@
                                 <td colspan="5"> {{IPAddress}}</td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap" scope="row">IP Type</th>
+                                <th class="text-nowrap" scope="row">Type</th>
                                 <td colspan="5">IP4</td>
                             </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Binary
+                                </th>
+                                <td colspan="5">{{bIPAddress}}
+                                    <br />
+                                    <i>The total number of bits in the address representation for this version: 32
+                                        for
+                                        IPv4, 128 for IPv6</i>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Integer
+                                </th>
+                                <td colspan="5">{{iIPAddress}} &lt;=4294967296(2**32)</td>
+                            </tr>
+
+
                             <tr>
                                 <th class="text-nowrap" scope="row">Local</th>
                                 <td colspan="5">{{is_local}}</td>
@@ -121,22 +140,40 @@
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Loopback
+                                <th class="text-nowrap" scope="row">Loopback ?
                                 </th>
                                 <td colspan="5">{{is_loopback}}</td>
                             </tr>
 
+
                             <tr>
-                                <th class="text-nowrap" scope="row">Binary
+                                <th class="text-nowrap" scope="row">Network Address?
                                 </th>
-                                <td colspan="5">10110110 . 01000000 . 10111011 . 01000111</td>
+                                <td colspan="5">{{is_network}}</td>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Binary
+                                <th class="text-nowrap" scope="row">Interface Address?
                                 </th>
-                                <td colspan="5">3057695559</td>
+                                <td colspan="5">{{ip_interface}}</td>
                             </tr>
+
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Reverse Pointer
+                                </th>
+                                <td colspan="5">{{reverse_pointer}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-nowrap" scope="row">Reverseed ?
+                                </th>
+                                <td colspan="5">{{is_reserved}} {{country_flag}}</td>
+                            </tr>
+
+
+
+
 
                         </tbody>
                     </table>
@@ -147,9 +184,9 @@
 
             </div>
 
-
+            <div class="col-sm-3">.col-sm-3</div>
         </div>
-        <div class="col-sm-3">.col-sm-3</div>
+
     </div>
     </div>
 

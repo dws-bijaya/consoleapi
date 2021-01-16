@@ -8,15 +8,43 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
+
++--------------------------------------------------------------------------------------------------+
+|                                            yugabyted                                             |
++--------------------------------------------------------------------------------------------------+
+| Status              : Running                                                                    |
+| Web console         : http://127.0.0.1:7000                                                      |
+| JDBC                : jdbc:postgresql://127.0.0.1:5433/yugabyte?user=yugabyte&password=yugabyte  |
+| YSQL                : bin/ysqlsh   -U yugabyte -d yugabyte                                       |
+| YCQL                : bin/ycqlsh   -u cassandra                                                  |
+| Data Dir            : /home/django/django_project/django_project/yugabyte-2.5.1.0/var/data       |
+| Log Dir             : /home/django/django_project/django_project/yugabyte-2.5.1.0/var/logs       |
+| Universe UUID       : 88e2c016-bbf6-4b1c-9722-e3abe6ffd2ce                                       |
++--------------------------------------------------------------------------------------------------+
+🚀 yugabyted started successfully! To load a sample dataset, try 'yugabyted demo'.
+🎉 Join us on Slack at https://www.yugabyte.com/slack
+👕 Claim your free t-shirt at https://www.yugabyte.com/community-rewards/
+
+./bin/yb-master --master_addresses 127.0.0.1:7100 -rpc_bind_addresses 127.0.0.1:7100 --fs_data_dirs "/home/django/django_project/django_project/var/data" --placement_cloud aws --placement_region us-west --placement_zone us-west-2a  --replication_factor=1  &
+./bin/yb-tserver --master_addresses 127.0.0.1:7100 -rpc_bind_addresses 127.0.0.1:9100 --start_pgsql_proxy --pgsql_proxy_bind_address 127.0.0.1:5433 --cql_proxy_bind_address 127.0.0.1:9042 --redis_proxy_bind_address 127.0.0.1:6379 --fs_data_dirs "/home/django/django_project/django_project/var/data" --placement_cloud aws --placement_region us-west --placement_zone us-west-2a
+./bin/yb-admin --master_addresses 127.0.0.1:7100 setup_redis_table
 """
 
 import os, sys
 import netifaces
 
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+REDIS_PASSWORD = None
+
+REDIS_COUNTRIES_KEY = "CSApi:Private:Contries"
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/bin/")
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/")
+COUNTRY_CACHE_FILE = os.path.dirname(os.path.abspath(__file__)) + "/bin/" + '/countries.json'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
