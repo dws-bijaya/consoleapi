@@ -21,10 +21,12 @@ from django.urls import path
 
 from .controllers.default import default
 from .controllers.network_tools import network_tools
+from .controllers.fast_tools import fast_tools
 
 # path('admin/', admin.site.urls)
 urlpatterns = [
     path('', default.index, name='indexs'),
     path('test-dns-lookup.html', network_tools.DNSLookup, name='network_tools:DNSLookup'),
     path('what-is-my-ip-address.html', network_tools.WhatIsMyIP, name='network_tools:whatismyip'),
+    path('fast-tools/http-server-header-test.html', fast_tools.HTTPServerHeaderTest, name='fast_tools.HTTPServerHeaderTest')
 ]

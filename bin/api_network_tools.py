@@ -1,6 +1,7 @@
-from easy_timezones.utils import is_valid_ip, is_local_ip
+from easy_timezones.utils import is_valid_ip, is_local_ip, get_ip_address_from_request
 import requests
 import json, os, sys
+import socket, ipaddress
 
 libs_loaded = None
 
@@ -229,8 +230,8 @@ def ip_detail(ip: any):
 			context['country_native'] = country_data['native'] if 'native' in country_data else None
 			context['country_phone'] = country_data['phone'] if 'phone' in country_data else None
 			context['country_languages'] = country_data['languages'] if 'languages' in country_data else None
-			context['country_currency_emoji'] = country_data['emoji'] if 'emoji' in country_data else None
-			context['country_currency_emojiU'] = country_data['emojiU'] if 'emojiU' in country_data else None
+			context['country_emoji'] = country_data['emoji'] if 'emoji' in country_data else None
+			context['country_emojiU'] = country_data['emojiU'] if 'emojiU' in country_data else None
 			context['country_currency_symbol'] = country_data['currency_symbol'] if 'currency_symbol' in country_data else None
 			context['country_currency_code'] = country_data['currency_code'] if 'currency_code' in country_data else None
 			context['country_currency_name'] = country_data['currency_name'] if 'currency_name' in country_data else None
@@ -275,7 +276,7 @@ def ip_detail(ip: any):
 				        'is_eu': False
 				    }
 				}
-
+				response = requests.get(endpoint).json()
 				#
 				country_code = response['country_code']
 				self.country_pack(country_code, context)
@@ -311,7 +312,7 @@ def ip_detail(ip: any):
 
 	lib = libs_loaded[0]
 
-	context = {'hostname': None}
+	context = {'hostname': None, 'ip': ip}
 	context['city'] = None
 	context['region_code'] = None
 	context['region_name'] = None
@@ -340,11 +341,61 @@ def ip_detail(ip: any):
 	context['timezone'] = None
 	context['is_eu'] = None
 	#
-	return lib.fetch(ip, context)
+	lib.fetch(ip, context)
+
+	#
+	context['hostname'] = get_host_byaddr(ip)
+
+	# find technical details
+	ip_address_technical(ip, context)
+	#exit(context)
+	return context
 	pass
 
 
-def get_ip_address_from_request(request):
+def ip_address_technical(ip: any, context: dict):
+
+	context['is_global'] = None
+	context['is_link_local'] = None
+	context['is_loopback'] = None
+	context['is_private'] = None
+	context['is_reserved'] = None
+	context['is_unspecified'] = None
+	context['reverse_pointer'] = None
+	context['is_multicast'] = None
+	context['version'] = None
+	context['bits'] = None
+	context['integer'] = None
+
+	try:
+		myip = ipaddress.ip_address(ip)
+		context['is_global'] = myip.is_global
+		context['is_link_local'] = myip.is_link_local
+		context['is_loopback'] = myip.is_loopback
+		context['is_private'] = myip.is_private
+		context['is_reserved'] = myip.is_reserved
+		context['is_unspecified'] = myip.is_unspecified
+		context['reverse_pointer'] = myip.reverse_pointer
+		context['is_multicast'] = myip.is_multicast
+		context['version'] = 'IPv4' if myip.version == 4 else 'IPv6'
+		context['bits'] = myip.max_prefixlen
+		context['integer'] = int(myip)
+		bits = bin(context['integer'])[2:]
+		context['binary'] = ".".join([bits[i:i + 8] for i in range(0, len(bits), 8)])
+	except Exception as e:
+		pass
+
+
+def get_host_byaddr(ip: str):
+	try:
+		thename, aliases, addresses = socket.gethostbyaddr(ip)
+		return thename
+	except Exception as e:
+		pass
+	return None
+
+
+def _get_ip_address_from_request(request):
 	""" Makes the best attempt to get the client's real IP or return the loopback """
 	PRIVATE_IPS_PREFIX = ('10.', '172.', '192.', '127.')
 	ip_address = ''

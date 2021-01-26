@@ -7,8 +7,9 @@
         -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DNS Lookpup: consoleAPI</title>
-    <meta name="description" content="Cloud Platform lets you test everything">
+    <title>Frre tools for finding your real public IP address both IPv4 & IPv6 and show details</title>
+    <meta name="description"
+        content="Find and Traces real your public IP address , show IP's details like City, IPS, Country Infomation, and developer technical information.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap and Font Awesome css-->
@@ -96,80 +97,197 @@
                         <tbody>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">IP</th>
-                                <td colspan="5"> {{IPAddress}}</td>
+                                <th class="text-right" scope="row">IP</th>
+                                <td>{{ip}}</td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap" scope="row">Type</th>
-                                <td colspan="5">IP4</td>
+                                <th class="text-right" scope="row">Version</th>
+                                <td>{{version}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right" scope="row">Hostname</th>
+                                <td>{{hostname}}</td>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Binary
-                                </th>
-                                <td colspan="5">{{bIPAddress}}
-                                    <br />
-                                    <i>The total number of bits in the address representation for this version: 32
-                                        for
-                                        IPv4, 128 for IPv6</i>
+                                <th colspan="2" class="text-left" scope="row">City And Country detail</th>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">City Name</th>
+                                <td>{{city}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Region Name</th>
+                                <td>{{region_name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right" scope="row">Region Code</th>
+                                <td>{{region_code}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Zip</th>
+                                <td>{{zip}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Location</th>
+                                <td>{{latitude}}, {{longitude}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Country Name</th>
+                                <td>{{country_name}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Country Capital</th>
+                                <td>{{country_capital}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Country Code</th>
+                                <td>{{country_code}}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right" scope="row">Country Emoji</th>
+                                <td>{{country_emoji}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Country Emoji Unicode</th>
+                                <td>{{country_emojiU}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Country Native</th>
+                                <td>{{country_native}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Country Langusages</th>
+                                <td>
+                                    {% if country_languages %}
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th> Code</th>
+                                                <th>Name</th>
+                                                <th>Native</th>
+                                            </tr>
+                                        </thead>
+                                        {% for obj in country_languages %}
+                                        <tr>
+                                            <th>{{obj.code}}</th>
+                                            <th>{{obj.name}}</th>
+                                            <th>{{obj.native}}</th>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </table>
+                                    {% endif %}
+
+
+
+
                                 </td>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Integer
-                                </th>
-                                <td colspan="5">{{iIPAddress}} &lt;=4294967296(2**32)</td>
+                                <th class="text-right text-nowrap" scope="row">Country Currency Name</th>
+                                <td>{{country_currency_name}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Country Currency Code</th>
+                                <td>{{country_currency_code}} </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Country Currency Symbol</th>
+                                <td>{{country_currency_symbol}} </td>
                             </tr>
 
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Local</th>
-                                <td colspan="5">{{is_local}}</td>
+                                <th class="text-right text-nowrap" scope="row">Country Phone Code</th>
+                                <td>{{country_phone}} </td>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Multicast</th>
-                                <td colspan="5">{{is_multicast}}</td>
-                            </tr>
-
-
-                            <tr>
-                                <th class="text-nowrap" scope="row">Global
-                                </th>
-                                <td colspan="5">{{is_global}}</td>
+                                <th class="text-right text-nowrap" scope="row">Continent Name</th>
+                                <td>{{continent_name}} </td>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Loopback ?
-                                </th>
-                                <td colspan="5">{{is_loopback}}</td>
+                                <th class="text-right text-nowrap" scope="row">Continent Code</th>
+                                <td>{{continent_code}} </td>
                             </tr>
 
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Network Address?
-                                </th>
-                                <td colspan="5">{{is_network}}</td>
+                                <th colspan="2" class="text-left" scope="row">Developer's Technical detail</th>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Interface Address?
-                                </th>
-                                <td colspan="5">{{ip_interface}}</td>
+                                <th class="text-right text-nowrap" scope="row">IP to Interger</th>
+                                <td>{{integer}} </td>
                             </tr>
-
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">IP to Bits</th>
+                                <td>{{binary}} </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Size(in Bits</th>
+                                <td>{{bits}} </td>
+                            </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Reverse Pointer
-                                </th>
-                                <td colspan="5">{{reverse_pointer}}</td>
+                                <th class="text-right text-nowrap" scope="row">Global/Public IP?</th>
+                                <td>{{is_global}} </td>
                             </tr>
 
                             <tr>
-                                <th class="text-nowrap" scope="row">Reverseed ?
-                                </th>
-                                <td colspan="5">{{is_reserved}} {{country_flag}}</td>
+                                <th class="text-right text-nowrap" scope="row">Local Link IP?</th>
+                                <td>{{is_link_local}} </td>
                             </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Loopback IP?</th>
+                                <td>{{is_loopback}} </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Private IP?</th>
+                                <td>{{is_private}} </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Reserved IP?</th>
+                                <td>{{is_reserved}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Unspecified IP?</th>
+                                <td>{{is_unspecified}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Reverse Pointer</th>
+                                <td>{{reverse_pointer}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Multicast IP</th>
+                                <td>{{is_multicast}} </td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right text-nowrap" scope="row">Multicast IP</th>
+                                <td>{{is_multicast}} </td>
+                            </tr>
+
+
 
 
 
