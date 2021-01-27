@@ -17,7 +17,7 @@ from cryptography.hazmat.backends import default_backend
 import base64
 import hashlib
 from datetime import datetime
-
+import binascii
 HTTP_VERSION_1_0 = 0x1
 HTTP_VERSION_1_1 = 0x2
 HTTP_VERSION_2_0 = 0x3
@@ -186,6 +186,7 @@ def opensocket(curl, purpose, curl_address):
 
 def _parse_url(Uri: str, response: dict):
 	try:
+		response['url'] = Uri
 		uparts = urlparse(Uri)
 		response['scheme'] = uparts.scheme if uparts.scheme else None
 		response['host'] = uparts.hostname if uparts.hostname else None
@@ -197,8 +198,12 @@ def _parse_url(Uri: str, response: dict):
 		response['fragment'] = uparts.fragment if uparts.fragment else None
 		response['filename'] = uparts.path if uparts.path else None
 		response['request_uri'] = (uparts.path + '?{qrystr}'.format(qrystr=uparts.query) if uparts.query else '/') + "" + ('#{fragment}'.format(fragment=uparts.fragment) if uparts.fragment else '')
+		netloc = '{domain}{port}'.format(domain=response['host'], port=':{}'.format(response['port']) if response['port'] else '')
+		Uri = ParseResult(scheme=response['scheme'], netloc=netloc, path=response['filename'] if response['filename'] else '', params={}, query=response['query'], fragment=response['fragment']).geturl()
+		response['url'] = Uri
 		#exit(response)
 	except Exception as e:
+		#raise e
 		response['errno'], response['errmsg'] = 1, 'Mailform URL'
 
 
@@ -284,6 +289,7 @@ def calculate_timmings(c, response, request_sent_time_ms):
 	ssl_setup_time_ms = 0
 	pretransfer_time_ms = 0
 	sending_time_ms = 0
+	redirct_time = 0
 	waiting_time_ms = 0
 	receive_time_ms = 0
 
@@ -305,7 +311,18 @@ def calculate_timmings(c, response, request_sent_time_ms):
 	receive_time_ms = TOTAL_TIME - STARTTRANSFER_TIME
 	totaltime = sum([dns_resolution_time_ms, connecting_time_ms, ssl_setup_time_ms, pretransfer_time_ms, sending_time_ms, waiting_time_ms, receive_time_ms])
 
+	response['blocked_time_ms'] = 0
+	response['dns_resolution_time_ms'] = 0
+	response['connecting_time_ms'] = 0
+	response['ssl_setup_time_ms'] = 0
+	response['pretransfer_time_ms'] = 0
+	response['sending_time_ms'] = 0
+	response['redirct_time'] = 0
+	response['waiting_time_ms'] = 0
+	response['receive_time_ms'] = 0
+
 	#exit([sending_time_ms])
+	"""
 	print("dns_resolution_time_ms = %.15f ms" % (dns_resolution_time_ms))
 	print("connecting_time_ms     = %.15f ms" % (connecting_time_ms))
 	print("ssl_setup_time_ms     = %.15f ms" % (ssl_setup_time_ms))
@@ -326,10 +343,124 @@ def calculate_timmings(c, response, request_sent_time_ms):
 	exit()
 
 	exit('timmings')
+	"""
+
+
+def analysis_security(c, response, hostname: str):
+	certinfo = c.getinfo(c.INFO_CERTINFO)
+	Signature_Algorithm = None
+	Key_Exchange_Group = 'X509v3'
+	Public_Key_Pinning = 'Disabled'
+	#issue
+
+	exit([certinfo[1]])
+	_Public_Key_Pinning = None
+	Certificate_Issue_To_CN = None
+	Certificate_Issue_To_O = None
+	Certificate_Issue_To_OU = None
+	Certificate_Issue_To_C = None
+	Certificate_Issue_To_ST = None
+	Certificate_Issue_To_L = None
+
+	Certificate_Issue_By_CN = None
+	Certificate_Issue_By_O = None
+	Certificate_Issue_By_OU = None
+	Certificate_Issue_By_C = None
+	Certificate_Issue_By_ST = None
+	Certificate_Issue_By_L = None
+
+	Period_Of_Validity_Begins_On = None
+	Period_Of_Validity_Expires_On = None
+
+	Certificate_Public_Key = None
+	Certificate_Serial_No = None
+	Certificate_Signature_Algorithm = None
+	Certificate_Expired = None
+	Certificate_Secure = None
+	if not certinfo:
+		return
+
+	for inf in certinfo[0]:
+		if inf[0] == 'Signature Algorithm':
+			Certificate_Signature_Algorithm = inf[1]
+		if inf[0] == 'Cert':
+			certb64 = inf[1]
+			try:
+				cert = crypto.load_certificate(crypto.FILETYPE_PEM, certb64)
+				#exit(help(cert))
+				subject = cert.get_subject()
+				Certificate_Issue_To_CN = subject.CN
+				Certificate_Issue_To_O = subject.O
+				Certificate_Issue_To_OU = subject.OU
+				Certificate_Issue_To_C = subject.C
+				Certificate_Issue_To_ST = subject.ST
+				Certificate_Issue_To_L = subject.L
+				Certificate_Secure = subject.CN and subject.CN == hostname
+
+				issuer = cert.get_issuer()
+
+				Certificate_Issue_By_CN = issuer.CN
+				Certificate_Issue_By_O = issuer.O
+				Certificate_Issue_By_OU = issuer.OU
+
+				Certificate_Issue_By_C = issuer.C
+				Certificate_Issue_By_ST = issuer.ST
+				Certificate_Issue_By_L = issuer.L
+
+				Certificate_Public_Key = cert.get_pubkey()
+				Certificate_Serial_No = cert.get_serial_number()
+				#Certificate_Signature_Algorithm = cert.get_signature_algorithm()
+				Certificate_Expired = cert.has_expired()
+				#elp(Certificate_Signature_Algorithm)
+				#exit([Certificate_Public_Key, Certificate_Serial_No, Certificate_Signature_Algorithm, Certificate_Expired])
+
+				sha256 = cert.digest('sha256').decode()
+				shamd5 = cert.digest('md5').decode()
+				bsha256 = base64.b64encode(binascii.a2b_hex(sha256.replace(':', '')))
+				_Public_Key_Pinning = bsha256.decode()
+			except Exception as e:
+				raise e
+				pass
+
+		#print(inf)
+
+	response['ssl_cert_issued_to_cn'] = Certificate_Issue_To_CN
+	response['ssl_cert_issued_to_o'] = Certificate_Issue_To_O
+	response['ssl_cert_issued_to_ou'] = Certificate_Issue_To_OU
+	response['ssl_cert_issued_to_u'] = Certificate_Issue_To_C
+	response['ssl_cert_issued_to_l'] = Certificate_Issue_To_L
+	response['ssl_cert_issued_to_st'] = Certificate_Issue_To_ST
+	response['ssl_cert_issued_to_c'] = Certificate_Issue_To_C
+
+	response['ssl_cert_issued_by_cn'] = Certificate_Issue_By_CN
+	response['ssl_cert_issued_by_o'] = Certificate_Issue_By_O
+	response['ssl_cert_issued_by_ou'] = Certificate_Issue_By_OU
+	response['ssl_cert_issued_by_u'] = Certificate_Issue_By_C
+	response['ssl_cert_issued_by_l'] = Certificate_Issue_By_L
+	response['ssl_cert_issued_by_st'] = Certificate_Issue_By_ST
+	response['ssl_cert_issued_by_c'] = Certificate_Issue_By_C
+
+	response['ssl_cert_validity_begins_on'] = Period_Of_Validity_Begins_On
+	response['ssl_cert_validity_expires_on'] = Period_Of_Validity_Expires_On
+
+	response['ssl_cert_public_key'] = Certificate_Public_Key
+	response['ssl_cert_serial_no'] = Certificate_Serial_No
+	response['ssl_cert_signature_algorithm'] = Certificate_Signature_Algorithm
+
+	response['ssl_cert_expired'] = Certificate_Expired
+	response['ssl_secure'] = Certificate_Secure and not Certificate_Expired
+
+	exit(response)
+	#exit([c.getinfo(c.SSL_ENGINES)])
+	#exit("analysis_security")
 
 
 def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, Insecure=False, Resolve=None):
-	def debug_func(debug_type, buffer, request_headers, request_sent_time_ms: dict):
+	def debug_func(response: dict, debug_type, buffer, request_headers, request_sent_time_ms: dict):
+		if debug_type == 0 and response['ssl_version'] is None:
+			ssl_v = re.match(r'SSL connection using (.[^/]*) / (.*)', buffer.decode())
+			if ssl_v:
+				response['ssl_version'], response['ssl_cipher_suite'] = ssl_v.groups(0)
 		if debug_type == 2:
 			request_headers.write(buffer)
 			if request_sent_time_ms['start'] is None:
@@ -339,7 +470,7 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 		if request_sent_time_ms['start'] is not None and request_sent_time_ms['end'] is None:
 			request_sent_time_ms['end'] = time.perf_counter() * 1000
 
-		#print(debug_type, time.time(), buffer)
+		print(debug_type, time.time(), buffer)
 
 	if Uri.lower().startswith('//'):
 		Uri = 'http://{}'.format(Uri.strip("//"))
@@ -385,6 +516,8 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 	response['request_headers_map'] = None
 	response['request_cookies'] = None
 	response['request_headers_size'] = None
+	''' SSL data '''
+	response['ssl_version'] = response['ssl_cipher_suite'] = None
 	request_headers = io.BytesIO()
 	_parse_url(Uri, response)
 	if response['errno']:
@@ -434,7 +567,7 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 	c.setopt(pycurl.HEADERFUNCTION, hfun_buffer.write)
 	#c.setopt(pycurl.WRITEHEADER, wfun_buffer.write)
 	#c.setopt(pycurl.WRITEFUNCTION, wfun_buffer.write)
-	c.setopt(pycurl.DEBUGFUNCTION, lambda d, b: debug_func(d, b, request_headers, request_sent_time_ms))
+	c.setopt(pycurl.DEBUGFUNCTION, lambda d, b: debug_func(response, d, b, request_headers, request_sent_time_ms))
 	c.setopt(pycurl.ACCEPT_ENCODING, 'gzip, deflate')
 	c.setopt(pycurl.WRITEDATA, http_buffer)
 	c.setopt(pycurl.USERAGENT, User_Agent)
@@ -477,6 +610,7 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 		response['status_msg'] = http.server.BaseHTTPRequestHandler.responses[response['status_code']][0]
 
 	calculate_timmings(c, response, request_sent_time_ms)
+	analysis_security(c, response, response['host'])
 	exit()
 	#exit([request_headers])
 	response['transferred'] = http_buffer.__sizeof__()
@@ -522,13 +656,15 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 params = {
     'Uri': 'https://www.google.com',
     #'Uri': 'https://collabx.com/test.php',
-    # 'Uri': 'http://66.70.176.45/test.php?cmd=sleep',
+    #'Uri': 'http://user:password@66.70.176.45:80/test.php?cmd=sleep',
     # https://tpc.googlesyndication.com public jey pinning
-    #'Uri': 'https://github.com/page/page2/?c=1&c2=1#ddd',
+    # 'Uri': 'https://github.com/page/page2/?c=1&c2=1#ddd',
+    'Uri': 'https://expired.badssl.com',
+    'Uri': 'https://wrong.host.badssl.com',
     'http_version': HTTP_VERSION_1_1,
     'User_Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329',
     'Insecure': False,
-    'Resolve': None  # '172.217.3.100'
+    'Resolve': None  #'172.217.167.4'
 }
 response = Curl_Request_Exec(**params)
 exit(response)
