@@ -299,6 +299,7 @@ def calculate_timmings(c, response, request_sent_time_ms):
 	PRETRANSFER_TIME = c.getinfo(c.PRETRANSFER_TIME) * 1000
 	STARTTRANSFER_TIME = c.getinfo(c.STARTTRANSFER_TIME) * 1000
 	TOTAL_TIME = c.getinfo(c.TOTAL_TIME) * 1000
+	#exit([TOTAL_TIME])
 	dns_resolution_time_ms = NAMELOOKUP_TIME
 	connecting_time_ms = CONNECT_TIME - NAMELOOKUP_TIME
 	ssl_setup_time_ms = APPCONNECT_TIME - CONNECT_TIME
@@ -310,16 +311,6 @@ def calculate_timmings(c, response, request_sent_time_ms):
 	waiting_time_ms = STARTTRANSFER_TIME - PRETRANSFER_TIME - sending_time_ms
 	receive_time_ms = TOTAL_TIME - STARTTRANSFER_TIME
 	totaltime = sum([dns_resolution_time_ms, connecting_time_ms, ssl_setup_time_ms, pretransfer_time_ms, sending_time_ms, waiting_time_ms, receive_time_ms])
-
-	response['blocked_time_ms'] = 0
-	response['dns_resolution_time_ms'] = 0
-	response['connecting_time_ms'] = 0
-	response['ssl_setup_time_ms'] = 0
-	response['pretransfer_time_ms'] = 0
-	response['sending_time_ms'] = 0
-	response['redirct_time'] = 0
-	response['waiting_time_ms'] = 0
-	response['receive_time_ms'] = 0
 
 	#exit([sending_time_ms])
 	"""
@@ -345,6 +336,17 @@ def calculate_timmings(c, response, request_sent_time_ms):
 	exit('timmings')
 	"""
 
+	response['blocked_time_ms'] = blocked_time_ms
+	response['dns_resolution_time_ms'] = dns_resolution_time_ms
+	response['connecting_time_ms'] = connecting_time_ms
+	response['ssl_setup_time_ms'] = ssl_setup_time_ms
+	response['pretransfer_time_ms'] = pretransfer_time_ms
+	response['sending_time_ms'] = sending_time_ms
+	response['redirct_time'] = redirct_time
+	response['waiting_time_ms'] = waiting_time_ms
+	response['receive_time_ms'] = receive_time_ms
+	response['total_time_ms'] = totaltime
+
 
 def analysis_security(c, response, hostname: str):
 	certinfo = c.getinfo(c.INFO_CERTINFO)
@@ -353,7 +355,7 @@ def analysis_security(c, response, hostname: str):
 	Public_Key_Pinning = 'Disabled'
 	#issue
 
-	exit([certinfo[1]])
+	#exit([certinfo[1]])
 	_Public_Key_Pinning = None
 	Certificate_Issue_To_CN = None
 	Certificate_Issue_To_O = None
@@ -377,52 +379,63 @@ def analysis_security(c, response, hostname: str):
 	Certificate_Signature_Algorithm = None
 	Certificate_Expired = None
 	Certificate_Secure = None
-	if not certinfo:
-		return
+	Fingerprints_sha256 = Fingerprints_sha1 = Fingerprints_md5 = Public_Key_Pinning_bs64 = None
 
-	for inf in certinfo[0]:
-		if inf[0] == 'Signature Algorithm':
-			Certificate_Signature_Algorithm = inf[1]
-		if inf[0] == 'Cert':
-			certb64 = inf[1]
-			try:
-				cert = crypto.load_certificate(crypto.FILETYPE_PEM, certb64)
-				#exit(help(cert))
-				subject = cert.get_subject()
-				Certificate_Issue_To_CN = subject.CN
-				Certificate_Issue_To_O = subject.O
-				Certificate_Issue_To_OU = subject.OU
-				Certificate_Issue_To_C = subject.C
-				Certificate_Issue_To_ST = subject.ST
-				Certificate_Issue_To_L = subject.L
-				Certificate_Secure = subject.CN and subject.CN == hostname
+	if certinfo:
+		for inf in certinfo[0]:
+			if inf[0] == 'Signature Algorithm':
+				Certificate_Signature_Algorithm = inf[1]
+			if inf[0] == 'Cert':
+				certb64 = inf[1]
+				try:
+					cert = crypto.load_certificate(crypto.FILETYPE_PEM, certb64)
+					notBefore, notAfter = cert.get_notBefore(), cert.get_notAfter()
+					try:
+						if notBefore:
+							notBefore = datetime.strptime(notBefore.decode(), '%Y%m%d%H%M%S%z').strftime('%d %b %Y')
+						if notAfter:
+							notAfter = datetime.strptime(notAfter.decode(), '%Y%m%d%H%M%S%z').strftime('%d %b %Y')
+						Period_Of_Validity_Begins_On, Period_Of_Validity_Expires_On = notBefore, notAfter
+					except Exception as e:
+						notBefore = notAfter = None
 
-				issuer = cert.get_issuer()
+					#exit(help(cert))
+					subject = cert.get_subject()
+					Certificate_Issue_To_CN = subject.CN
+					Certificate_Issue_To_O = subject.O
+					Certificate_Issue_To_OU = subject.OU
+					Certificate_Issue_To_C = subject.C
+					Certificate_Issue_To_ST = subject.ST
+					Certificate_Issue_To_L = subject.L
+					Certificate_Secure = subject.CN and subject.CN == hostname
 
-				Certificate_Issue_By_CN = issuer.CN
-				Certificate_Issue_By_O = issuer.O
-				Certificate_Issue_By_OU = issuer.OU
+					issuer = cert.get_issuer()
 
-				Certificate_Issue_By_C = issuer.C
-				Certificate_Issue_By_ST = issuer.ST
-				Certificate_Issue_By_L = issuer.L
+					Certificate_Issue_By_CN = issuer.CN
+					Certificate_Issue_By_O = issuer.O
+					Certificate_Issue_By_OU = issuer.OU
 
-				Certificate_Public_Key = cert.get_pubkey()
-				Certificate_Serial_No = cert.get_serial_number()
-				#Certificate_Signature_Algorithm = cert.get_signature_algorithm()
-				Certificate_Expired = cert.has_expired()
-				#elp(Certificate_Signature_Algorithm)
-				#exit([Certificate_Public_Key, Certificate_Serial_No, Certificate_Signature_Algorithm, Certificate_Expired])
+					Certificate_Issue_By_C = issuer.C
+					Certificate_Issue_By_ST = issuer.ST
+					Certificate_Issue_By_L = issuer.L
 
-				sha256 = cert.digest('sha256').decode()
-				shamd5 = cert.digest('md5').decode()
-				bsha256 = base64.b64encode(binascii.a2b_hex(sha256.replace(':', '')))
-				_Public_Key_Pinning = bsha256.decode()
-			except Exception as e:
-				raise e
-				pass
+					Certificate_Public_Key = None  #help(cert.get_pubkey())
+					Certificate_Serial_No = cert.get_serial_number()
+					#Certificate_Signature_Algorithm = cert.get_signature_algorithm()
+					Certificate_Expired = cert.has_expired()
+					#elp(Certificate_Signature_Algorithm)
+					#exit([Certificate_Public_Key, Certificate_Serial_No, Certificate_Signature_Algorithm, Certificate_Expired])
 
-		#print(inf)
+					Fingerprints_sha256 = cert.digest('sha256').decode()
+					Fingerprints_sha1 = cert.digest('sha1').decode()
+					Fingerprints_md5 = cert.digest('md5').decode()
+					bsha256 = base64.b64encode(binascii.a2b_hex(Fingerprints_sha256.replace(':', '')))
+					Public_Key_Pinning_bs64 = bsha256.decode()
+				except Exception as e:
+					print(e)
+					pass
+
+			#print(inf)
 
 	response['ssl_cert_issued_to_cn'] = Certificate_Issue_To_CN
 	response['ssl_cert_issued_to_o'] = Certificate_Issue_To_O
@@ -450,39 +463,20 @@ def analysis_security(c, response, hostname: str):
 	response['ssl_cert_expired'] = Certificate_Expired
 	response['ssl_secure'] = Certificate_Secure and not Certificate_Expired
 
-	exit(response)
+	response['ssl_key_exchange_group'] = Key_Exchange_Group
+
+	response['ssl_fingerprints_sha256'] = Fingerprints_sha256
+	response['ssl_fingerprints_sha1'] = Fingerprints_sha1
+	response['ssl_fingerprints_md5'] = Fingerprints_md5
+
+	response['ssl_public_key_pinning_bs64'] = Public_Key_Pinning_bs64
+
+	#exit(response)
 	#exit([c.getinfo(c.SSL_ENGINES)])
 	#exit("analysis_security")
 
 
-def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, Insecure=False, Resolve=None):
-	def debug_func(response: dict, debug_type, buffer, request_headers, request_sent_time_ms: dict):
-		if debug_type == 0 and response['ssl_version'] is None:
-			ssl_v = re.match(r'SSL connection using (.[^/]*) / (.*)', buffer.decode())
-			if ssl_v:
-				response['ssl_version'], response['ssl_cipher_suite'] = ssl_v.groups(0)
-		if debug_type == 2:
-			request_headers.write(buffer)
-			if request_sent_time_ms['start'] is None:
-				request_sent_time_ms['start'] = time.perf_counter() * 1000
-				#exit([request_sending_start_time_ms])
-
-		if request_sent_time_ms['start'] is not None and request_sent_time_ms['end'] is None:
-			request_sent_time_ms['end'] = time.perf_counter() * 1000
-
-		print(debug_type, time.time(), buffer)
-
-	if Uri.lower().startswith('//'):
-		Uri = 'http://{}'.format(Uri.strip("//"))
-	elif not Uri.lower().startswith('http://') and not Uri.lower().startswith('https://'):
-		Uri = f'http://{Uri}'
-	#exit(Uri)
-	httpheaders = [
-	    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8', 'Accept-Encoding: gzip, deflate',
-	    'Cache-Control: max-age=0', 'Upgrade-Insecure-Requests: 1'
-	]
-
-	error_no = 1
+def get_default_response():
 	response = {}
 	response['errno'] = 0
 	response['errmsg'] = ''
@@ -502,6 +496,17 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 	response['transferred'] = None
 	response['referrer_policy'] = None
 
+	response['blocked_time_ms'] = None
+	response['dns_resolution_time_ms'] = None
+	response['connecting_time_ms'] = None
+	response['ssl_setup_time_ms'] = None
+	response['pretransfer_time_ms'] = None
+	response['sending_time_ms'] = None
+	response['redirct_time'] = None
+	response['waiting_time_ms'] = None
+	response['receive_time_ms'] = None
+	response['total_time_ms'] = None
+
 	response['content_type'] = None
 	response['strict_transport_security'] = None
 	response['content_encoding'] = None
@@ -516,6 +521,39 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 	response['request_headers_map'] = None
 	response['request_cookies'] = None
 	response['request_headers_size'] = None
+
+	return response
+
+
+def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, Insecure=False, Resolve=None):
+	def debug_func(response: dict, debug_type, buffer, request_headers, request_sent_time_ms: dict):
+		if debug_type == 0 and response['ssl_version'] is None:
+			ssl_v = re.match(r'SSL connection using (.[^/]*) / (.*)', buffer.decode())
+			if ssl_v:
+				response['ssl_version'], response['ssl_cipher_suite'] = ssl_v.groups(0)
+		if debug_type == 2:
+			request_headers.write(buffer)
+			if request_sent_time_ms['start'] is None:
+				request_sent_time_ms['start'] = time.perf_counter() * 1000
+				#exit([request_sending_start_time_ms])
+
+		if request_sent_time_ms['start'] is not None and request_sent_time_ms['end'] is None:
+			request_sent_time_ms['end'] = time.perf_counter() * 1000
+
+		#print(debug_type, time.time(), buffer)
+
+	if Uri.lower().startswith('//'):
+		Uri = 'http://{}'.format(Uri.strip("//"))
+	elif not Uri.lower().startswith('http://') and not Uri.lower().startswith('https://'):
+		Uri = f'http://{Uri}'
+	#exit(Uri)
+	httpheaders = [
+	    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8', 'Accept-Encoding: gzip, deflate',
+	    'Cache-Control: max-age=0', 'Upgrade-Insecure-Requests: 1'
+	]
+
+	error_no = 1
+	response = get_default_response()
 	''' SSL data '''
 	response['ssl_version'] = response['ssl_cipher_suite'] = None
 	request_headers = io.BytesIO()
@@ -610,8 +648,8 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 		response['status_msg'] = http.server.BaseHTTPRequestHandler.responses[response['status_code']][0]
 
 	calculate_timmings(c, response, request_sent_time_ms)
+	exit([response, 22])
 	analysis_security(c, response, response['host'])
-	exit()
 	#exit([request_headers])
 	response['transferred'] = http_buffer.__sizeof__()
 	response['transferred'] += hfun_buffer.__sizeof__()
@@ -626,6 +664,11 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 
 	_parse_request_headers(HTTP_METHOD_GET, request_headers, response, httpheaders, cookie_host)
 	_parse_response_headers(hfun_buffer, cookie_host, response)
+	response['ssl_public_key_pins'] = None
+	if response['ssl_public_key_pinning_bs64'] and response['public_key_pins'].find(response['ssl_public_key_pinning_bs64']) >= 0:
+		response['ssl_public_key_pins'] = True
+
+	#exit(response)
 	response['compression'] = 'no-referrer-when-downgrade'
 	response['response_headers_size'] = c.getinfo(pycurl.HEADER_SIZE)
 
@@ -659,8 +702,8 @@ params = {
     #'Uri': 'http://user:password@66.70.176.45:80/test.php?cmd=sleep',
     # https://tpc.googlesyndication.com public jey pinning
     # 'Uri': 'https://github.com/page/page2/?c=1&c2=1#ddd',
-    'Uri': 'https://expired.badssl.com',
-    'Uri': 'https://wrong.host.badssl.com',
+    #'Uri': 'https://expired.badssl.com',
+    # 'Uri': 'https://wrong.host.badssl.com',
     'http_version': HTTP_VERSION_1_1,
     'User_Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329',
     'Insecure': False,

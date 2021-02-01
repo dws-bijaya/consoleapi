@@ -647,64 +647,124 @@
                             </div>
                         </div>
 
+
                         <div id="headers" class="tab-pane">
                             <div id="headers_tab_nocontent" class="p-5 text-muted">
-
                                 <center> No Data Available. Please initiate a refesh request.</center>
-
                             </div>
-                            <div id="headers_tab_content" style="display: none;">
+                            <div id="headers_tab_content" style="display:block;">
                                 <table class="table table-responsive w-100 d-block d-md-table">
                                     <tr>
-                                        <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                            role="button" style="cursor:pointer">
-                                            <i class="fa fa-angle-right"></i> Response Headers (12)
+                                        <td width="30%" id="headers-tab-request"
+                                            class="small pr-1 border-top-0 border-bottom-0 text-left" role="button"
+                                            style="cursor:pointer">
+                                            <i class="fa fa-angle-right"></i> Request Headers (<span
+                                                id="headers-tab-request-cnt">0</span>)
                                         </td>
                                         <td class="small text-muted border-top-0 text-left">
-                                            <span class="small" role="button" style="cursor:pointer">View Source
-                                                w</span>
+                                            <span id="headers-tab-request-rawclk" class="small" role="button"
+                                                style="cursor:pointer">Raw
+                                            </span>
                                         </td>
                                     </tr>
 
                                     <tr style="display:table-row">
-                                        <td colspan="2" class="border-0">
+                                        <td id='headers-tab-request-all' colspan="2" class="border-0">
 
-                                            <table class="table table-responsive w-100 d-block d-md-table">
-                                                <tr>
-                                                    <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                        style="padding:0;margin: 0;">Request URL:
-                                                    </td>
-                                                    <td class="small pr-0 text-muted border-top-0 text-left"
-                                                        style="padding:0;margin: 0;"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                        Request
-                                                        Method:</td>
-                                                    <td class="small pr-0 text-muted text-left"
-                                                        style="padding:0;margin: 0;"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                        Status
-                                                        Code:</td>
-                                                    <td class="small pr-0 text-muted text-left"
-                                                        style="padding:0;margin: 0;"></td>
-                                                </tr>
 
-                                                <tr>
-                                                    <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                        Remote
-                                                        Address:</td>
-                                                    <td class="small pr-0 text-muted text-left"
-                                                        style="padding:0;margin: 0;"></td>
-                                                </tr>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td width="30%" id="headers-tab-response"
+                                            class="small pr-1 border-top-0 border-bottom-0 text-left" role="button"
+                                            style="cursor:pointer">
+                                            <i class="fa fa-angle-right"></i> Response Headers (<span
+                                                id="headers-tab-response-cnt">0</span>)
+                                        </td>
+                                        <td class="small text-muted border-top-0 text-left">
+
+                                            <span id="headers-tab-response-rawclk" class="small" role="button"
+                                                style="cursor:pointer">Raw
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="display:table-row">
+                                        <td id='headers-tab-response-all' colspan="2" class="border-0">
 
 
 
-                                            </table>
 
-                                            <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="security" class="tab-pane">
+                            <div id="security_tab_nocontent" class="p-5 text-muted">
+                                <center> No Data Available. Please initiate a refesh request.</center>
+                            </div>
+                            <div id="security_tab_content" style="display:block;">
+                                <table class="table table-responsive w-100 d-block d-md-table">
+                                    <tr>
+                                        <td colspan="2" width="30%" id="headers-tab-request"
+                                            class="pr-1 border-top-0 border-bottom-0 text-left" role="button">
+                                            <i class="fa fa-angle-right small" style="cursor:pointer">Connecion
+                                                (<span id="security-tab-connection-cnt" cnt="4">4</span>)
+                                            </i>
+
+                                            <br />
+                                            <br />
+                                            <div id="headers-tab-connection-general">
+                                                <table class="table table-responsive w-100 d-block d-md-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Protocol
+                                                                version:&nbsp;&nbsp;</td>
+                                                            <td id="security-tab-connection-protocol-version"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;"> Cipher suite:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-connection-cipher-suite"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">
+                                                                Key Exchange Group:&nbsp;&nbsp;</td>
+                                                            <td id="security-tab-connection-kxgroup"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">
+                                                                Signature Scheme::&nbsp;&nbsp;</td>
+                                                            <td id="security-tab-connection-sign-scheme"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
 
 
                                         </td>
@@ -713,13 +773,274 @@
 
 
                                     <tr>
-                                        <td width="30%" class="small pr-1 border-top-0 text-left" role="button"
-                                            style="cursor:pointer">
-                                            <i class="fa fa-angle-right"></i> Request Headers (12)
+                                        <td colspan="2" width="30%" id="headers-tab-request"
+                                            class="pr-1 border-top-0 border-bottom-0 text-left" role="button">
+                                            <i class="fa fa-angle-right small" style="cursor:pointer">Host
+                                                <span id="security-tab-connection-domain"></span>
+
+                                                &nbsp;&nbsp;(<span id="security-tab-connection-cnt" cnt="2">2</span>)
+                                            </i>
+
+                                            <br />
+                                            <br />
+                                            <div id="security-tab-connection-host">
+                                                <table class="table table-responsive w-100 d-block d-md-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;"> HTTP Strict Transport
+                                                                Security:&nbsp;&nbsp;</td>
+                                                            <td id="security-tab-connection-host-hsts"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;"> Public Key
+                                                                Pinning:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-connection-host-pkey-pinning"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;"> Public Key
+                                                                Pin:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-connection-host-pkey-pin"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+
+
                                         </td>
-                                        <td class="small text-muted border-top-0 text-left">
-                                            <span role="button" class="small" style="cursor:pointer">View Source
-                                                w</span>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td colspan="2" width="30%" id="headers-tab-request"
+                                            class="pr-1 border-top-0 border-bottom-0 text-left" role="button">
+                                            <i class="fa fa-angle-right small" style="cursor:pointer">
+                                                Certificate Subject:
+                                                &nbsp;&nbsp;(<span id="security-tab-cert-cnt" cnt="3">3</span>)
+                                            </i>
+
+                                            <br />
+                                            <br />
+                                            <div id="security-tab-cert-subject">
+                                                <table class="table table-responsive w-100 d-block d-md-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Common Name
+                                                                (CN):&nbsp;&nbsp;</td>
+                                                            <td id="security-tab-cert-sub-cn"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Organization
+                                                                (O):&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-sub-o"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Organizational Unit
+                                                                (OU):&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-sub-ou"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+
+
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="2" width="30%" id="headers-tab-request"
+                                            class="pr-1 border-top-0 border-bottom-0 text-left" role="button">
+                                            <i class="fa fa-angle-right small" style="cursor:pointer">
+                                                Certificate Issuer:
+                                                &nbsp;&nbsp;(<span id="security-tab-cert-cnt" cnt="3">3</span>)
+                                            </i>
+
+                                            <br />
+                                            <br />
+                                            <div id="security-tab-cert-issuer">
+                                                <table class="table table-responsive w-100 d-block d-md-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Common Name
+                                                                (CN):&nbsp;&nbsp;</td>
+                                                            <td id="security-tab-cert-issuer-cn"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Organization
+                                                                (O):&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-issuer-o"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Organizational Unit
+                                                                (OU):&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-issuer-ou"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+
+
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="2" width="30%" id="security-tab-cert-validity"
+                                            class="pr-1 border-top-0 border-bottom-0 text-left" role="button">
+                                            <i class="fa fa-angle-right small" style="cursor:pointer">
+                                                Certificate Validity:
+                                                &nbsp;&nbsp;(<span id="security-tab-connection-cnt" cnt="2">2</span>)
+                                            </i>
+
+                                            <br />
+                                            <br />
+                                            <div id="security-tab-cert-validity-role">
+                                                <table class="table table-responsive w-100 d-block d-md-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Begins On::&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-validity-beginson"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">Expires On:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-validity-expireson"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2" width="30%" id="headers-tab-request"
+                                            class="pr-1 border-top-0 border-bottom-0 text-left" role="button">
+                                            <i class="fa fa-angle-right small" style="cursor:pointer">
+                                                Fingerprints:
+                                                &nbsp;&nbsp;(<span id="security-tab-cert-fingerprints-cnt"
+                                                    cnt="2">3</span>)
+                                            </i>
+
+                                            <br />
+                                            <br />
+                                            <div id="security-tab-cert-fingerprints">
+                                                <table class="table table-responsive w-100 d-block d-md-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="30%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">SHA-256:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-fingerprints-sha256"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">SHA-1:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-fingerprints-sha1"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td width="35%" class="small pr-0 border-top-0 text-right"
+                                                                style="padding:0;margin: 0;">MD5:&nbsp;&nbsp;
+                                                            </td>
+                                                            <td id="security-tab-cert-fingerprints-md5"
+                                                                class="small pr-0 text-muted border-top-0 text-left"
+                                                                style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;">
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+
+
+
                                         </td>
                                     </tr>
 
@@ -727,632 +1048,156 @@
                             </div>
                         </div>
 
-                        <div id="security" class="tab-pane">
+                        <div id="timmings" class="tab-pane in active">
+                            <div id="timmings_tab_nocontent" class="p-5 text-muted">
+                                <center> No Data Available. Please initiate a refresh request.</center>
+                            </div>
+                            <div id="general_tab_content" style="display: block;">
+                                <table id="general_tab_nocontent" style="display:none"
+                                    class="table table-responsive w-100 d-block d-md-table">
+                                    <tr>
+                                        <td width="20%" class="small pr-1 border-top-0 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Request
+                                            Blocked:</td>
+                                        <td class="small text-muted text-left border-top-0"
+                                            style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-block-time" width="20%"
+                                            class="small pr-1 border-top-0 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">DNS Resolution:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-dns-resolution" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Connecting:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-connecting-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">TLS Setup:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-setup-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Pretransfer:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-pretransfer_time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td width="20%" class="small pr-1  text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Sending:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-sending-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Waiting:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
+
+                                        </td>
+                                        <td id="timmings-tab-waiting-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
+
+                                    </tr>
 
-                            <table class="table table-responsive w-100 d-block d-md-table">
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Connection
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Protocol version:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Cipher
-                                                    suite:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Key
-                                                    Exchange Group:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Signature
-                                                    Scheme:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Redirect:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
 
+                                        </td>
+                                        <td id="timmings-tab-redirct-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
 
+                                    </tr>
 
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Host consolepai.com
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td width="20%" class="small pr-1 text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Receive:</td>
+                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
 
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
+                                        </td>
+                                        <td id="timmings-tab-receive-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
 
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">HTTP Strict Transport Security:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Public
-                                                    Key Pinning:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Key
-                                                    Exchange Group:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
+                                    </tr>
+                                    <tr>
+                                        <td width="20%" class="small pr-1  text-right"
+                                            style="padding:0;margin: 0; padding-top: 5px;">Total time:</td>
+                                        <td id="timmings-tab-total-time-pbar" class="small text-muted text-left"
+                                            style="padding:0;margin: 0;">
 
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Issued To:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
 
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
 
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Common Name (CN):
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organization (O):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
 
+                                        </td>
+                                        <td id="timmings-tab-total-time" width="20%"
+                                            class="small pr-1 border-top-1 text-left"
+                                            style="padding:0;margin: 0; padding-top: 5px;">
+                                        </td>
 
+                                    </tr>
 
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-
-
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Issued By:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Common Name (CN):
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organization (O):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Period of Validity:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Begins On:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Expires On:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Fingerprints:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">SHA-256 Fingerprint:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    SHA-1 Fingerprint:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    MD5 Fingerprint:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-                            </table>
-
+                                </table>
+                            </div>
                         </div>
 
-                        <div id="timmings" class="tab-pane">
 
-                            <table class="table table-responsive w-100 d-block d-md-table">
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Request Timing
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Blocked:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;">
-
-                                                    <div
-                                                        style="padding: 50px; background-color: #BCC6CC; width: 100px; display: inline-block;">
-                                                        Div one</div>
-                                                    <div
-                                                        style="padding: 50px; background-color: #E5E4E2; display: inline-block;">
-                                                        Div two</div>
-
-
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">DNS
-                                                    Resolution:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Connecting:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">TLS
-                                                    Setup:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Sending:
-                                                </td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Waiting:
-                                                </td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Receiving:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;">
-
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar" role="progressbar" style="width: 50%"
-                                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-                                            </tr>
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Host consolepai.com
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">HTTP Strict Transport Security:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Public
-                                                    Key Pinning:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">Key
-                                                    Exchange Group:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Issued To:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Common Name (CN):
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organization (O):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-
-
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Issued By:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Common Name (CN):
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organization (O):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Organizational Unit (OU):</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Period of Validity:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">Begins On:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    Expires On:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td width="30%" class="small pr-1 border-top-0 border-bottom-0 text-left"
-                                        role="button" style="cursor:pointer">
-                                        <i class="fa fa-angle-right"></i>Certificate Fingerprints:
-                                    </td>
-                                    <td class="small text-muted border-top-0 text-left">
-                                    </td>
-                                </tr>
-
-                                <tr style="display:table-row">
-                                    <td colspan="2" class="border-0">
-
-                                        <table class="table table-responsive w-100 d-block d-md-table">
-                                            <tr>
-                                                <td width="20%" class="small pr-0 border-top-0 text-right"
-                                                    style="padding:0;margin: 0;">SHA-256 Fingerprint:
-                                                </td>
-                                                <td class="small pr-0 text-muted border-top-0 text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    SHA-1 Fingerprint:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="small pr-0 text-right" style="padding:0;margin: 0;">
-                                                    MD5 Fingerprint:</td>
-                                                <td class="small pr-0 text-muted text-left"
-                                                    style="padding:0;margin: 0;"></td>
-                                            </tr>
-
-
-
-
-                                        </table>
-
-
-                                    </td>
-                                </tr>
-
-                            </table>
-
-                        </div>
                 </section>
 
 
@@ -1518,8 +1363,47 @@
             'response_cookies_raw': [
                 '1P_JAR=2021-01-29-16; expires=Sun, 28-Feb-2021 16:20:12 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none; Priority=High; Version=2.3; Comment=Comment; MaxAge=34564',
                 '1P_JAR=2021-01-29-16; expires=Sun, 28-Feb-2021 16:20:12 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none; Priority=High; Version=2.3; Comment=Comment; MaxAge=34564'
-            ]
-
+            ],
+            'request_headers_map': [['Host', 'www.google.com'], ['Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'], ['Accept-Language', 'en-GB,en-US;q=0.9,en;q=0.8'], ['Accept-Encoding', 'gzip, deflate'], ['Cache-Control', 'max-age=0'], ['Upgrade-Insecure-Requests', '1']],
+            'request_headers_raw': 'GET / HTTP/1.1\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1',
+            'response_headers_map': [['Host', 'www.google.com'], ['Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'], ['Accept-Language', 'en-GB,en-US;q=0.9,en;q=0.8'], ['Accept-Encoding', 'gzip, deflate'], ['Cache-Control', 'max-age=0'], ['Upgrade-Insecure-Requests', '1']],
+            'response_headers_raw': 'GET / HTTP/1.1\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1',
+            'ssl_version': 'TLSv1.3',
+            'ssl_cipher_suite': 'TLS_AES_256_GCM_SHA384',
+            'ssl_key_exchange_group': 'X509v3',
+            'ssl_cert_signature_algorithm': 'sha256WithRSAEncryption',
+            'ssl_domain': 'www.google.com',
+            'strict_transport_security': true,
+            'public_key_pinning': true,
+            'public_key_pins': null,
+            'ssl_cert_issued_to_cn': 'www.google.com',
+            'ssl_cert_issued_to_o': 'Google LLC',
+            'ssl_cert_issued_to_ou': null,
+            'ssl_cert_issued_to_l': 'Mountain View',
+            'ssl_cert_issued_to_st': 'California',
+            'ssl_cert_issued_to_c': 'US',
+            'ssl_cert_issued_by_cn': 'GTS CA 1O1',
+            'ssl_cert_issued_by_o': 'Google Trust Services',
+            'ssl_cert_issued_by_ou': null,
+            'ssl_cert_issued_by_u': 'US',
+            'ssl_cert_issued_by_l': null,
+            'ssl_cert_issued_by_st': null,
+            'ssl_cert_issued_by_c': 'US',
+            'ssl_cert_validity_begins_on': '5 Jan 2021',
+            'ssl_cert_validity_expires_on': '30 Mar 2021',
+            'ssl_fingerprints_sha256': '74:A5:BA:B8:3A:29:E3:DA:8B:51:AC:FB:C6:DC:11:69:8B:B7:50:13:A8:DC:8D:C5:A7:9B:A4:B0:4F:82:96:F2',
+            'ssl_fingerprints_sha1': 'C4: C7: F3: 49: DC: 7C: C6: DC: 4C: 51: 56: 6E: 36: 12: 49: 9D: 69: ED: 95: A7',
+            'ssl_fingerprints_md5': 'BB:20:E7:F8:9E:7E:16:B3:96:93:C0:C5:3B:B7:76:5F',
+            'blocked_time_ms': 0,
+            'dns_resolution_time_ms': 0.554,
+            'connecting_time_ms': 0.30199999999999994,
+            'ssl_setup_time_ms': 20.033,
+            'pretransfer_time_ms': 0.09999999999999787,
+            'sending_time_ms': 0.003657102584838867,
+            'redirct_time': 0,
+            'waiting_time_ms': 86.85834289741516,
+            'receive_time_ms': 19.647000000000006,
+            'total_time_ms': 127.498
 
         }
         window.csapi = window.csapi || {
@@ -1571,7 +1455,209 @@
                 this.parseurl_tab(response)
                 this.data_tab(response)
                 this.cookies_tab(response)
+                this.headers_tab(response)
+                this.security_tab(response)
+                this.timmings_tab(response)
+
             },
+            timmings_tab: function (response) {
+
+                total_time_ms = 0
+                blocked_time_ms = 0
+                dns_resolution_time_ms = 0
+                connecting_time_ms = 0
+                ssl_setup_time_ms = 0
+                pretransfer_time_ms = 0
+                sending_time_ms = 0
+                redirct_time_ms = 0
+                waiting_time_ms = 0
+                receive_time_ms = 0
+
+
+                total_time_per = 0
+                blocked_time_per = 0
+                dns_resolution_time_per = 0
+                connecting_time_per = 0
+                ssl_setup_time_per = 0
+                pretransfer_time_per = 0
+                sending_time_per = 0
+                redirct_time_per = 0
+                waiting_time_per = 0
+                receive_time_per = 0
+
+                if (response['total_time_ms'] != null) {
+                    blocked_time_per = ((response['blocked_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    dns_resolution_time_per = ((response['dns_resolution_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    connecting_time_per = ((response['connecting_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    ssl_setup_time_per = ((response['ssl_setup_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    pretransfer_time_per = ((response['pretransfer_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    sending_time_per = ((response['sending_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    redirct_time_per = ((response['redirct_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    waiting_time_per = ((response['waiting_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    receive_time_per = ((response['receive_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+                    total_time_per = ((response['total_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
+
+                    total_time_ms = response['total_time_ms'].toFixed(2);
+                    blocked_time_ms = response['blocked_time_ms'].toFixed(2);
+                    dns_resolution_time_ms = response['dns_resolution_time_ms'].toFixed(2);
+                    connecting_time_ms = response['connecting_time_ms'].toFixed(2);
+                    ssl_setup_time_ms = response['ssl_setup_time_ms'].toFixed(2);
+                    pretransfer_time_ms = response['pretransfer_time_ms'].toFixed(2);
+                    sending_time_ms = response['sending_time_ms'].toFixed(2);
+                    redirct_time_ms = response['redirct_time'].toFixed(2);
+                    waiting_time_ms = response['waiting_time_ms'].toFixed(2);
+                    receive_time_ms = response['receive_time_ms'].toFixed(2);
+
+                }
+
+                $('#timmings-tab-block-time').html(blocked_time_ms + ' Ms')
+                $('#timmings-tab-dns-resolution').html(dns_resolution_time_ms + ' Ms')
+                $('#timmings-tab-connecting-time').html(connecting_time_ms + ' Ms')
+                $('#timmings-tab-setup-time').html(ssl_setup_time_ms + ' Ms')
+                $('#timmings-tab-pretransfer_time').html(pretransfer_time_ms + ' Ms')
+                $('#timmings-tab-sending-time').html(sending_time_ms + ' Ms')
+                $('#timmings-tab-waiting-time').html(waiting_time_ms + ' Ms')
+                $('#timmings-tab-redirct-time').html(redirct_time_ms + ' Ms')
+                $('#timmings-tab-receive-time').html(receive_time_ms + ' Ms')
+                $('#timmings-tab-total-time').html(total_time_ms + ' Ms')
+
+                pbar_div = '<div class="progress progress-sm" style="height:5px; margin-top:12px;"><div class="progress-bar" role="progressbar" style="width: {per}%" aria-valuenow="{per}" aria-valuemin="0" aria-valuemax="100"> </div></div>'
+                _pbar_div = pbar_div.replace(/\{per\}/g, total_time_per.toString());
+                $('#timmings-tab-total-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, blocked_time_per.toString());
+                $('#timmings-tab-block-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, dns_resolution_time_per.toString());
+                $('#timmings-tab-dns-resolution-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, connecting_time_per.toString());
+                $('#timmings-tab-connecting-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, ssl_setup_time_per.toString());
+                $('#timmings-tab-setup-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, pretransfer_time_per.toString());
+                $('#timmings-tab-pretransfer_time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, sending_time_per.toString());
+                $('#timmings-tab-sending-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, waiting_time_per.toString());
+                $('#timmings-tab-waiting-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, redirct_time_per.toString());
+                $('#timmings-tab-redirct-time-pbar').html(_pbar_div)
+                _pbar_div = pbar_div.replace(/\{per\}/g, receive_time_per.toString());
+                $('#timmings-tab-receive-time-pbar').html(_pbar_div)
+
+
+            },
+
+            security_tab: function (response) {
+                $('#security-tab-connection-protocol-version').html(response['ssl_version'] ? response['ssl_version'] : '')
+                $('#security-tab-connection-cipher-suite').html(response['ssl_cipher_suite'] ? response['ssl_cipher_suite'] : '')
+                $('#security-tab-connection-kxgroup').html(response['ssl_key_exchange_group'] ? response['ssl_key_exchange_group'] : '')
+                $('#security-tab-connection-sign-scheme').html(response['ssl_cert_signature_algorithm'] ? response['ssl_cert_signature_algorithm'] : '')
+                $('#security-tab-connection-domain').html(response['ssl_domain'] ? response['ssl_domain'] : '')
+                $('#security-tab-connection-host-hsts').html(response['strict_transport_security'] == null ? '' : response['strict_transport_security'])
+                $('#security-tab-connection-host-pkey-pinning').html(response['public_key_pinning'] == null ? '' : response['public_key_pinning'])
+                $('#security-tab-connection-host-pkey-pin').html(response['public_key_pins'] == null ? '' : response['public_key_pins'])
+                $('#security-tab-cert-sub-cn').html(response['ssl_cert_issued_to_cn'] ? response['ssl_cert_issued_to_cn'] : '')
+                $('#security-tab-cert-sub-o').html(response['ssl_cert_issued_to_o'] ? response['ssl_cert_issued_to_o'] : '')
+                $('#security-tab-cert-sub-ou').html(response['ssl_cert_issued_to_ou'] ? response['ssl_cert_issued_to_ou'] : '')
+
+                $('#security-tab-cert-issuer-cn').html(response['ssl_cert_issued_by_cn'] ? response['ssl_cert_issued_by_cn'] : '')
+                $('#security-tab-cert-issuer-o').html(response['ssl_cert_issued_by_o'] ? response['ssl_cert_issued_by_o'] : '')
+                $('#security-tab-cert-issuer-ou').html(response['ssl_cert_issued_by_ou'] ? response['ssl_cert_issued_by_ou'] : '')
+
+                $('#security-tab-cert-validity-beginson').html(response['ssl_cert_validity_begins_on'] ? response['ssl_cert_validity_begins_on'] : '')
+                $('#security-tab-cert-validity-expireson').html(response['ssl_cert_validity_expires_on'] ? response['ssl_cert_validity_expires_on'] : '')
+
+
+                $('#security-tab-cert-fingerprints-sha256').html(response['ssl_fingerprints_sha256'] ? response['ssl_fingerprints_sha256'] : '')
+                $('#security-tab-cert-fingerprints-sha1').html(response['ssl_fingerprints_sha1'] ? response['ssl_fingerprints_sha1'] : '')
+                $('#security-tab-cert-fingerprints-md5').html(response['ssl_fingerprints_md5'] ? response['ssl_fingerprints_md5'] : '')
+
+
+            },
+            headers_tab: function (response) {
+                req_ccounts = response['request_headers_map'].length
+                $('#headers-tab-request-cnt').html(req_ccounts)
+
+                headers_general = ''
+                headers_raw = ''
+                if (req_ccounts) {
+                    headers_general = headers_general + '<table class="table table-responsive w-100 d-block d-md-table">'
+                    for (var i in response['request_headers_map']) {
+                        key = response['request_headers_map'][i][0]
+                        value = response['request_headers_map'][i][1]
+                        headers_general = headers_general + '<tr>'
+                        headers_general = headers_general + '<td width="30%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;"> ' + key + ':&nbsp;&nbsp;</td>'
+                        headers_general = headers_general + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;" > ' + value + '</td>'
+                        headers_general = headers_general + '</tr>'
+
+                    }
+                    headers_general = headers_general + '</table>'
+                    headers_general = '<div id="headers-tab-request-general">' + headers_general + '</div>'
+                    headers_general = headers_general + '<div id="headers-tab-request-general-raw">' + '<textarea  id="headers-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%; font-size:10px">' + (response['request_headers_raw'] ? response['request_headers_raw'] : '') + '</textarea></div>'
+                }
+                $('#headers-tab-request-all').html(headers_general)
+                $('#headers-tab-request-general').show()
+                $('#headers-tab-request-general-raw').hide()
+
+                $('#headers-tab-request-rawclk').unbind('click', this.headers_tab_request_toggle)
+                $('#headers-tab-request-rawclk').bind('click', this.headers_tab_request_toggle)
+
+
+                //
+                req_ccounts = response['response_headers_map'].length
+                $('#headers-tab-response-cnt').html(req_ccounts)
+
+                headers_general = ''
+                headers_raw = ''
+                if (req_ccounts) {
+                    headers_general = headers_general + '<table class="table table-responsive w-100 d-block d-md-table">'
+                    for (var i in response['response_headers_map']) {
+                        key = response['response_headers_map'][i][0]
+                        value = response['response_headers_map'][i][1]
+                        headers_general = headers_general + '<tr>'
+                        headers_general = headers_general + '<td width="30%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;"> ' + key + ':&nbsp;&nbsp;</td>'
+                        headers_general = headers_general + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;" > ' + value + '</td>'
+                        headers_general = headers_general + '</tr>'
+
+                    }
+                    headers_general = headers_general + '</table>'
+                    headers_general = '<div id="headers-tab-response-general">' + headers_general + '</div>'
+                    headers_general = headers_general + '<div id="headers-tab-response-general-raw">' + '<textarea  id="headers-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%; font-size:10px">' + (response['response_headers_raw'] ? response['response_headers_raw'] : '') + '</textarea></div>'
+                }
+
+                //alert(cookies_general)
+                $('#headers-tab-response-all').html(headers_general)
+                $('#headers-tab-response-general').show()
+                $('#header-tab-response-general-raw').hide()
+
+                $('#headers-tab-response-rawclk').unbind('click', this.headers_tab_response_toggle)
+                $('#headers-tab-response-rawclk').bind('click', this.headers_tab_response_toggle)
+                //
+
+
+            },
+            headers_tab_response_toggle: function () {
+                if ($('#headers-tab-response-general').css('display') == 'none') {
+                    $('#headers-tab-response-general').show()
+                    $('#headers-tab-response-general-raw').hide()
+                } else {
+                    $('#headers-tab-response-general').hide()
+                    $('#headers-tab-response-general-raw').show()
+                }
+
+            },
+
+            headers_tab_request_toggle: function () {
+                if ($('#headers-tab-request-general').css('display') == 'none') {
+                    $('#headers-tab-request-general').show()
+                    $('#headers-tab-request-general-raw').hide()
+                } else {
+                    $('#headers-tab-request-general').hide()
+                    $('#headers-tab-request-general-raw').show()
+                }
+
+            },
+
+
             cookies_tab: function (response) {
 
                 req_ccounts = response['request_cookies'].length
@@ -1656,7 +1742,10 @@
 
                     }
                     cookies_general = '<div id="cookies-tab-response-general">' + cookies_general + '</div>'
-                    cookies_general = cookies_general + '<div id="cookies-tab-response-general-raw">' + '<textarea  id="cookies-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%">Cookie: ' + (response['response_cookies_raw'] ? response['response_cookies_raw'] : '') + '</textarea></div>'
+                    cookies_raw = ''
+                    for (var rc in response['response_cookies_raw'])
+                        cookies_raw = cookies_raw + 'Set-Cookie: ' + response['response_cookies_raw'] + '\r\n'
+                    cookies_general = cookies_general + '<div id="cookies-tab-response-general-raw">' + '<textarea  id="cookies-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%; font-size:10px">' + (cookies_raw) + '</textarea></div>'
                 }
 
                 //alert(cookies_general)
@@ -1691,6 +1780,7 @@
                 }
 
             },
+
             data_tab_post_raw_toggle: function () {
 
                 $('#data-tab-post-decode').hide()
@@ -1832,7 +1922,7 @@
     </script>
     <script>
         $(function () {
-            window.csapi.on_receive.bind(window.csapi)(response) //
+            window.csapi.on_receive.bind(window.csapi)(response)
         })
     </script>
 </body>
