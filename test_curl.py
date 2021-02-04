@@ -32,6 +32,11 @@ from http.cookies import Morsel, SimpleCookie
 import re
 
 
+class FAST_TOOLS_CURL_ERROR:
+	OK = (0x0, '+OK')
+	UNKNONWN = (0x2, 'Unknown error.')
+
+
 def parse_dict_cookies(value):
 	result = {}
 	for item in value.split(';'):
@@ -476,10 +481,11 @@ def analysis_security(c, response, hostname: str):
 	#exit("analysis_security")
 
 
-def get_default_response():
+def get_default_response(Uri: str):
 	response = {}
-	response['errno'] = 0
-	response['errmsg'] = ''
+	response['errno'], response['errmsg'] = FAST_TOOLS_CURL_ERROR.UNKNONWN
+	response['url'] = Uri
+	response['method'] = None
 	response['scheme'] = None
 	response['host'] = None
 	response['port'] = None
@@ -525,6 +531,22 @@ def get_default_response():
 	return response
 
 
+def get_default_headers(User_Agent: str = None):
+	httpheaders = [
+	    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8', 'Accept-Encoding: gzip, deflate',
+	    'Cache-Control: max-age=0', 'Upgrade-Insecure-Requests: 1'
+	]
+	return httpheaders + ([User_Agent] if User_Agent else [])
+
+
+def auto_build_uri_scheme(Uri: str):
+	if Uri.lower().startswith('//'):
+		Uri = 'http://{}'.format(Uri.strip("//"))
+	elif not Uri.lower().startswith('http://') and not Uri.lower().startswith('https://'):
+		Uri = f'http://{Uri}'
+	return Uri
+
+
 def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, Insecure=False, Resolve=None):
 	def debug_func(response: dict, debug_type, buffer, request_headers, request_sent_time_ms: dict):
 		if debug_type == 0 and response['ssl_version'] is None:
@@ -542,18 +564,11 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 
 		#print(debug_type, time.time(), buffer)
 
-	if Uri.lower().startswith('//'):
-		Uri = 'http://{}'.format(Uri.strip("//"))
-	elif not Uri.lower().startswith('http://') and not Uri.lower().startswith('https://'):
-		Uri = f'http://{Uri}'
 	#exit(Uri)
-	httpheaders = [
-	    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8', 'Accept-Encoding: gzip, deflate',
-	    'Cache-Control: max-age=0', 'Upgrade-Insecure-Requests: 1'
-	]
-
-	error_no = 1
-	response = get_default_response()
+	httpheaders = get_default_headers(User_Agent)
+	Uri = auto_build_uri_scheme(Uri)
+	#exit([httpheaders, Uri])
+	response = get_default_response(Uri)
 	''' SSL data '''
 	response['ssl_version'] = response['ssl_cipher_suite'] = None
 	request_headers = io.BytesIO()
@@ -696,21 +711,26 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 	pycurl.PRIMARY_PORT
 
 
+from bin.fast_tools_curl import Curl, HTTP_VERSION
 params = {
-    'Uri': 'https://www.google.com',
+    'uri': 'https://www.google.com/404.php',
     #'Uri': 'https://collabx.com/test.php',
     #'Uri': 'http://user:password@66.70.176.45:80/test.php?cmd=sleep',
     # https://tpc.googlesyndication.com public jey pinning
     # 'Uri': 'https://github.com/page/page2/?c=1&c2=1#ddd',
     #'Uri': 'https://expired.badssl.com',
     # 'Uri': 'https://wrong.host.badssl.com',
-    'http_version': HTTP_VERSION_1_1,
-    'User_Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329',
-    'Insecure': False,
-    'Resolve': None  #'172.217.167.4'
+    'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329',
+    'http_version': HTTP_VERSION.V1_1,
+    'insecure': False,
+    'resolve': '172.217.134.4'
 }
-response = Curl_Request_Exec(**params)
+
+response = Curl.Exec_Get(**params)
 exit(response)
+
+response = Curl_Request_Exec(**params)
+
 ts = time.perf_counter()
 c.perform()
 certinfo = c.getinfo(c.INFO_CERTINFO)
