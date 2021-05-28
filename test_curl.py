@@ -51,83 +51,6 @@ def parse_dict_cookies(value):
 	return result
 
 
-def Robotcookie(cookie: str, parent_domain: str):
-	items = cookie.split(';')
-	SameSite = HttpOnly = Secure = Domain = Path = Expires = Comment = MaxAge = CookieName = CookieValue = Size = Sessionkey = Version = Priority = None
-	CookieName = CookieValue = None
-	idx = len(items) - 1
-	while idx >= 0:
-		item = items[idx].strip()
-		idx -= 1
-		if not item:
-			continue
-		SameSiteMatched = re.match(r'^SameSite(.*)?', item, re.I)
-		HttpOnlyMatched = SameSiteMatched or re.match(r'^HttpOnly(.*)$', item, re.I)
-		SecureMatched = HttpOnlyMatched or re.match(r'^Secure(.*)$', item, re.I)
-		DomainMatched = SecureMatched or re.match(r'^Domain(.*)?', item, re.I)
-		PathMatched = DomainMatched or re.match(r'^Path(.*)?', item, re.I)
-		ExpiresMatched = PathMatched or re.match(r'^Expires(.*)?', item, re.I)
-		CommentMatched = ExpiresMatched or re.match(r'^Comment(.*)?', item, re.I)
-		MaxAgeMatched = ExpiresMatched or re.match(r'^Max-Age=(.*)?', item, re.I)
-		VersionMatched = MaxAgeMatched or re.match(r'^Version=(.*)?', item, re.I)
-		PriorityMatched = VersionMatched or re.match(r'^priority=(.*)?', item, re.I)
-		#print(PriorityMatched)
-		matched = SameSiteMatched or HttpOnlyMatched or SecureMatched or DomainMatched or PathMatched or ExpiresMatched or CommentMatched or MaxAgeMatched or VersionMatched or PriorityMatched
-		if matched:
-			val = matched.groups(0)[0].lstrip('=')
-			if matched == SameSiteMatched:
-				SameSite = val if val.lower() in ['strict', 'lax', 'none'] else None
-			elif matched == HttpOnlyMatched:
-				HttpOnly = True
-			elif matched == SecureMatched:
-				Secure = True
-			elif matched == DomainMatched:
-				Domain = val
-			elif matched == PathMatched:
-				Path = val
-			elif matched == PathMatched:
-				Path = val
-			elif matched == ExpiresMatched:
-				Expires = val
-			elif matched == CommentMatched:
-				Comment = val
-			elif matched == MaxAgeMatched:
-				MaxAge = val
-			elif matched == VersionMatched:
-				Version = val
-			elif matched == PriorityMatched:
-				Priority = val
-		else:
-			CookieMatched = re.match(r'^(.[^=]*)=(.*)?', item, re.I)
-			if CookieMatched:
-				CookieName, CookieValue = CookieMatched.groups(0)
-
-	Sessionkey = True if not Expires else False
-	Size = (len(CookieName) if CookieName else 0) + (len(CookieValue) if CookieValue else 0)
-
-	Domain = parent_domain if not Domain else Domain
-	Path = '/' if not Path else Path
-	Priority = 'Medium' if CookieName and not Priority else Priority.title() if Priority else 'Medium'
-
-	Cookie = {
-	    CookieName: CookieValue,
-	    'Domain': Domain,
-	    'Path': Path,
-	    'Expires': Expires,
-	    'Comment': Comment,
-	    'MaxAge': MaxAge,
-	    'SameSite': SameSite,
-	    'HttpOnly': HttpOnly,
-	    'Secure': Secure,
-	    'Size': Size,
-	    'Sessionkey': Sessionkey,
-	    'Version': Version,
-	    'Priority': Priority
-	}
-	return Cookie if CookieName else None
-	#exit([idx, CookieName, CookieValue, SameSite, HttpOnly, Secure, Domain, Path, Expires, Comment, MaxAge, Cookie])
-
-
 def _parse_response_headers(hfun_buffer: io.BytesIO, parent_domain: str, response: dict):
 	headers_dict = []
 	headers_str = hfun_buffer.getvalue().decode().strip()
@@ -219,6 +142,7 @@ def _parse_request_headers(method: HTTP_METHOD_GET, request_headers: io.BytesIO,
 		_headers += httpheaders
 		headers = "\r\n".join(_headers)
 
+	exit([headers])
 	first_header = ''
 	headers_dict = []
 	Cookies = []
@@ -677,7 +601,7 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 	except Exception as e:
 		pass
 
-	_parse_request_headers(HTTP_METHOD_GET, request_headers, response, httpheaders, cookie_host)
+	p(HTTP_METHOD_GET, request_headers, response, httpheaders, cookie_host)
 	_parse_response_headers(hfun_buffer, cookie_host, response)
 	response['ssl_public_key_pins'] = None
 	if response['ssl_public_key_pinning_bs64'] and response['public_key_pins'].find(response['ssl_public_key_pinning_bs64']) >= 0:
@@ -713,21 +637,23 @@ def Curl_Request_Exec(Uri: str, User_Agent: str, http_version=HTTP_VERSION_1_1, 
 
 from bin.fast_tools_curl import Curl, HTTP_VERSION
 params = {
-    'uri': 'https://www.google.com/404.php',
+    'uri': 'https://www.google.com/',
     #'Uri': 'https://collabx.com/test.php',
-    #'Uri': 'http://user:password@66.70.176.45:80/test.php?cmd=sleep',
+    # 'uri': 'http://66.70.176.45/test.php?cmd=sleep',
     # https://tpc.googlesyndication.com public jey pinning
     # 'Uri': 'https://github.com/page/page2/?c=1&c2=1#ddd',
     #'Uri': 'https://expired.badssl.com',
     # 'Uri': 'https://wrong.host.badssl.com',
+    'uri': 'https://www.rankwatch.com',
     'user_agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329',
     'http_version': HTTP_VERSION.V1_1,
     'insecure': False,
-    'resolve': '172.217.134.4'
+    'resolve': None  #'142.250.72.196'
 }
-
+params = {"uri": "http://nts-group.nl", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329", "http_version": 2, "insecure": False, "resolve": ""}
 response = Curl.Exec_Get(**params)
-exit(response)
+import json
+exit((response))
 
 response = Curl_Request_Exec(**params)
 

@@ -7,7 +7,7 @@
         -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Free Fast tools for gettting server request/response headers with SSL data</title>
+    <title>Free Fast tools for testing SMTP email sending</title>
     <meta name="description"
         content="Find and Traces real your public IP address , show IP's details like City, IPS, Country Infomation, and developer technical information.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -97,7 +97,7 @@
 
                 <h2>
                     About:
-                    <small class="text-muted">HTTP Server Header Test
+                    <small class="text-muted">Email SMTP Test
 
 
 
@@ -114,209 +114,323 @@
                     </span>
 
                 </div>
-                <p class="text-justify">Your browser(or search engine bot) and a website server are cominicate each
-                    other using
-                    sending/receive packet in form of
-                    headers which is as called HTTP request/response Headers and are hiiden to user but visible to your
-                    browser and server. It tell to browser what should do at browser end. if anything went wrong at
-                    server end, your browser(or search engine bot) bahave abnormaly . This fast tools will help to
-                    visible these response /request headers.
+                <p class="text-justify">This fast tools Uses SMTP protocol to connect to any Email Server , i,e
+                    Mandrill, Google, Hotmail, Amazon SES, SendinBlue, Sendgrid, Mailgun or any standard SMTP server
+                    uisng TCP connection and send a test mail to with diffrent option like SSL/TLS, Auth
+
                 </p>
                 <p></p>
 
                 <form name="frmHTTPSverReq">
 
-                    <table class="table">
-                        <tr>
-                            <td colspan="4">
-                                <input type="text small" class="form-control" id="Url"
-                                    placeholder="http://www.consoleapi.com">
-
-                                <table>
-
-                                    <tr>
 
 
-                                        <td class="text-right" style="padding-right:0">
-                                            <input type="checkbox" name="ReqInsecure" id="Insecure" />
-                                        </td>
-                                        <td class="text-left" style="padding-left:0">
-                                            <label class="form-check-label small"
-                                                for="ReqInsecure">&nbsp;Insecure</label>
-                                        </td>
-                                        <td>Resolve:</td>
-                                        <td>
-                                            <input id="Resolve" type='text' class="form-control small"
-                                                style="height:20px" placeholder="127.0.0.1" />
-                                        </td>
+                    <ul class="p-0">
+                        <li class="list-group-item">
+                            <h1 class="h4 all_tools_h1">SMTP Test</h1>
+                            <p class="d-none d-md-block">Test SMTP authentication and send email, troubleshoot Email
+                                issues in realtime.</p>
+                            <div class="text-left mb-md-2 mb-1 d-inline-block align-middle google_ads"
+                                style="display: none !important;">
 
+                                <style>
+                                    .td_tp_b_h1_8276598484752839 {
+                                        display: table-cell;
+                                        height: 60px;
+                                        vertical-align: middle;
+                                    }
 
-
-                                    </tr>
-
-                                </table>
-
-
-                                <select id="UserAgent"
-                                    class="comboboxs small input-large form-control selectpicker custom-select">
-
-                                    <optgroup label="Current User Agent">
-                                        <option selected>{{User_Agent}}</option>
-
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Google Chrome On Microsoft Window">
-                                        <option>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like
-                                            Gecko) Chrome/62.0.3202.9 Safari/537.36</option>
-
-                                    </optgroup>
-
-
-
-                                    <optgroup label="Desktop Google Chrome On Linux">
-                                        <option>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
-                                            Chrome/61.0.3163.100 Safari/537.36/option>
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Google Chrome On Apple Mac-OS">
-                                        <option>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36
-                                            (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36</option>
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Google Chrome On Google Chrome-OS">
-                                        <option>Mozilla/5.0 (X11; CrOS armv7l 9592.96.0) AppleWebKit/537.36 (KHTML, like
-                                            Gecko) Chrome/60.0.3112.114 Safari/537.36</option>
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Google Chrome On Google Chrome-OS">
-                                        <option>Mozilla/5.0 (X11; CrOS armv7l 9592.96.0) AppleWebKit/537.36 (KHTML, like
-                                            Gecko) Chrome/60.0.3112.114 Safari/537.36</option>
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Google Chrome On freeBSG-OS">
-                                        <option>Mozilla/5.0 (X11; FreeBSD amd64) AppleWebKit/537.36 (KHTML, like Gecko)
-                                            Chrome/40.0.2214.115 Safari/537.36</option>
-                                    </optgroup>
-
-
-
-
-                                    <optgroup label="Desktop Opera On Microsoft Window">
-                                        <option>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
-                                            like Gecko) Chrome/61.0.3163.100 Safari/537.36 OPR/48.0.2685.52</option>
-
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Opera On Linux">
-                                        <option>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
-                                            Chrome/61.0.3163.49 Safari/537.36 OPR/48.0.2685.7
-                                        <option>
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Opera On Apple Mac-OS">
-                                        <option>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36
-                                            (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36 OPR/47.0.2631.55
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Desktop Google Chrome On freeBSG-OS">
-                                        <option>Mozilla/5.0 (X11; U; FreeBSD i386; zh-tw; rv:31.0) Gecko/20100101
-                                            Opera/13.0</option>
-                                    </optgroup>
-
-
-                                    <optgroup label="Googlebot Web">
-                                        <option>Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Googlebot News">
-                                        <option>Mozilla/5.0 (compatible; Googlebot-News/2.1;
-                                            +http://www.google.com/bot.html)</option>
-                                    </optgroup>
-
-                                    <optgroup label="Googlebot Images">
-                                        <option>Mozilla/5.0 (compatible; Googlebot-Image/1.0
-                                            /2.1;
-                                            +http://www.google.com/bot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Googlebot Video">
-                                        <option>Mozilla/5.0 (compatible; Googlebot-Video/1.0/1.0
-                                            /2.1;
-                                            +http://www.google.com/bot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Google Mobile (featured phone)">
-                                        <option>SAMSUNG-SGH-E250/1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
-                                            UP.Browser/6.2.3.3.c.1.101 (GUI) MMP/2.0 (compatible; Googlebot-Mobile/2.1;
-                                            +http://www.google.com/bot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Google Smartphone">
-                                        <option>SAMSUNG-SGH-E250/1.0 Profile/MIDP-2.0 Configuration/CLDC-1.1
-                                            UP.Browser/6.2.3.3.c.1.101 (GUI) MMP/2.0 (compatible; Googlebot-Mobile/2.1;
-                                            +http://www.google.com/bot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Google Mobile Adsense">
-                                        <option>(compatible; Mediapartners-Google/2.1; +http://www.google.com/bot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Google Adsense">
-                                        <option>Mediapartners-Google
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Google AdsBot (PPC landing page quality)	">
-                                        <option>AdsBot-Google (+http://www.google.com/adsbot.html)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Google app crawler (fetch resources for mobile)	">
-                                        <option>AdsBot-Google-Mobile-Apps
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Bingbot">
-                                        <option>Mozilla/5.0 (compatible; Bingbot/2.0; +http://www.bing.com/bingbot.htm)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="Slurp Bot">
-                                        <option>Mozilla/5.0 (compatible; Yahoo! Slurp;
-                                            http://help.yahoo.com/help/us/ysearch/slurp)
-                                        </option>
-                                    </optgroup>
-
-                                    <optgroup label="DuckDuckBot">
-                                        <option>DuckDuckBot/1.0; (+http://duckduckgo.com/duckduckbot.html)
-                                        </option>
-                                    </optgroup>
-
-
-                                    <optgroup label="Baiduspider">
-                                        <option>Mozilla/5.0 (compatible; Baiduspider/2.0;
-                                            +http://www.baidu.com/search/spider.html)
-                                        </option>
-                                    </optgroup>
-
-
-
-                                </select>
-
-
-                            </td>
-                        </tr>
-
-
-                    </table>
-                    <button id="FetchNow" type="button" class="btn btn-primary btn-lg btn-block">Fetch Now</button>
+                                    @media(max-width: 470px) {
+                                        .td_tp_b_h1_8276598484752839 {
+                                            height: 100px;
+                                        }
+                                    }
+                                </style>
+                                <div class="td_tp_b_h1_8276598484752839" data-fuse="22151050514"></div>
+                            </div>
+                            <form id="smtp_test_form" method="post">
+                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                                    <label for="server_host">SMTP Server <i class="icon icon-information icon-info"
+                                            data-toggle="tooltip" data-html="true" data-placement="right"
+                                            data-original-title="Host or IP address of your SMTP server (example: <strong>smtp.company.com</strong>)."></i></label>
+                                    <input type="text" class="form-control" id="stt_host" placeholder="smtp.site.com"
+                                        required="">
+                                </div>
+                                <div class="form-group col-12 col-sm-3 col-md-2">
+                                    <label for="server_port">Port <i class="icon icon-information icon-info"
+                                            data-toggle="tooltip" data-html="true" data-placement="right"
+                                            data-original-title="The default port is <strong>25</strong>, but some SMTP servers use a custom port (example: <strong>587</strong>)."></i></label>
+                                    <input type="number" class="form-control" id="stt_port" placeholder="25" required=""
+                                        value="25">
+                                    <small class="text-info cursor-pointer stt_smtp_ports">25</small> |
+                                    <small class="text-info cursor-pointer stt_smtp_ports">2525</small> |
+                                    <small class="text-info cursor-pointer stt_smtp_ports">465</small> |
+                                    <small class="text-info cursor-pointer stt_smtp_ports">587</small>
+                                </div>
+                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                                    <label for="stt_from">Email From <i class="icon icon-information icon-info"
+                                            data-toggle="tooltip" data-html="true" data-placement="right"
+                                            data-original-title="The sender email address (example: <strong>account@foo.com</strong>)."></i></label>
+                                    <input type="email" class="form-control" id="stt_from" placeholder="me@mydomain.com"
+                                        required="">
+                                </div>
+                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                                    <label for="stt_to">Email To <i class="icon icon-information icon-info"
+                                            data-toggle="tooltip" data-html="true" data-placement="right"
+                                            data-original-title="<strong>Very important</strong>: The test mail will be sent to this address (example: <strong>receiver@example.com</strong>)."></i></label>
+                                    <input type="email" class="form-control" id="stt_to"
+                                        placeholder="recipient@domain.com" required="">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label><input type="checkbox" id="stt_secure"> use secured connection <i
+                                            class="icon icon-information icon-info" data-toggle="tooltip"
+                                            data-html="true" data-placement="right"
+                                            data-original-title="Select it only if the SMTP server needs a secured connection (<strong>SSL</strong>, <strong>TLS</strong>)."></i></label>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label><input type="checkbox" checked="" id="stt_auth"> use authentication <i
+                                            class="icon icon-information icon-info" data-toggle="tooltip"
+                                            data-html="true" data-placement="right"
+                                            data-original-title="Most of SMTP servers need authentication (<strong>login / password</strong>). Check it if required."></i></label>
+                                </div>
+                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                                    <label for="stt_username">Username <i class="icon icon-information icon-info"
+                                            data-toggle="tooltip" data-html="true" data-placement="right"
+                                            data-original-title="Required if <strong>use authentication</strong> is checked (ex: <strong>account</strong> or <strong>account@foo.com</strong>)."></i></label>
+                                    <input type="text" class="form-control" id="stt_username" placeholder="Required">
+                                </div>
+                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                                    <label for="stt_password">Password <i class="icon icon-information icon-info"
+                                            data-toggle="tooltip" data-html="true" data-placement="right"
+                                            data-original-title="Required if <strong>use authentication</strong> is checked."></i></label>
+                                    <input type="password" class="form-control" id="stt_password"
+                                        placeholder="Required">
+                                </div>
+                                <div class="col-sm-12 text-left">
+                                    <button type="submit" class="btn btn-info" id="stt_submit">Test SMTP</button>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="list-group-item overflow-auto d-none mt-1" id="stt_results"></li>
+                        <li class="list-group-item my-4">
+                            <h2 class="h5">More Tools</h2>
+                            <div class="p-0 col-lg-12 mt-3"><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/spf-record-validation.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-lg-2 icon-approval"></i>SPF
+                                    Record Checker</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/open-graph-preview-generate-metatags.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-tags"></i>Open Graph
+                                    Generator</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/ipv6-expand.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-expand"></i>IPv6 Expand
+                                    Tool</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/qr-code-generator.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-qr-code"></i>QR Code
+                                    Generator</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/mx-record-validation.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-envelope"></i>MX Record
+                                    Validation</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/ipv6-compress.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-collapse"></i>IPv6 Compression
+                                    Tool</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/domain-health-checker.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-stethoscope"></i>Domain DNS
+                                    Health Checker</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/idn-punycode-converter.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-domain"></i>Punycode
+                                    Converter</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/dmarc-record-validation.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-lg-2 icon-approval"></i>DMARC
+                                    Validation Tool</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/website-broken-link-checker.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-broken-link"></i>Broken Links
+                                    Checker</a><a
+                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
+                                    href="https://dnschecker.org/smtp-test-tool.php"><i
+                                        class="mr-1 valign-middle icon-black icon icon-email"></i>SMTP Test</a></div>
+                            <div class="p-0 col-lg-12 all_tools_button_container mb-3"><a
+                                    class="all-tools-button-related-tools pl-2 pr-2 pt-2 pb-2 h6 icon-hover-white"
+                                    href="https://dnschecker.org/all-tools.php"><i
+                                        class="pr-1 icon-primary icon icon-wrench"></i><strong>All Tools</strong></a>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h2 class="h6">About SMTP Test Tool</h2>
+                            <p>Use the SMTP test tool to check your SMTP server's health status. The tool connects to
+                                your SMTP server &amp; then sends an email also.</p>
+                            <h2 class="h4">Why use the SMTP Server Health test tool?</h2>
+                            <p>Email is an essential part of the business. <strong> Among the B2B audiences, email is
+                                    the third most influential source of information.</strong> Companies emphasize
+                                creating a lot of emails and newsletters. But the majority of them are not concerned
+                                about testing their email servers/services, whether they have any outbound email
+                                delivery issues or not. A study shows that globally, email has an inbox placement rate
+                                of about 83%. And only one in six emails get sent to the spam folder or blocked by your
+                                subscribers.
+                            </p>
+                            <p><strong>So what is the solution?</strong></p>
+                            <p>You must address the root problems related to your outbound emails. And SMTP test tool is
+                                the solution to that problem.</p>
+                            <h3 class="h5">What is an SMTP?</h3>
+                            <p>But before performing the SMTP test, you must have an idea about <strong>what is SMTP and
+                                    how does it work?</strong></p>
+                            <p>SMTP stands for Simple Mail Transfer Protocol. The protocol consists of a set of commands
+                                that authenticate and directs the transfer of email. Commonly, SMTP is linked with IMAP
+                                or POP3. However, SMTP is the protocol for sending emails, where is IMAP and POP3 are
+                                the protocols for retrieving or receiving emails. So, in other words, SMTP is a protocol
+                                for sending emails to people.</p>
+                            <p>For example, when you send an email using an email client: </p>
+                            <ul>
+                                <li>The email travels from your device to the email server, also called the SMTP server
+                                    (that server is already configured in your email client).</li>
+                                <li>Your SMTP server then sends the message to your recipient's email server using SMTP
+                                    protocol. </li>
+                                <li>Then the email stays on the recipient's email server until the recipient logs in to
+                                    its email account and downloads the emails using IMAP or POP3. </li>
+                            </ul>
+                            <p>Here we are assuming that the recipient's email address is correctly spelled and still
+                                exists. But if it is misspelled and does not exist, you will receive a mail delivery
+                                failure message in your inbox. </p>
+                            <h2 class="h5">How the SMTP test tool helps in checking your SMTP configuration by sending
+                                test mail from that SMTP host?</h2>
+                            <p>Before running the test, you must have your <strong>SMTP host/mail server
+                                    configuration</strong>. For that, you can use any of the following options.</p>
+                            <ul>
+                                <li>Visit website of your email provider or SMTP delivery service for specific
+                                    instructions to get SMTP configurations.
+                                    <ol>
+                                        <li>
+                                            <h3 class="h6">Following is a list of top Email service providers:</h3>
+                                            <ul>
+                                                <li>Namecheap
+                                                    (<a href="https://dnschecker.org/out/namecheap_email" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9142/2186/general-configuration-for-mail-clients-and-mobile-devices/"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>Google Workspace
+                                                    (<a href="https://dnschecker.org/out/google_workspace"
+                                                        rel="nofollow" target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://support.google.com/a/answer/176600?hl=en#zippy=%2Cuse-the-gmail-smtp-server"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>Microsoft Outlook Email
+                                                    (<a href="https://live.com" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://support.microsoft.com/en-us/office/pop-imap-and-smtp-settings-for-outlook-com-d088b986-291d-42b8-9564-9c414e2aa040"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>Gmail
+                                                    (<a href="https://gmail.com" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://support.google.com/mail/answer/7126229?hl=en"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h3 class="h6">Moreover, following list includes top SMTP Email Delivery
+                                                providers:</h3>
+                                            <ul>
+                                                <li>Sendinblue
+                                                    (<a href="https://dnschecker.org/out/sendinblue" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://help.sendinblue.com/hc/en-us/articles/209462765-What-is-Sendinblue-SMTP-"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>Mailgun
+                                                    (<a href="https://dnschecker.org/out/mailgun" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://help.mailgun.com/hc/en-us/articles/203380100-Where-Can-I-Find-My-API-Key-and-SMTP-Credentials-"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>SendGrid
+                                                    (<a href="https://dnschecker.org/out/sendgrid" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://sendgrid.com/docs/for-developers/sending-email/integrating-with-the-smtp-api/"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>Amazon SES
+                                                    (<a href="https://aws.amazon.com/ses/" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-smtp.html"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>Postmark
+                                                    (<a href="https://dnschecker.org/out/postmark" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://postmarkapp.com/developer/user-guide/send-email-with-smtp"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>MailChimp
+                                                    (<a href="https://mailchimp.com/mailchimp" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://mailchimp.com/developer/transactional/docs/smtp-integration/"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>SMTP.com
+                                                    (<a href="https://dnschecker.org/out/smtp_com" rel="nofollow"
+                                                        target="_blank">Website</a>)
+                                                </li>
+                                                <li>Moosend
+                                                    (<a href="https://dnschecker.org/out/moosend" rel="nofollow"
+                                                        target="_blank">Website</a>
+                                                    |
+                                                    <a href="https://help.moosend.com/hc/en-us/articles/209602949-What-is-SMTP-and-how-can-I-use-it-"
+                                                        rel="nofollow" target="_blank">Guide</a>)
+                                                </li>
+                                                <li>WP Mail SMTP
+                                                    (<a href="https://dnschecker.org/out/wp_mail_smtp" rel="nofollow"
+                                                        target="_blank">Website</a>)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>If you use cPanel, then use the following <a
+                                        href="https://blog.cpanel.com/setting-up-and-troubleshooting-smtp-in-cpanel/"
+                                        rel="nofollow" target="_blank">guide</a> to find SMTP configurations</li>
+                                <li>If you use some other Email provider. Please contact your email/hosting provider.
+                                </li>
+                            </ul><br>
+                            <p>After obtaining SMTP configurations, open the <a
+                                    href="https://dnschecker.org/smtp-test-tool.php"><span
+                                        class="text-primary"><strong>SMTP Test tool</strong></span></a> and adopt the
+                                following procedure to use that tool.</p>
+                            <ol type="1">
+                                <li>Enter the host or IP address of your SMTP server.</li>
+                                <li>Enter the port. The default port is 25. However, SMTP servers use many custom ports.
+                                </li>
+                                <li>Enter the sender's email address.</li>
+                                <li>Enter the receiver's email address. The tool will send the test mail to that
+                                    address.</li>
+                                <li>Check for "use Secured Connection" if the SMTP server needs a secure connection
+                                    (SSL, TSL).</li>
+                                <li>Check for "use authentication" if the SMTP server needs this.</li>
+                                <li>Enter the "Username" and "Password" if you checked for "use authentication."</li>
+                                <li>Hit the "Test SMTP" button to perform the SMTP test.</li>
+                            </ol>
+                        </li>
+                    </ul>
 
                     <hr />
 
