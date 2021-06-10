@@ -60,6 +60,15 @@
             color: #bec6cc;
         }
     </style>
+
+    <script data-ad-client="ca-pub-6472937662100642" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+
+
+    <script src="https://cdn.tiny.cloud/1/1ahoplv0u7c24ubbmsqnprefl4xhjomwnwvb8v3bpbow0vuk/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
 </head>
 
 <body data-spy="scroll" data-target="#navigation" data-offset="120">
@@ -127,9 +136,7 @@
 
                     <ul class="p-0">
                         <li class="list-group-item">
-                            <h1 class="h4 all_tools_h1">SMTP Test</h1>
-                            <p class="d-none d-md-block">Test SMTP authentication and send email, troubleshoot Email
-                                issues in realtime.</p>
+
                             <div class="text-left mb-md-2 mb-1 d-inline-block align-middle google_ads"
                                 style="display: none !important;">
 
@@ -148,287 +155,251 @@
                                 </style>
                                 <div class="td_tp_b_h1_8276598484752839" data-fuse="22151050514"></div>
                             </div>
-                            <form id="smtp_test_form" method="post">
-                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                                    <label for="server_host">SMTP Server <i class="icon icon-information icon-info"
-                                            data-toggle="tooltip" data-html="true" data-placement="right"
-                                            data-original-title="Host or IP address of your SMTP server (example: <strong>smtp.company.com</strong>)."></i></label>
-                                    <input type="text" class="form-control" id="stt_host" placeholder="smtp.site.com"
-                                        required="">
+                            <form id="smtp_test_form" class="form-inline" method="post">
+
+
+                                <!--Section: Live preview-->
+                                <section class="section-preview">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <label>Send mail through your</label>
+                                        <br />
+                                    </div>
+                                    <!-- Default inline 1-->
+
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link small active" id="server_smtp-tab" data-toggle="pill"
+                                                href="#server_smtp" role="tab" aria-controls="server_smtp"
+                                                aria-selected="true">
+                                                <img class="img-thumbnail" src="/static/images/smtp-icon.svg"
+                                                    valign="absmiddle" width="24px" height="24px" />&nbsp;&nbsp;SMTP
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link small" id="server_gmaillogin-tab" data-toggle="pill"
+                                                href="#server_gmaillogin" role="tab" aria-controls="server_gmaillogin"
+                                                aria-selected="true">
+                                                <img class="img-thumbnail" src="/static/images/gmail-icon.svg"
+                                                    valign="absmiddle" width="24px" height="24px" /> &nbsp;GMail Login
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link small" id="server_mandrill-tab" data-toggle="pill"
+                                                href="#server_mandrill" role="tab" aria-controls="server_mandrill"
+                                                aria-selected="true">
+                                                <img class="img-thumbnail" src="/static/images/mandrill-icon.svg"
+                                                    valign="absmiddle" width="24px" height="24px" />&nbsp;Mandrill
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+
+                                            <a class="nav-link small" id="server_mailgun-tab" data-toggle="pill"
+                                                href="#server_mailgun" role="tab" aria-controls="server_mailgun"
+                                                aria-selected="true">
+                                                <img class="img-thumbnail" src="/static/images/mailgun-icon.svg"
+                                                    valign="absmiddle" width="24px" height="24px" />&nbsp;Mailgun
+                                            </a>
+                                        </li>
+
+
+
+                                        <li class="nav-item">
+
+                                            <a class="nav-link small" id="server_sendgrid-tab" data-toggle="pill"
+                                                href="#server_sendgrid" role="tab" aria-controls="server_sendgrid"
+                                                aria-selected="true">
+                                                <img class="img-thumbnail" src="/static/images/sendgrid-icon.svg"
+                                                    valign="absmiddle" width="24px" height="24px" />&nbsp;Sendgrid
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <hr />
+
+                                </section>
+                                <!--Section: Live preview-->
+
+                                <div class="tab-content" id="accordion">
+                                    <div class="tab-pane table-responsive active" id="server_smtp">
+                                        <table class="table">
+                                            <tr>
+                                                <td width="20%">
+                                                    SMTP Server
+                                                </td>
+                                                <td width="80%">
+                                                    <input type="text" class="form-control" id="host"
+                                                        placeholder="smtp.site.com">
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td width="20%">
+                                                    SMTP Port
+                                                </td>
+                                                <td width="80%">
+
+                                                    <select name="port" id="port"
+                                                        onchange="var port = document.getElementById('port').value; if (port=='465'){ document.getElementById('ssl').checked= true;} else if (port=='587') { document.getElementById('tls').checked= true   } else { document.getElementById('unsecured').checked = true  }  ">
+                                                        <option value="25">25</option>
+                                                        <option value="2525">2525</option>
+                                                        <option value="465">465</option>
+                                                        <option selected value="587">587</option>
+                                                    </select>
+                                                    &nbsp;&nbsp;
+                                                    <input type="radio" name="secure" id="unsecured" /> Unsecured
+                                                    <input type="radio" name="secure" id="ssl" /> SSL
+                                                    <input type="radio" checked name="secure" id="tls" /> TLS
+
+
+
+                                                </td>
+                                            </tr>
+
+
+
+
+
+
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <fieldset class="border p-2">
+                                                        <legend style="font-size: 14px;" class="w-auto text-muted">
+                                                            <input type="checkbox" value="auth" id="auth" name="auth"
+                                                                onchange="if(!this.checked){document.getElementById('username').setAttribute('disabled',  'disabled' ) ; document.getElementById('password').setAttribute('disabled', 'disabled') ;} else  {document.getElementById('username').removeAttribute('disabled') ; document.getElementById('password').removeAttribute('disabled') ;} " />
+                                                            Authentication
+                                                        </legend>
+                                                        <div class="form-group mx-sm-3 mb-2">
+                                                            <input type="text" class="form-control" disabled='disabled'
+                                                                id="username" placeholder="User Name">
+                                                        </div>
+                                                        <div class="form-group mx-sm-3 mb-2">
+                                                            <input type="password" disabled='disabled'
+                                                                class="form-control" id="password"
+                                                                placeholder="Password">
+                                                        </div>
+
+                                                    </fieldset>
+                                                </td>
+                                            </tr>
+
+
+
+
+
+                                            <tr>
+                                                <td colspan="2" class=>
+                                                    User your library client:
+                                                    <br />
+
+                                                    <input type="radio" checked name="libray" id="phpmailer" />
+                                                    PHPMailer(PHP)
+                                                    <input type="radio" name="libray" id="smtplib" /> smtplib(Python)
+                                                    <input type="radio" name="libray" id="EmailBuilder" />
+                                                    EmailBuilder(JAVA)
+                                                    <input type="radio" name="libray" id="SmtpClient" />
+                                                    SmtpClient(.Net)
+
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+
+                                    <div class="tab-pane table-responsive" id="server_gmaillogin">
+                                        Please Sign-up first !!
+                                    </div>
+
+
+                                    <div class="tab-pane table-responsive" id="server_mandrill">
+                                        Please Sign-up first !!
+                                    </div>
+
+
+                                    <div class="tab-pane table-responsive" id="server_mailgun">
+                                        Please Sign-up first !!
+                                    </div>
+
                                 </div>
-                                <div class="form-group col-12 col-sm-3 col-md-2">
-                                    <label for="server_port">Port <i class="icon icon-information icon-info"
-                                            data-toggle="tooltip" data-html="true" data-placement="right"
-                                            data-original-title="The default port is <strong>25</strong>, but some SMTP servers use a custom port (example: <strong>587</strong>)."></i></label>
-                                    <input type="number" class="form-control" id="stt_port" placeholder="25" required=""
-                                        value="25">
-                                    <small class="text-info cursor-pointer stt_smtp_ports">25</small> |
-                                    <small class="text-info cursor-pointer stt_smtp_ports">2525</small> |
-                                    <small class="text-info cursor-pointer stt_smtp_ports">465</small> |
-                                    <small class="text-info cursor-pointer stt_smtp_ports">587</small>
-                                </div>
-                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                                    <label for="stt_from">Email From <i class="icon icon-information icon-info"
-                                            data-toggle="tooltip" data-html="true" data-placement="right"
-                                            data-original-title="The sender email address (example: <strong>account@foo.com</strong>)."></i></label>
-                                    <input type="email" class="form-control" id="stt_from" placeholder="me@mydomain.com"
-                                        required="">
-                                </div>
-                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                                    <label for="stt_to">Email To <i class="icon icon-information icon-info"
-                                            data-toggle="tooltip" data-html="true" data-placement="right"
-                                            data-original-title="<strong>Very important</strong>: The test mail will be sent to this address (example: <strong>receiver@example.com</strong>)."></i></label>
-                                    <input type="email" class="form-control" id="stt_to"
-                                        placeholder="recipient@domain.com" required="">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label><input type="checkbox" id="stt_secure"> use secured connection <i
-                                            class="icon icon-information icon-info" data-toggle="tooltip"
-                                            data-html="true" data-placement="right"
-                                            data-original-title="Select it only if the SMTP server needs a secured connection (<strong>SSL</strong>, <strong>TLS</strong>)."></i></label>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label><input type="checkbox" checked="" id="stt_auth"> use authentication <i
-                                            class="icon icon-information icon-info" data-toggle="tooltip"
-                                            data-html="true" data-placement="right"
-                                            data-original-title="Most of SMTP servers need authentication (<strong>login / password</strong>). Check it if required."></i></label>
-                                </div>
-                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                                    <label for="stt_username">Username <i class="icon icon-information icon-info"
-                                            data-toggle="tooltip" data-html="true" data-placement="right"
-                                            data-original-title="Required if <strong>use authentication</strong> is checked (ex: <strong>account</strong> or <strong>account@foo.com</strong>)."></i></label>
-                                    <input type="text" class="form-control" id="stt_username" placeholder="Required">
-                                </div>
-                                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-                                    <label for="stt_password">Password <i class="icon icon-information icon-info"
-                                            data-toggle="tooltip" data-html="true" data-placement="right"
-                                            data-original-title="Required if <strong>use authentication</strong> is checked."></i></label>
-                                    <input type="password" class="form-control" id="stt_password"
-                                        placeholder="Required">
-                                </div>
-                                <div class="col-sm-12 text-left">
-                                    <button type="submit" class="btn btn-info" id="stt_submit">Test SMTP</button>
-                                </div>
+
+
+
+
+
+
+
+
+
+
+
                             </form>
                         </li>
-                        <li class="list-group-item overflow-auto d-none mt-1" id="stt_results"></li>
-                        <li class="list-group-item my-4">
-                            <h2 class="h5">More Tools</h2>
-                            <div class="p-0 col-lg-12 mt-3"><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/spf-record-validation.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-lg-2 icon-approval"></i>SPF
-                                    Record Checker</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/open-graph-preview-generate-metatags.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-tags"></i>Open Graph
-                                    Generator</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/ipv6-expand.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-expand"></i>IPv6 Expand
-                                    Tool</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/qr-code-generator.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-qr-code"></i>QR Code
-                                    Generator</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/mx-record-validation.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-envelope"></i>MX Record
-                                    Validation</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/ipv6-compress.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-collapse"></i>IPv6 Compression
-                                    Tool</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/domain-health-checker.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-stethoscope"></i>Domain DNS
-                                    Health Checker</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/idn-punycode-converter.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-domain"></i>Punycode
-                                    Converter</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/dmarc-record-validation.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-lg-2 icon-approval"></i>DMARC
-                                    Validation Tool</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/website-broken-link-checker.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-broken-link"></i>Broken Links
-                                    Checker</a><a
-                                    class="d-inline-block mr-3 pl-3 pr-3 pt-1 pb-1 related-links-href icon-hover-white"
-                                    href="https://dnschecker.org/smtp-test-tool.php"><i
-                                        class="mr-1 valign-middle icon-black icon icon-email"></i>SMTP Test</a></div>
-                            <div class="p-0 col-lg-12 all_tools_button_container mb-3"><a
-                                    class="all-tools-button-related-tools pl-2 pr-2 pt-2 pb-2 h6 icon-hover-white"
-                                    href="https://dnschecker.org/all-tools.php"><i
-                                        class="pr-1 icon-primary icon icon-wrench"></i><strong>All Tools</strong></a>
+
+
+                        <li class="list-group-item mt-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">From Address</label>
+                                        <input type="email" class="form-control" name="from" placeholder="">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">To Aaddress</label>
+                                        <input type="email" class="form-control" name="to" placeholder="">
+                                    </div>
+                                </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <h2 class="h6">About SMTP Test Tool</h2>
-                            <p>Use the SMTP test tool to check your SMTP server's health status. The tool connects to
-                                your SMTP server &amp; then sends an email also.</p>
-                            <h2 class="h4">Why use the SMTP Server Health test tool?</h2>
-                            <p>Email is an essential part of the business. <strong> Among the B2B audiences, email is
-                                    the third most influential source of information.</strong> Companies emphasize
-                                creating a lot of emails and newsletters. But the majority of them are not concerned
-                                about testing their email servers/services, whether they have any outbound email
-                                delivery issues or not. A study shows that globally, email has an inbox placement rate
-                                of about 83%. And only one in six emails get sent to the spam folder or blocked by your
-                                subscribers.
-                            </p>
-                            <p><strong>So what is the solution?</strong></p>
-                            <p>You must address the root problems related to your outbound emails. And SMTP test tool is
-                                the solution to that problem.</p>
-                            <h3 class="h5">What is an SMTP?</h3>
-                            <p>But before performing the SMTP test, you must have an idea about <strong>what is SMTP and
-                                    how does it work?</strong></p>
-                            <p>SMTP stands for Simple Mail Transfer Protocol. The protocol consists of a set of commands
-                                that authenticate and directs the transfer of email. Commonly, SMTP is linked with IMAP
-                                or POP3. However, SMTP is the protocol for sending emails, where is IMAP and POP3 are
-                                the protocols for retrieving or receiving emails. So, in other words, SMTP is a protocol
-                                for sending emails to people.</p>
-                            <p>For example, when you send an email using an email client: </p>
-                            <ul>
-                                <li>The email travels from your device to the email server, also called the SMTP server
-                                    (that server is already configured in your email client).</li>
-                                <li>Your SMTP server then sends the message to your recipient's email server using SMTP
-                                    protocol. </li>
-                                <li>Then the email stays on the recipient's email server until the recipient logs in to
-                                    its email account and downloads the emails using IMAP or POP3. </li>
-                            </ul>
-                            <p>Here we are assuming that the recipient's email address is correctly spelled and still
-                                exists. But if it is misspelled and does not exist, you will receive a mail delivery
-                                failure message in your inbox. </p>
-                            <h2 class="h5">How the SMTP test tool helps in checking your SMTP configuration by sending
-                                test mail from that SMTP host?</h2>
-                            <p>Before running the test, you must have your <strong>SMTP host/mail server
-                                    configuration</strong>. For that, you can use any of the following options.</p>
-                            <ul>
-                                <li>Visit website of your email provider or SMTP delivery service for specific
-                                    instructions to get SMTP configurations.
-                                    <ol>
-                                        <li>
-                                            <h3 class="h6">Following is a list of top Email service providers:</h3>
-                                            <ul>
-                                                <li>Namecheap
-                                                    (<a href="https://dnschecker.org/out/namecheap_email" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9142/2186/general-configuration-for-mail-clients-and-mobile-devices/"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>Google Workspace
-                                                    (<a href="https://dnschecker.org/out/google_workspace"
-                                                        rel="nofollow" target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://support.google.com/a/answer/176600?hl=en#zippy=%2Cuse-the-gmail-smtp-server"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>Microsoft Outlook Email
-                                                    (<a href="https://live.com" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://support.microsoft.com/en-us/office/pop-imap-and-smtp-settings-for-outlook-com-d088b986-291d-42b8-9564-9c414e2aa040"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>Gmail
-                                                    (<a href="https://gmail.com" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://support.google.com/mail/answer/7126229?hl=en"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <h3 class="h6">Moreover, following list includes top SMTP Email Delivery
-                                                providers:</h3>
-                                            <ul>
-                                                <li>Sendinblue
-                                                    (<a href="https://dnschecker.org/out/sendinblue" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://help.sendinblue.com/hc/en-us/articles/209462765-What-is-Sendinblue-SMTP-"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>Mailgun
-                                                    (<a href="https://dnschecker.org/out/mailgun" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://help.mailgun.com/hc/en-us/articles/203380100-Where-Can-I-Find-My-API-Key-and-SMTP-Credentials-"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>SendGrid
-                                                    (<a href="https://dnschecker.org/out/sendgrid" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://sendgrid.com/docs/for-developers/sending-email/integrating-with-the-smtp-api/"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>Amazon SES
-                                                    (<a href="https://aws.amazon.com/ses/" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-smtp.html"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>Postmark
-                                                    (<a href="https://dnschecker.org/out/postmark" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://postmarkapp.com/developer/user-guide/send-email-with-smtp"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>MailChimp
-                                                    (<a href="https://mailchimp.com/mailchimp" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://mailchimp.com/developer/transactional/docs/smtp-integration/"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>SMTP.com
-                                                    (<a href="https://dnschecker.org/out/smtp_com" rel="nofollow"
-                                                        target="_blank">Website</a>)
-                                                </li>
-                                                <li>Moosend
-                                                    (<a href="https://dnschecker.org/out/moosend" rel="nofollow"
-                                                        target="_blank">Website</a>
-                                                    |
-                                                    <a href="https://help.moosend.com/hc/en-us/articles/209602949-What-is-SMTP-and-how-can-I-use-it-"
-                                                        rel="nofollow" target="_blank">Guide</a>)
-                                                </li>
-                                                <li>WP Mail SMTP
-                                                    (<a href="https://dnschecker.org/out/wp_mail_smtp" rel="nofollow"
-                                                        target="_blank">Website</a>)
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ol>
-                                </li>
-                                <li>If you use cPanel, then use the following <a
-                                        href="https://blog.cpanel.com/setting-up-and-troubleshooting-smtp-in-cpanel/"
-                                        rel="nofollow" target="_blank">guide</a> to find SMTP configurations</li>
-                                <li>If you use some other Email provider. Please contact your email/hosting provider.
-                                </li>
-                            </ul><br>
-                            <p>After obtaining SMTP configurations, open the <a
-                                    href="https://dnschecker.org/smtp-test-tool.php"><span
-                                        class="text-primary"><strong>SMTP Test tool</strong></span></a> and adopt the
-                                following procedure to use that tool.</p>
-                            <ol type="1">
-                                <li>Enter the host or IP address of your SMTP server.</li>
-                                <li>Enter the port. The default port is 25. However, SMTP servers use many custom ports.
-                                </li>
-                                <li>Enter the sender's email address.</li>
-                                <li>Enter the receiver's email address. The tool will send the test mail to that
-                                    address.</li>
-                                <li>Check for "use Secured Connection" if the SMTP server needs a secure connection
-                                    (SSL, TSL).</li>
-                                <li>Check for "use authentication" if the SMTP server needs this.</li>
-                                <li>Enter the "Username" and "Password" if you checked for "use authentication."</li>
-                                <li>Hit the "Test SMTP" button to perform the SMTP test.</li>
-                            </ol>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">BCc Address</label>
+                                        <input type="email" class="form-control" name="from" placeholder="">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">CC Address</label>
+                                        <input type="email" class="form-control" name="to" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="exampleInputEmail1">Subject</label>
+                                    <input type="text" class="form-control" name="to" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <textarea id="mytextarea" rows="2" class="form-control"></textarea>
+                                <script>
+                                    tinymce.init({
+
+                                        width: "100%",
+                                        menubar: false,
+                                        selector: '#mytextarea'
+                                    });
+                                </script>
+
+
+                            </div>
+
+
+                            <div class="row  mt-1">
+                                <div class="form-group col-md-12">
+                                    <button id="SendNow" type="button" class="btn btn-primary btn-lg btn-block">Send
+                                        Now</button>
+                                </div>
+                            </div>
                         </li>
                     </ul>
 
@@ -730,7 +701,7 @@
                                     </tr>
 
                                     <tr style="display:table-row">
-                                        <td id='data-tab-get-all' colspan="2" class="border-0">
+                                        <td id=' data-tab-get-all' colspan="2" class="border-0">
 
                                         </td>
                                     </tr>
@@ -954,7 +925,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td width="30%" class="small pr-0 border-top-0 text-right"
-                                                                style="padding:0;margin: 0;"> Cipher suite:&nbsp;&nbsp;
+                                                                style="padding:0;margin: 0;"> Cipher
+                                                                suite:&nbsp;&nbsp;
                                                             </td>
                                                             <td id="security-tab-connection-cipher-suite"
                                                                 class="small pr-0 text-muted border-top-0 text-left"
@@ -1008,7 +980,8 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="30%" class="small pr-0 border-top-0 text-right"
-                                                                style="padding:0;margin: 0;"> HTTP Strict Transport
+                                                                style="padding:0;margin: 0;"> HTTP Strict
+                                                                Transport
                                                                 Security:&nbsp;&nbsp;</td>
                                                             <td id="security-tab-host-hsts"
                                                                 class="small pr-0 text-muted border-top-0 text-left"
@@ -1018,7 +991,8 @@
 
                                                         <tr>
                                                             <td width="35%" class="small pr-0 border-top-0 text-right"
-                                                                style="padding:0;margin: 0;">Pin SHA256:&nbsp;&nbsp;
+                                                                style="padding:0;margin: 0;">Pin
+                                                                SHA256:&nbsp;&nbsp;
                                                             </td>
                                                             <td id="security-tab-host-pkey-sha256"
                                                                 class="small pr-0 text-muted border-top-0 text-left"
@@ -1184,7 +1158,8 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="30%" class="small pr-0 border-top-0 text-right"
-                                                                style="padding:0;margin: 0;">Begins On::&nbsp;&nbsp;
+                                                                style="padding:0;margin: 0;">Begins
+                                                                On::&nbsp;&nbsp;
                                                             </td>
                                                             <td id="security-tab-cert-validity-beginson"
                                                                 class="small pr-0 text-muted border-top-0 text-left"
@@ -1193,7 +1168,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td width="35%" class="small pr-0 border-top-0 text-right"
-                                                                style="padding:0;margin: 0;">Expires On:&nbsp;&nbsp;
+                                                                style="padding:0;margin: 0;">Expires
+                                                                On:&nbsp;&nbsp;
                                                             </td>
                                                             <td id="security-tab-cert-validity-expireson"
                                                                 class="small pr-0 text-muted border-top-0 text-left"
@@ -1228,7 +1204,8 @@
                                                     <tbody>
                                                         <tr>
                                                             <td width="30%" class="small pr-0 border-top-0 text-right"
-                                                                style="padding:0;margin: 0;">SHA-256:&nbsp;&nbsp;
+                                                                style="padding:0;margin: 0;">
+                                                                SHA-256:&nbsp;&nbsp;
                                                             </td>
                                                             <td id="security-tab-cert-fingerprints-sha256"
                                                                 class="small pr-0 text-muted border-top-0 text-left"

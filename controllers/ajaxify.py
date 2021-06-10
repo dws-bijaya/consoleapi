@@ -13,7 +13,7 @@ class ajaxify:
 		params = {'wano': '919911033016', 'wamsg': "hello"}
 		params['wano'] = request.POST.get("wano", "")
 		params['wamsg'] = request.POST.get("wamsg", '')
-		response = WA.direct_msg(params['wano'], params['wamsg'])
+		response = WA.direct_msg(request, params['wano'], params['wamsg'])
 
 		with open('/tmp/dwa_resp.csv', 'a+') as p:
 			from datetime import datetime

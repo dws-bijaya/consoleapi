@@ -16,7 +16,7 @@ class ERROR_CODES:
 
 class WA:
 	@classmethod
-	def direct_msg(self, mobno: str, msg: str):
+	def direct_msg(self, request, mobno: str, msg: str):
 		mobno = re.sub("[^0-9]", "", mobno)
 		msg = quote(msg)
 
@@ -27,5 +27,12 @@ class WA:
 		response['wa_url2'] = "https://api.whatsapp.com/send?phone={phone}&text={text}".format(phone=mobno, text=msg)
 		response['wa_url3'] = "https://wa.me/{phone}/?text={text}".format(phone=mobno, text=msg)
 		response['wa_protocol'] = 'whatsapp://send/?phone={phone}&text={text}'.format(phone=mobno, text=msg)
+
+		#response['wa_ismobile'] = request.user_agent.is_mobile
+		#response['wa_istablet'] = request.user_agent.is_tablet
+		#response['wa_osfamily'] = request.user_agent.os.family
+		#
+		#response['wa_url2'] = request.user_agent.os.family
+		response['wa_supported'] = True if (request.user_agent.is_mobile or request.user_agent.is_tablet) and (request.user_agent.os.family == 'Android' or request.user_agent.device.family == 'iPhone') else False
 
 		return response

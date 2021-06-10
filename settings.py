@@ -32,6 +32,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os, sys
 import netifaces
+import mimetypes
+
+mimetypes.add_type("image/svg+xml", ".svg", True)
+mimetypes.add_type("image/svg+xml", ".svgz", True)
 
 REDIS_HOST = '127.0.0.1'
 REDIS_PORT = 6379
@@ -80,6 +84,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_user_agents'
 ]
 
 MIDDLEWARE = [
@@ -90,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 MIDDLEWARE_CLASSES = ('easy_timezones.middleware.EasyTimezoneMiddleware', )
