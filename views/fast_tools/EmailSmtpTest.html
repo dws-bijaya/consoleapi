@@ -220,7 +220,7 @@
                                 </section>
                                 <!--Section: Live preview-->
 
-                                <div class="tab-content" id="accordion">
+                                <div class="tab-content" id="server-tab-content">
                                     <div class="tab-pane table-responsive active" id="server_smtp">
                                         <table class="table">
                                             <tr>
@@ -229,7 +229,7 @@
                                                 </td>
                                                 <td width="80%">
                                                     <input type="text" class="form-control" id="host"
-                                                        placeholder="smtp.site.com">
+                                                        placeholder="domain or IP4 or IP6">
                                                 </td>
                                             </tr>
 
@@ -239,13 +239,14 @@
                                                 </td>
                                                 <td width="80%">
 
-                                                    <select name="port" id="port"
+                                                    <input list="ports" name="port" id="port" value="587"
                                                         onchange="var port = document.getElementById('port').value; if (port=='465'){ document.getElementById('ssl').checked= true;} else if (port=='587') { document.getElementById('tls').checked= true   } else { document.getElementById('unsecured').checked = true  }  ">
+                                                    <datalist id="ports">
                                                         <option value="25">25</option>
                                                         <option value="2525">2525</option>
                                                         <option value="465">465</option>
                                                         <option selected value="587">587</option>
-                                                    </select>
+                                                    </datalist>
                                                     &nbsp;&nbsp;
                                                     <input type="radio" name="secure" id="unsecured" /> Unsecured
                                                     <input type="radio" name="secure" id="ssl" /> SSL
@@ -293,12 +294,14 @@
                                                     User your library client:
                                                     <br />
 
-                                                    <input type="radio" checked name="libray" id="phpmailer" />
+
+                                                    <input type="radio" checked name="libray" id="smtplib" />
+                                                    smtplib(Python)
+                                                    <input type="radio" disabled name="libray" id="phpmailer" />
                                                     PHPMailer(PHP)
-                                                    <input type="radio" name="libray" id="smtplib" /> smtplib(Python)
-                                                    <input type="radio" name="libray" id="EmailBuilder" />
+                                                    <input type="radio" disabled name="libray" id="EmailBuilder" />
                                                     EmailBuilder(JAVA)
-                                                    <input type="radio" name="libray" id="SmtpClient" />
+                                                    <input type="radio" disabled name="libray" id="SmtpClient" />
                                                     SmtpClient(.Net)
 
 
@@ -344,14 +347,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">From Address</label>
-                                        <input type="email" class="form-control" name="from" placeholder="">
+                                        <input id="smtp_fromaddr" type="email" class="form-control" name="from"
+                                            placeholder="Your Name <name@consoleapi.com>">
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">To Aaddress</label>
-                                        <input type="email" class="form-control" name="to" placeholder="">
+                                        <input type="email" id="smtp_toaddr" class="form-control" name="to"
+                                            placeholder="Your Name <name@consoleapi.com>">
                                     </div>
                                 </div>
                             </div>
@@ -360,14 +365,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">BCc Address</label>
-                                        <input type="email" class="form-control" name="from" placeholder="">
+                                        <input type="email" id="smtp_bccaddr" class="form-control" name="from"
+                                            placeholder="Your Name <name@consoleapi.com>">
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">CC Address</label>
-                                        <input type="email" class="form-control" name="to" placeholder="">
+                                        <input type="email" id="smtp_ccaddr" class="form-control" name="to"
+                                            placeholder="Your Name <name@consoleapi.com>">
                                     </div>
                                 </div>
                             </div>
@@ -375,18 +382,43 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="exampleInputEmail1">Subject</label>
-                                    <input type="text" class="form-control" name="to" placeholder="">
+                                    <input type="text" id="smtp_subject" class="form-control" name="to" placeholder="">
                                 </div>
                             </div>
 
+                            <div class="row mb-1">
+                                <label class="form-check-label" for="smtp_bodymultipart">Send Email As:
+                                    &nbsp;&nbsp;&nbsp;</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" checked="checked" type="radio"
+                                        onchange="if(this.checked) tinyMCE.execCommand('mceRemoveControl', true, 'smtp_body');"
+                                        name="smtp_multipart" id="smtp_bodymultipart" value="bodymultipart">
+                                    <label class="form-check-label" for="smtp_bodymultipart">Mutipart HTML/Text</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="smtp_multipart"
+                                        id="smtp_bodyhtml" value="bodyhtml"
+                                        onchange="tinymce.EditorManager.execCommand('mceAddEditor', false, 'smtp_body');">
+                                    <label class="form-check-label" for="smtp_bodyhtml"
+                                        onchange="tinymce.EditorManager.execCommand('mceAddEditor', false, 'smtp_body');">HTML</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="smtp_multipart"
+                                        id="smtp_bodytext" value="bodytext"
+                                        onchange="tinymce.EditorManager.execCommand('mceRemoveEditor', false, 'smtp_body');">
+                                    <label class="form-check-label" for="smtp_bodytext">TEXT</label>
+                                </div>
+
+                            </div>
+
                             <div class="row">
-                                <textarea id="mytextarea" rows="2" class="form-control"></textarea>
+                                <textarea id="smtp_body" rows="2" class="form-control"></textarea>
                                 <script>
                                     tinymce.init({
 
                                         width: "100%",
                                         menubar: false,
-                                        selector: '#mytextarea'
+                                        selector: '#smtp_body'
                                     });
                                 </script>
 
@@ -419,37 +451,37 @@
                                 role="tab" aria-controls="general" aria-selected="true" aria-expanded="true">General</a>
                         </li>
 
-                        <li class="nav-item waves-effect waves-light">
+                        <li class="nav-item waves-effect waves-light d-none">
                             <a class="nav-link small" id="parseurl-tab" data-toggle="tab" href="#parseurl" role="tab"
                                 aria-controls="parseurl" aria-selected="true" aria-expanded="false">Parse
                                 URLs</a>
                         </li>
 
 
-                        <li class="nav-item waves-effect waves-light">
+                        <li class="nav-item waves-effect waves-light  d-none">
                             <a class="nav-link small" id="data-tab" data-toggle="tab" href="#data" role="tab"
                                 aria-controls="data" aria-selected="true" aria-expanded="false">Data</a>
                         </li>
 
 
-                        <li class="nav-item waves-effect waves-light">
+                        <li class="nav-item waves-effect waves-light  d-none">
                             <a class="nav-link small" id="cookies-tab" data-toggle="tab" href="#cookies" role="tab"
                                 aria-controls="cookies" aria-selected="true" aria-expanded="false">Cookies</a>
                         </li>
 
 
 
-                        <li class="nav-item waves-effect waves-light">
+                        <li class="nav-item waves-effect waves-light  d-none">
                             <a class="nav-link small" id="headers-tab" data-toggle="tab" href="#headers" role="tab"
                                 aria-controls="headers" aria-selected="true" aria-expanded="false">Headers</a>
                         </li>
 
-                        <li class="nav-item waves-effect waves-light">
+                        <li class="nav-item waves-effect waves-light  d-none">
                             <a class="nav-link small" id="security-tab" data-toggle="tab" href="#security" role="tab"
                                 aria-controls="security" aria-selected="true" aria-expanded="false">Security</a>
                         </li>
 
-                        <li class="nav-item waves-effect waves-light">
+                        <li class="nav-item waves-effect waves-light  d-none">
                             <a class="nav-link small" id="security-tab" data-toggle="tab" href="#timmings" role="tab"
                                 aria-controls="timmings" aria-selected="true" aria-expanded="false">Timmings</a>
                         </li>
@@ -1439,169 +1471,6 @@
      //]]>
     </script>
     <script>
-        response = {
-            'errno': 0,
-            'errmsg': '+OK',
-            'url': 'https://www.rankwatch.com/tools/mobile-friendly-check.html',
-            'method': 'GET',
-            'version': 'HTTP/1.1',
-            'status': [200, 'OK'],
-            'address': '192.168.9.1',
-            'compressed': 'gzip',
-            'transfered': [200000, 23235252],
-            'referer_policy': 'no-referrer-when-downgrade',
-            'ssl_version': 'TLSv1.3',
-            'ssl_secure': false,
-            'content_type': 'application/json',
-            'scheme': 'https',
-            'domain': 'www.google.com',
-            'port': '80',
-            'username': 'username',
-            'password': 'password',
-            'path': '/',
-            'query': 'client=opera&q=quer+para&sourceid=opera&ie=UTF-8&oe=UTF-8',
-            'fragment': 'serplist',
-            'get_params_decoded': { 'client': 'opera', 'q': 'quer para', 'sourceid': 'opera', 'ie': 'UTF - 8', 'oe': 'UTF-8' },
-            'get_params_encoded': { 'client': 'opera', 'q': escape('quer para'), 'sourceid': 'opera', 'ie': 'UTF-8', 'oe': 'UTF-8' },
-            'get_params_raw': 'client=opera&q=' + escape('quer para') + '&sourceid=opera' + '&ie=UTF-8' + '&oe=UTF-8',
-            'get_params_size': null,
-            'post_params': { 'client': 'opera', 'q': 'quer para', 'sourceid': 'opera', 'ie': 'UTF - 8', 'oe': 'UTF-8' },
-            'post_params_encoded': { 'client': 'opera', 'q': escape('quer para'), 'sourceid': 'opera', 'ie': 'UTF-8', 'oe': 'UTF-8' },
-            'post_params_raw': 'client=pos  opera&q=' + escape('quer para') + '&sourceid=opera' + '&ie=UTF-8' + '&oe=UTF-8',
-            'post_params_size': null,
-            'request_cookies': [
-                {
-                    "CookieName": "CookieValue",
-                    'Domain': 'www.google.com',
-                    'Path': '/',
-                    'Expires': 'Sat, 31-Jul-2021 15:12:53 GMT',
-                    'Comment': 'Comment',
-                    'MaxAge': '2000',
-                    'SameSite': 'SameSite',
-                    'HttpOnly': true,
-                    'Secure': true,
-                    'Size': 10,
-                    'Sessionkey': true,
-                    'Version': 1.0,
-                    'Priority': 'medium'
-                },
-                {
-                    'CookieName': 'CookieValue',
-                    'Domain': 'www.google.com',
-                    'Path': '/',
-                    'Expires': 'Sat, 31-Jul-2021 15:12:53 GMT',
-                    'Comment': 'Comment',
-                    'MaxAge': '2000',
-                    'SameSite': 'SameSite',
-                    'HttpOnly': true,
-                    'Secure': true,
-                    'Size': 10,
-                    'Sessionkey': true,
-                    'Version': 1.0,
-                    'Priority': 'medium'
-                }
-
-            ],
-            'request_cookies_raw': 'CookieName1=CookieValue2; CookieName2=CookieValue3;',
-
-
-
-
-
-            'response_cookies': [
-                {
-                    "CookieName": "CookieValue",
-                    'Domain': 'www.google.com',
-                    'Path': '/',
-                    'Expires': 'Sat, 31-Jul-2021 15:12:53 GMT',
-                    'Comment': 'Comment',
-                    'MaxAge': '2000',
-                    'SameSite': 'SameSite',
-                    'HttpOnly': true,
-                    'Secure': true,
-                    'Size': 10,
-                    'Sessionkey': true,
-                    'Version': 1.0,
-                    'Priority': 'medium'
-                },
-                {
-                    "CookieName": "CookieValue",
-                    'Domain': 'www.google.com',
-                    'Path': '/',
-                    'Expires': 'Sat, 31-Jul-2021 15:12:53 GMT',
-                    'Comment': 'Comment',
-                    'MaxAge': '2000',
-                    'SameSite': 'SameSite',
-                    'HttpOnly': true,
-                    'Secure': true,
-                    'Size': 10,
-                    'Sessionkey': true,
-                    'Version': 1.0,
-                    'Priority': 'medium'
-                },
-                {
-                    'CookieName': 'CookieValue',
-                    'Domain': 'www.google.com',
-                    'Path': '/',
-                    'Expires': 'Sat, 31-Jul-2021 15:12:53 GMT',
-                    'Comment': 'Comment',
-                    'MaxAge': '2000',
-                    'SameSite': 'SameSite',
-                    'HttpOnly': true,
-                    'Secure': true,
-                    'Size': 10,
-                    'Sessionkey': true,
-                    'Version': 1.0,
-                    'Priority': 'medium'
-                }
-
-            ],
-            'response_cookies_raw': [
-                '1P_JAR=2021-01-29-16; expires=Sun, 28-Feb-2021 16:20:12 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none; Priority=High; Version=2.3; Comment=Comment; MaxAge=34564',
-                '1P_JAR=2021-01-29-16; expires=Sun, 28-Feb-2021 16:20:12 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none; Priority=High; Version=2.3; Comment=Comment; MaxAge=34564'
-            ],
-            'request_headers_map': [['Host', 'www.google.com'], ['Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'], ['Accept-Language', 'en-GB,en-US;q=0.9,en;q=0.8'], ['Accept-Encoding', 'gzip, deflate'], ['Cache-Control', 'max-age=0'], ['Upgrade-Insecure-Requests', '1']],
-            'request_headers_raw': 'GET / HTTP/1.1\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1',
-            'response_headers_map': [['Host', 'www.google.com'], ['Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'], ['Accept-Language', 'en-GB,en-US;q=0.9,en;q=0.8'], ['Accept-Encoding', 'gzip, deflate'], ['Cache-Control', 'max-age=0'], ['Upgrade-Insecure-Requests', '1']],
-            'response_headers_raw': 'GET / HTTP/1.1\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nAccept-Encoding: gzip, deflate\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1',
-            'ssl_version': 'TLSv1.3',
-            'ssl_cipher_suite': 'TLS_AES_256_GCM_SHA384',
-            'ssl_key_exchange_group': 'X509v3',
-            'ssl_cert_signature_algorithm': 'sha256WithRSAEncryption',
-            'ssl_domain': 'www.google.com',
-            'strict_transport_security': true,
-            'ssl_public_key_pinning': true,
-            'ssl_public_key_pins': null,
-            'ssl_cert_issued_to_cn': 'www.google.com',
-            'ssl_cert_issued_to_o': 'Google LLC',
-            'ssl_cert_issued_to_ou': null,
-            'ssl_cert_issued_to_l': 'Mountain View',
-            'ssl_cert_issued_to_st': 'California',
-            'ssl_cert_issued_to_c': 'US',
-            'ssl_cert_issued_by_cn': 'GTS CA 1O1',
-            'ssl_cert_issued_by_o': 'Google Trust Services',
-            'ssl_cert_issued_by_ou': null,
-            'ssl_cert_issued_by_u': 'US',
-            'ssl_cert_issued_by_l': null,
-            'ssl_cert_issued_by_st': null,
-            'ssl_cert_issued_by_c': 'US',
-            'ssl_cert_validity_begins_on': '5 Jan 2021',
-            'ssl_cert_validity_expires_on': '30 Mar 2021',
-            'ssl_fingerprints_sha256': '74:A5:BA:B8:3A:29:E3:DA:8B:51:AC:FB:C6:DC:11:69:8B:B7:50:13:A8:DC:8D:C5:A7:9B:A4:B0:4F:82:96:F2',
-            'ssl_fingerprints_sha1': 'C4: C7: F3: 49: DC: 7C: C6: DC: 4C: 51: 56: 6E: 36: 12: 49: 9D: 69: ED: 95: A7',
-            'ssl_fingerprints_md5': 'BB:20:E7:F8:9E:7E:16:B3:96:93:C0:C5:3B:B7:76:5F',
-            'blocked_time_ms': 0,
-            'dns_resolution_time_ms': 0.554,
-            'connecting_time_ms': 0.30199999999999994,
-            'ssl_setup_time_ms': 20.033,
-            'pretransfer_time_ms': 0.09999999999999787,
-            'sending_time_ms': 0.003657102584838867,
-            'redirct_time_ms': 0,
-            'waiting_time_ms': 86.85834289741516,
-            'receive_time_ms': 19.647000000000006,
-            'total_time_ms': 127.498
-
-        }
         window.csapi = window.csapi || {
             general_tab: function (response) {
                 $('#general_tab_url').html(response['url'])
@@ -1793,7 +1662,6 @@
 
 
             },
-
             security_tab: function (response) {
                 $('#security-tab-connection-protocol-version').html(response['ssl_version'] ? response['ssl_version'] : '')
                 $('#security-tab-connection-cipher-suite').html(response['ssl_cipher_suite'] ? response['ssl_cipher_suite'] : '')
@@ -1895,7 +1763,6 @@
                 }
 
             },
-
             headers_tab_request_toggle: function () {
                 if ($('#headers-tab-request-general').css('display') == 'none') {
                     $('#headers-tab-request-general').show()
@@ -1906,8 +1773,6 @@
                 }
 
             },
-
-
             cookies_tab: function (response) {
 
                 req_ccounts = response['request_cookies'] ? response['request_cookies'].length : 0

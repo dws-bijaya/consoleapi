@@ -650,7 +650,13 @@ params = {
     'insecure': False,
     'resolve': None  #'142.250.72.196'
 }
-params = {"uri": "http://nts-group.nl", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329", "http_version": 2, "insecure": False, "resolve": ""}
+params = {
+    "uri": "https://expired.badssl.com",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 OPR/73.0.3856.329",
+    "http_version": 2,
+    "insecure": False,
+    "resolve": ""
+}
 response = Curl.Exec_Get(**params)
 import json
 exit((response))

@@ -130,7 +130,7 @@
                         <tr>
                             <td colspan="4">
                                 <input type="text small" class="form-control" id="Url"
-                                    placeholder="http://www.consoleapi.com">
+                                    placeholder="http://www.consoleapi.com" value="{{url}}">
 
                                 <table>
 
@@ -2114,7 +2114,8 @@
                 }
                 ua = $('#UserAgent :selected').text()
                 ip = $('#Resolve').val()
-                is = $('#Insecure').val()
+                is = $('#Insecure').is(':checked')
+
                 //alert(url + "][" + ua + "][" + ip)
                 var posting = $.post('/ajaxify/fetch_header_response.json', { 'url': url, 'ua': ua, 'ip': ip, 'is': is });
                 $('#FetchNow').html("Please wait .....")

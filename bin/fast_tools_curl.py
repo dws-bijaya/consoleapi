@@ -124,6 +124,7 @@ class HTTP_METHOD:
 class Curl:
 	@classmethod
 	def cb_debug(self, response: dict, debug_Type: int, buffer: str, request_headers, request_sent_time_ms: dict):
+		print(buffer)
 		if debug_Type == 0 and response['ssl_version'] is None:
 			ssl_v = re.match(r'SSL connection using (.[^/]*) / (.*)', buffer.decode())
 			if ssl_v:
@@ -306,8 +307,9 @@ class Curl:
 	@classmethod
 	def _exec_get(self, uri: str, http_version, httpheaders, user_agent: str, insecure: bool, resolve_hosts: str, hfun_buffer: io.BytesIO, request_headers: io.BytesIO, http_buffer: io.BytesIO, request_sent_time_ms: dict, response: dict):
 
+		#print(insecure)
+		#exit()
 		response['remote_address'] = None
-
 		c = pycurl.Curl()
 		c.setopt(pycurl.URL, uri)
 		c.setopt(pycurl.VERBOSE, True)  # to see request details
@@ -328,8 +330,9 @@ class Curl:
 		c.setopt(pycurl.CONNECTTIMEOUT, 5)
 		c.setopt(pycurl.TCP_FASTOPEN, True)
 		c.setopt(pycurl.TIMEOUT, 10)
+		#exit([resolve_hosts])
 		if resolve_hosts:
-			c.setopt(pycurl.RESOLVE, [resolve_hosts])
+			c.setopt(pycurl.RESOLVE, resolve_hosts)
 		c.setopt(pycurl.HTTP_VERSION, http_version)
 		c.setopt(pycurl.NOSIGNAL, 1)
 		c.setopt(pycurl.NOPROGRESS, 1)
@@ -354,13 +357,14 @@ class Curl:
 
 		remote_address = response['remote_address']
 		del response['remote_address']
-		#exit([remote_address, 22])
+		response['address'], response['port'] = (remote_address[0], remote_address[1]) if remote_address else (None, None)
+
+		#exit([remote_address, 22, response['address'], response['port']])
 		if err:
 			hfun_buffer.close()
 			request_headers.close()
 			http_buffer.close()
 		else:
-
 			#exit([c.getinfo(pycurl.SIZE_DOWNLOAD)])
 			curl_info[pycurl.SIZE_DOWNLOAD] = c.getinfo(pycurl.SIZE_DOWNLOAD)
 			pycurl.SIZE_DOWNLOAD

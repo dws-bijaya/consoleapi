@@ -40,8 +40,13 @@ class ajaxify:
 		    'insecure': False,
 		    'resolve': None  #'172.217.134.4'
 		}
+
+		insecure = request.POST.get("is", "false").lower()
+		insecure = insecure == 'true' or insecure == 'on' or insecure == '1'
+		params = {}
+		params['user_agent'] = request.POST.get("url", "")
 		params['uri'] = request.POST.get("url", "")
-		params['insecure'] = request.POST.get("isd", False)
+		params['insecure'] = insecure
 		params['resolve'] = request.POST.get("ip", None)
 
 		with open('/tmp/hdr_resp.csv', 'a+') as p:
