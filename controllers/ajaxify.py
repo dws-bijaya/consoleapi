@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from bin.fast_tools_curl import Curl, HTTP_VERSION
 from django.views.decorators.csrf import csrf_exempt
 from bin.fast_tools_wa import WA
+from bin.fast_tools_smtp import Smtp
+import json
 
 
 class ajaxify:
@@ -68,3 +70,26 @@ class ajaxify:
 
 		#context = {}
 		#return render(request, 'fast_tools/HTTPServerHeaderTest.html', context)
+
+	@csrf_exempt
+	def email_smtp_response(request):
+		'''
+		from io import StringIO
+		import os, sys
+		old_stderr = sys.stderr
+		redirected_error = sys.stderr = StringIO()
+		print("hello", file=sys.stderr)
+		return JsonResponse({"response": redirected_error.getvalue()})
+		'''
+
+		params = json.loads(request.body.decode("utf-8"))
+		with open('/tmp/smtp_resp.csv', 'a+') as p:
+			from datetime import datetime
+			format = "%Y-%m-%d %H:%M:%S %Z%z"
+			now_utc = datetime.now()
+			ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', '')).split(',')[0].strip()
+			p.write("{url}|{ip}|{time}\n".format(url=params['host'], ip=ip, time=now_utc.strftime(format)))
+
+		response = Smtp.Send(params)
+		#exit([response])
+		return JsonResponse(response)

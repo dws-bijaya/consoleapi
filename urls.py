@@ -30,6 +30,7 @@ urlpatterns = [
     path('what-is-my-ip-address.html', network_tools.WhatIsMyIP, name='network_tools:whatismyip'),
     path('fast-tools/http-server-header-test.html', fast_tools.HTTPServerHeaderTest, name='fast_tools.HTTPServerHeaderTest'),
     path('fast-tools/email-smtp-test.html', fast_tools.EmailSmtpTest, name='fast_tools.EmailSmtpTest'),
+    path('ajaxify/email-smtp-response.json', ajaxify.email_smtp_response, name='ajaxify.EmailSmtpTest'),
     path('fast-tools/whatsapp-direct.html', fast_tools.WhatsappDirect, name='fast_tools.WhatsappDirect'),
     path('ajaxify/fetch_header_response.json', ajaxify.fetch_header_response, name='ajaxify_fetch_header_response'),
     path('ajaxify/whatsapp-direct-response.json', ajaxify.whatsapp_direct_response, name='ajaxify_fetch_header_response'),

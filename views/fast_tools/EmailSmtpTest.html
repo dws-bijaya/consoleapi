@@ -1,75 +1,94 @@
 <!DOCTYPE html>
 <html class="no-js">
 
-<head>
-    <!-- view-source:demo.bootstraptemple.com/blackandwhite/
-    https://bbbootstrap.com/snippets/bootstrap-ecommerce-product-grid-view-card-19577966
-        -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Free Fast tools for testing SMTP email sending</title>
-    <meta name="description"
-        content="Find and Traces real your public IP address , show IP's details like City, IPS, Country Infomation, and developer technical information.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-    <!-- Bootstrap and Font Awesome css-->
-    <!-- we use cdn but you can also include local files located in css directory-->
+{% include "_sections/pre-header.html" %}
 
 
-    <!-- Google fonts - Montserrat for headings, Cardo for copy-->
-    <!-- theme stylesheet-->
+<style>
+    pre {
+        background: #000;
+        padding: 1em;
+        white-space: unset;
+        color: #fff;
+    }
 
+    .neither {
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 1em;
+    }
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        crossorigin="anonymous">
+    .client {
+        color: #48ff48;
+    }
 
-    <link href="//netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-glyphicons.css" rel="stylesheet">
+    .server {
+        color: #2dd7ff;
+    }
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    .error {
+        color: #ff3a3a;
+    }
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    #status {
+        /*margin-top: 2em;*/
+        display: none;
+    }
 
-    <!-- ekko lightbox-->
-    <!-- <link rel="stylesheet" href="/static/css/ekko-lightbox.css">-->
-    <!-- Custom stylesheet - for your changes-->
-    <!-- <link rel="stylesheet" href="static/css/custom.css"> -->
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="/favicon.png">
-    <!-- Tweaks for older IEs-->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-    <style>
-        .form-control::-webkit-input-placeholder {
-            color: #bec6cc;
+    .spinner {
+        margin: 1em 0;
+        width: 70px;
+        text-align: center;
+    }
+
+    .spinner>div {
+        width: 18px;
+        height: 18px;
+        background-color: #333;
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .spinner .bounce1 {
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+
+    .spinner .bounce2 {
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+
+        0%,
+        80%,
+        100% {
+            -webkit-transform: scale(0);
         }
 
-        .form-control:-moz-placeholder {
-            color: #bec6cc;
+        40% {
+            -webkit-transform: scale(1.0);
+        }
+    }
+
+    @keyframes sk-bouncedelay {
+
+        0%,
+        80%,
+        100% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
         }
 
-        .form-control::-moz-placeholder {
-            color: #bec6cc;
+        40% {
+            -webkit-transform: scale(1.0);
+            transform: scale(1.0);
         }
-
-        .form-control::placeholder {
-            color: #bec6cc;
-        }
-
-        .form-control:-ms-input-placeholder {
-            color: #bec6cc;
-        }
-    </style>
-
-    <script data-ad-client="ca-pub-6472937662100642" async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-
-
-
-    <script src="https://cdn.tiny.cloud/1/1ahoplv0u7c24ubbmsqnprefl4xhjomwnwvb8v3bpbow0vuk/tinymce/5/tinymce.min.js"
-        referrerpolicy="origin"></script>
-</head>
+    }
+</style>
 
 <body data-spy="scroll" data-target="#navigation" data-offset="120">
 
@@ -239,7 +258,8 @@
                                                 </td>
                                                 <td width="80%">
 
-                                                    <input list="ports" name="port" id="port" value="587"
+                                                    <input style="width: 90px;" list="ports" name="port" id="port"
+                                                        value="587"
                                                         onchange="var port = document.getElementById('port').value; if (port=='465'){ document.getElementById('ssl').checked= true;} else if (port=='587') { document.getElementById('tls').checked= true   } else { document.getElementById('unsecured').checked = true  }  ">
                                                     <datalist id="ports">
                                                         <option value="25">25</option>
@@ -250,9 +270,12 @@
                                                     &nbsp;&nbsp;
                                                     <input type="radio" name="secure" id="unsecured" /> Unsecured
                                                     <input type="radio" name="secure" id="ssl" /> SSL
+                                                    <input type="checkbox" name="smtp_verify" id="smtp_verify" checked>
+                                                    Verify Host
                                                     <input type="radio" checked name="secure" id="tls" /> TLS
 
-
+                                                    <input type="checkbox" name="smtp_starttls" id="smtp_starttls">
+                                                    STARTTLS
 
                                                 </td>
                                             </tr>
@@ -295,13 +318,13 @@
                                                     <br />
 
 
-                                                    <input type="radio" checked name="libray" id="smtplib" />
+                                                    <input type="radio" checked name="libray" id="smtplib_py" />
                                                     smtplib(Python)
-                                                    <input type="radio" disabled name="libray" id="phpmailer" />
+                                                    <input type="radio" disabled name="libray" id="phpmailer_php" />
                                                     PHPMailer(PHP)
-                                                    <input type="radio" disabled name="libray" id="EmailBuilder" />
+                                                    <input type="radio" disabled name="libray" id="EmailBuilder_java" />
                                                     EmailBuilder(JAVA)
-                                                    <input type="radio" disabled name="libray" id="SmtpClient" />
+                                                    <input type="radio" disabled name="libray" id="SmtpClient_net" />
                                                     SmtpClient(.Net)
 
 
@@ -387,24 +410,24 @@
                             </div>
 
                             <div class="row mb-1">
-                                <label class="form-check-label" for="smtp_bodymultipart">Send Email As:
+                                <label class="form-check-label" for="smtp_bodymultipart">Send Email Format:
                                     &nbsp;&nbsp;&nbsp;</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" checked="checked" type="radio"
-                                        onchange="if(this.checked) tinyMCE.execCommand('mceRemoveControl', true, 'smtp_body');"
-                                        name="smtp_multipart" id="smtp_bodymultipart" value="bodymultipart">
+                                        onchange="tinyMCE.execCommand('mceRemoveControl', false, 'smtp_body');"
+                                        name="smtp_format" id="smtp_bodymultipart" value="html_text">
                                     <label class="form-check-label" for="smtp_bodymultipart">Mutipart HTML/Text</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="smtp_multipart"
-                                        id="smtp_bodyhtml" value="bodyhtml"
+                                    <input class="form-check-input" type="radio" name="smtp_format" id="smtp_bodyhtml"
+                                        value="html_only"
                                         onchange="tinymce.EditorManager.execCommand('mceAddEditor', false, 'smtp_body');">
                                     <label class="form-check-label" for="smtp_bodyhtml"
                                         onchange="tinymce.EditorManager.execCommand('mceAddEditor', false, 'smtp_body');">HTML</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="smtp_multipart"
-                                        id="smtp_bodytext" value="bodytext"
+                                    <input class="form-check-input" type="radio" name="smtp_format" id="smtp_bodytext"
+                                        value="text_only"
                                         onchange="tinymce.EditorManager.execCommand('mceRemoveEditor', false, 'smtp_body');">
                                     <label class="form-check-label" for="smtp_bodytext">TEXT</label>
                                 </div>
@@ -428,6 +451,10 @@
 
                             <div class="row  mt-1">
                                 <div class="form-group col-md-12">
+                                    <div class="alert alert-warning mt-3" role="alert">
+                                        Please whitelist our IP <b> 138.197.98.186 </b> if firewall is active on your
+                                        seerver.
+                                    </div>
                                     <button id="SendNow" type="button" class="btn btn-primary btn-lg btn-block">Send
                                         Now</button>
                                 </div>
@@ -451,10 +478,9 @@
                                 role="tab" aria-controls="general" aria-selected="true" aria-expanded="true">General</a>
                         </li>
 
-                        <li class="nav-item waves-effect waves-light d-none">
-                            <a class="nav-link small" id="parseurl-tab" data-toggle="tab" href="#parseurl" role="tab"
-                                aria-controls="parseurl" aria-selected="true" aria-expanded="false">Parse
-                                URLs</a>
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link small" id="output-tab" data-toggle="tab" href="#output" role="tab"
+                                aria-controls="output" aria-selected="true" aria-expanded="false">Ouput</a>
                         </li>
 
 
@@ -498,192 +524,40 @@
                             <div id="general_tab_content" style="display: none;">
                                 <table id="general_tab_nocontent" style="display:none"
                                     class="table table-responsive w-100 d-block d-md-table">
-                                    <tr>
-                                        <td width="20%" class="small pr-1 border-top-0 text-right"
-                                            style="padding:0;margin: 0; padding-top: 5px;">Request
-                                            URL:</td>
 
-                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
-                                            <span id="general_tab_url"></span>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Request Method:
-                                        </td>
-                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
-                                            <span id="general_tab_method"></span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Version:</td>
-                                        <td id="general_tab_version" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
 
 
 
                                     <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Status Code:</td>
-                                        <td id="general_tab_status" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;">
+                                        <td class="small pr-2 text-right border-top-0"
+                                            style="width:20%;padding:5;margin: 0;">
+                                            Status Code:</td>
+                                        <td id="general_tab_status" class="small text-muted text-left border-top-0"
+                                            style="padding:5;margin: 0;">
 
                                         </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Redirect:</td>
-                                        <td id="general_tab_redirect" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;">
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Tooks:
-                                        </td>
-                                        <td id="general_tab_timetotal" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Secure:</td>
-                                        <td id="general_tab_sslsecure" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;">
-                                            &#128274;
-
-                                        </td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Compressed:
-                                        </td>
-                                        <td id="general_tab_compressed" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Remote Address:
-                                        </td>
-                                        <td id="general_tab_address" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;">
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Transferred:</td>
-                                        <td id="general_tab_transfered" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Content-Type:
-                                        </td>
-                                        <td id="general_tab_contenttype" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Referrer Policy:
-                                        </td>
-                                        <td id="general_tab_referer_policy" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
                                     </tr>
 
                                 </table>
                             </div>
                         </div>
 
-                        <div id="parseurl" class="tab-pane ">
-                            <div id="parseurl_tab_nocontent" class="p-5 text-muted">
+                        <div id="output" class="tab-pane ">
+                            <div id="output_tab_nocontent" class="p-5 text-muted">
                                 <center> No Data Available. Please initiate a refresh request.</center>
                             </div>
-                            <div id="parseurl_tab_content" style="display: none;">
-                                <table id="parseurl_tab_nocontent" style="display:none"
-                                    class="table table-responsive w-100 d-block d-md-table">
-                                    <tr>
-                                        <td width="20%" class="small pr-1 border-top-0 text-right"
-                                            style="padding:0;margin: 0; padding-top: 5px;">Scheme:</td>
-                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
-                                            <span id="parseurl_tab_scheme"></span>
+                            <div id="output_tab_content" style="display: none;">
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Domain:
-                                        </td>
-                                        <td class="small text-muted text-left" style="padding:0;margin: 0;">
-                                            <span id="parseurl_tab_domain"></span>
-                                        </td>
-                                    </tr>
+                                <div id="status" style="display: block;">
+                                    <div id="log">
 
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Port:</td>
-                                        <td id="parseurl_tab_port" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
+                                        <pre id="console_output" style="background-color: black">
 
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">User:</td>
-                                        <td id="parseurl_tab_user" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
+                                            ddddd
+                                        </pre>
 
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Password:</td>
-                                        <td id="parseurl_tab_password" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Path:</td>
-                                        <td id="parseurl_tab_path" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Request Uri:</td>
-                                        <td id="parseurl_tab_request_uri" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Query:</td>
-                                        <td id="parseurl_tab_query" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Fragment:</td>
-                                        <td id="parseurl_tab_fragment" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;"> dddd</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="small pr-2 text-right" style="padding:0;margin: 0;">Params:</td>
-                                        <td id="parseurl_tab_params" class="small text-muted text-left"
-                                            style="padding:0;margin: 0;">
-
-
-
-
-
-
-                                        </td>
-                                    </tr>
-
-                                </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -1472,6 +1346,121 @@
     </script>
     <script>
         window.csapi = window.csapi || {
+            validate_email: function (email) {
+                email = "" + email;
+                re = /^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
+                re2 = /^(.[^<]*) *?<[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?>$/;
+                return re.test(email.toLowerCase()) || re2.test(email.toLowerCase());
+            },
+            print_output: function (output) {
+
+                for (var i in output) {
+                    if (i == 0) {
+                        $('#console_output').append($('<div class="neither">' + output[i] + '</div>'));
+                        continue;
+                    }
+                    if (/^\d/.test(output[i])) {
+                        $('#console_output').append($('<div class="server">&lt;&lt; ' + output[i] + '</div>'));
+                    } else {
+                        $('#console_output').append($('<div class="client">&gt;&gt; ' + output[i] + '</div>'));
+                    }
+
+                }
+
+            },
+            server_smtp: function (self) {
+                host = $('#host').val();
+                if (!(/^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/g.test(host) || /^((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4}))*::((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4}))*|((?:[0-9A-Fa-f]{1,4}))((?::[0-9A-Fa-f]{1,4})){7}$/g.test(host) || /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/g.test(host))) {
+                    alert("Please enter valid doamin or IP4 or IP6.");
+                    return;
+                }
+                port = $("#port").val();
+                if (parseInt(port) <= 0 || parseInt(port) > 9999999) {
+                    alert("Please enter valid port.");
+                    return;
+                }
+                secure = $('input[name=secure]:checked').attr('id');
+                if (secure === undefined || ['unsecured', 'ssl', 'tls'].indexOf(secure) === -1) {
+                    alert("Please select any one option from the ['unsecured', 'ssl', 'tls'].");
+                    return;
+                }
+
+
+                auth_checked = $('#auth').is(':checked');
+                starttls = $('#smtp_starttls').is(':checked')
+                verify = $('#smtp_verify').is(':checked')
+
+                username = $('#username').val();
+                password = $('#password').val();
+
+                libray = $('input[name=libray]:checked').attr('id');
+                if (libray === undefined || ['smtplib_py'].indexOf(libray) == -1) {
+                    alert("Please select any one libary option from the ['smtplib'].");
+                    return;
+                }
+
+
+
+                smtp_fromaddr = $('#smtp_fromaddr').val();
+                smtp_toaddr = $('#smtp_toaddr').val();
+                smtp_bccaddr = $('#smtp_bccaddr').val();
+                smtp_ccaddr = $('#smtp_ccaddr').val();
+                if (!this.validate_email(smtp_fromaddr)) {
+                    alert('Please enter valid from address.');
+                    return false;
+                }
+
+                if (!this.validate_email(smtp_toaddr)) {
+                    alert('Please enter valid to address.');
+                    return false;
+                }
+
+                if (smtp_bccaddr && !validate_email(smtp_bccaddr)) {
+                    alert('Please enter valid BCC address.');
+                    return false;
+                }
+
+                if (smtp_ccaddr && !validate_email(smtp_ccaddr)) {
+                    alert('Please enter valid Cc address.');
+                    return false;
+                }
+
+
+                smtp_subject = $('#smtp_subject').val();
+                smtp_body = tinymce.activeEditor.getContent();
+                smtp_format = $('input[name=smtp_format]:checked').val();
+                params = { 'server_type': server_id, 'host': host, 'port': port, 'secure': secure, 'verify': verify, 'starttls': starttls, 'auth': auth_checked ? { 'username': username, 'password': password } : {}, 'libray': libray, 'from_address': smtp_fromaddr, 'to_address': [smtp_toaddr], 'bcc_address': smtp_bccaddr ? [smtp_bccaddr] : [], 'cc_address': smtp_ccaddr ? [smtp_ccaddr] : [], 'format': smtp_format, 'subject': smtp_subject, 'body': smtp_body };
+                console.log(JSON.stringify(params));
+
+                $('#SendNow').html("Please wait .....");
+                /* $('#SendNow').attr('disabled', true); */
+                $.ajax({
+                    url: '/ajaxify/email-smtp-response.json',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        console.log(response);
+                        $('#SendNow').html("Send Now")
+                        $('#SendNow').attr('disabled', false)
+                        // alert(response)
+                        window.csapi.on_receive.bind(window.csapi)(response)
+                    },
+                    data: JSON.stringify(params)
+                });
+
+            },
+            send: function (self) {
+                server_id = $("#server-tab-content .tab-pane:visible").attr("id");
+                if (server_id === undefined || (['server_gmaillogin', 'server_mandrill', 'server_mailgun'].indexOf(server_id) >= 0)) {
+                    alert("Please select your server first.");
+                    return false;
+                }
+                if (server_id === 'server_smtp') {
+                    this.server_smtp()
+                    return false;
+                }
+            },
             general_tab: function (response) {
                 $('#general_tab_url').html(response['url'])
                 $('#general_tab_method').html(response['method'] ? response['method'] : '-')
@@ -1490,569 +1479,37 @@
 
 
             },
-            parseurl_tab: function (response) {
-                $('#parseurl_tab_scheme').html(response['scheme'] ? response['scheme'] : '-')
-                $('#parseurl_tab_domain').html(response['domain'] ? response['domain'] : '-')
-                $('#parseurl_tab_port').html(response['port'] ? response['port'] : '-')
-                $('#parseurl_tab_user').html(response['username'] ? response['username'] : '-')
-                $('#parseurl_tab_password').html(response['password'] ? response['password'] : '-')
-                $('#parseurl_tab_path').html(response['path'] ? response['path'] : '-')
-                $('#parseurl_tab_request_uri').html(response['request_uri'] ? response['request_uri'] : '-')
-                $('#parseurl_tab_query').html(response['query'] ? response['query'] : '-')
-                $('#parseurl_tab_fragment').html(response['fragment'] ? response['fragment'] : '-')
-                table = ''
-                if (response['params']) {
-                    table = '<table class="table">'
-                    Object.keys(response['params']).forEach(function (key) {
-                        table = table + '<tr>'
-                        table = table + '<td width="20%" class="small  text-right" style="padding:0;margin: 0;">' + key + ':&nbsp;&nbsp;</td>'
-                        table = table + '<td class="small text-muted text-left" style="padding:0;margin: 0;">' + response['params'][key] + '</td>'
-                        table = table + '</tr>'
-                    })
-                    table = table + '</table>'
-                }
-                $('#parseurl_tab_params').html(table)
-
-            },
             on_receive: function (response) {
                 if (response['errno'])
                     response['status'] = [response['errno'], response['errmsg']]
 
                 this.reset_tabs()
                 this.general_tab(response)
-                this.parseurl_tab(response)
-                this.data_tab(response)
-                this.cookies_tab(response)
-                this.headers_tab(response)
-                this.security_tab(response)
-                this.timmings_tab(response)
+                this.output_tab(response)
                 this.enable_tabs()
             },
+            output_tab: function (response) {
+                this.print_output(response['output'])
+            },
             reset_tabs: function () {
-                $('#timmings_tab_nocontent').show()
-                $('#timmings_tab_content').hide()
-
                 $('#general_tab_nocontent').show()
                 $('#general_tab_content').hide()
-
-                $('#parseurl_tab_nocontent').show()
-                $('#parseurl_tab_content').hide()
-
-                $('#data_tab_nocontent').show()
-                $('#data_tab_content').hide()
-
-                $('#cookies_tab_nocontent').show()
-                $('#cookies_tab_content').hide()
-
-                $('#headers_tab_nocontent').show()
-                $('#headers_tab_content').hide()
-
-                $('#security_tab_nocontent').show()
-                $('#security_tab_content').hide()
+                $('#output_tab_nocontent').show()
+                $('#output_tab_content').hide()
+                $('#console_output').html("<br />");
 
 
 
             },
             enable_tabs: function () {
-                $('#timmings_tab_nocontent').hide()
-                $('#timmings_tab_content').show()
-
                 $('#general_tab_nocontent').hide()
                 $('#general_tab_content').show()
 
-                $('#parseurl_tab_nocontent').hide()
-                $('#parseurl_tab_content').show()
-
-                $('#data_tab_nocontent').hide()
-                $('#data_tab_content').show()
-
-                $('#cookies_tab_nocontent').hide()
-                $('#cookies_tab_content').show()
-
-                $('#headers_tab_nocontent').hide()
-                $('#headers_tab_content').show()
-
-                $('#security_tab_nocontent').hide()
-                $('#security_tab_content').show()
-
+                $('#output_tab_nocontent').hide()
+                $('#output_tab_content').show()
                 $('#myTab a[href="#general"]').tab('show')
             },
-            timmings_tab: function (response) {
 
-                total_time_ms = 0
-                blocked_time_ms = 0
-                dns_resolution_time_ms = 0
-                connecting_time_ms = 0
-                ssl_setup_time_ms = 0
-                pretransfer_time_ms = 0
-                sending_time_ms = 0
-                redirct_time_ms = 0
-                waiting_time_ms = 0
-                receive_time_ms = 0
-
-
-                total_time_per = 0
-                blocked_time_per = 0
-                dns_resolution_time_per = 0
-                connecting_time_per = 0
-                ssl_setup_time_per = 0
-                pretransfer_time_per = 0
-                sending_time_per = 0
-                redirct_time_per = 0
-                waiting_time_per = 0
-                receive_time_per = 0
-
-                if (response['total_time_ms'] != null) {
-                    blocked_time_per = ((response['blocked_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    dns_resolution_time_per = ((response['dns_resolution_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    connecting_time_per = ((response['connecting_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    ssl_setup_time_per = ((response['ssl_setup_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    pretransfer_time_per = ((response['pretransfer_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    sending_time_per = ((response['sending_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    redirct_time_per = ((response['redirct_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    waiting_time_per = ((response['waiting_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    receive_time_per = ((response['receive_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-                    total_time_per = ((response['total_time_ms'] / response['total_time_ms']) * 100).toFixed(2);
-
-                    total_time_ms = response['total_time_ms'].toFixed(2);
-                    blocked_time_ms = response['blocked_time_ms'].toFixed(2);
-                    dns_resolution_time_ms = response['dns_resolution_time_ms'].toFixed(2);
-                    connecting_time_ms = response['connecting_time_ms'].toFixed(2);
-                    ssl_setup_time_ms = response['ssl_setup_time_ms'].toFixed(2);
-                    pretransfer_time_ms = response['pretransfer_time_ms'].toFixed(2);
-                    sending_time_ms = response['sending_time_ms'].toFixed(2);
-                    redirct_time_ms = response['redirct_time_ms'].toFixed(2);
-                    waiting_time_ms = response['waiting_time_ms'].toFixed(2);
-                    receive_time_ms = response['receive_time_ms'].toFixed(2);
-
-                }
-
-                $('#timmings-tab-block-time').html(blocked_time_ms + ' Ms')
-                $('#timmings-tab-dns-resolution').html(dns_resolution_time_ms + ' Ms')
-                $('#timmings-tab-connecting-time').html(connecting_time_ms + ' Ms')
-                $('#timmings-tab-setup-time').html(ssl_setup_time_ms + ' Ms')
-                $('#timmings-tab-pretransfer-time').html(pretransfer_time_ms + ' Ms')
-                $('#timmings-tab-sending-time').html(sending_time_ms + ' Ms')
-                $('#timmings-tab-waiting-time').html(waiting_time_ms + ' Ms')
-                $('#timmings-tab-redirct-time').html(redirct_time_ms + ' Ms')
-                $('#timmings-tab-receive-time').html(receive_time_ms + ' Ms')
-                $('#timmings-tab-total-time').html(total_time_ms + ' Ms')
-
-                pbar_div = '<div class="progress progress-sm" style="height:5px; margin-top:12px;"><div class="progress-bar" role="progressbar" style="width: {per}%" aria-valuenow="{per}" aria-valuemin="0" aria-valuemax="100"> </div></div>'
-                _pbar_div = pbar_div.replace(/\{per\}/g, total_time_per.toString());
-                $('#timmings-tab-total-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, blocked_time_per.toString());
-                $('#timmings-tab-block-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, dns_resolution_time_per.toString());
-                $('#timmings-tab-dns-resolution-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, connecting_time_per.toString());
-                $('#timmings-tab-connecting-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, ssl_setup_time_per.toString());
-                $('#timmings-tab-setup-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, pretransfer_time_per.toString());
-                $('#timmings-tab-pretransfer-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, sending_time_per.toString());
-                $('#timmings-tab-sending-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, waiting_time_per.toString());
-                $('#timmings-tab-waiting-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, redirct_time_per.toString());
-                $('#timmings-tab-redirct-time-pbar').html(_pbar_div)
-                _pbar_div = pbar_div.replace(/\{per\}/g, receive_time_per.toString());
-                $('#timmings-tab-receive-time-pbar').html(_pbar_div)
-
-
-            },
-            security_tab: function (response) {
-                $('#security-tab-connection-protocol-version').html(response['ssl_version'] ? response['ssl_version'] : '')
-                $('#security-tab-connection-cipher-suite').html(response['ssl_cipher_suite'] ? response['ssl_cipher_suite'] : '')
-                $('#security-tab-connection-kxgroup').html(response['ssl_key_exchange_group'] ? response['ssl_key_exchange_group'] : '')
-                $('#security-tab-connection-sign-scheme').html(response['ssl_cert_signature_algorithm'] ? response['ssl_cert_signature_algorithm'] : '')
-                $('#security-tab-connection-domain').html(response['ssl_domain'] ? response['ssl_domain'] : '')
-                $('#security-tab-host-hsts').html(response['strict_transport_security'] == null ? '' : response['strict_transport_security'] ? 'Enabled' : 'Disabled')
-                $('#security-tab-host-pkey-pinning').html(response['ssl_public_key_pinning'] == null ? '' : response['ssl_public_key_pinning'])
-                $('#security-tab-host-pkey-sha256').html(response['ssl_public_key_pinning_bs64'] == null ? '' : response['ssl_public_key_pinning_bs64'])
-
-                //$('#security-tab-connection-host-pkey-pin').html(response['ssl_public_key_pins'] == null ? '' : response['ssl_public_key_pins'])
-                $('#security-tab-cert-sub-cn').html(response['ssl_cert_issued_to_cn'] ? response['ssl_cert_issued_to_cn'] : '')
-                $('#security-tab-cert-sub-o').html(response['ssl_cert_issued_to_o'] ? response['ssl_cert_issued_to_o'] : '')
-                $('#security-tab-cert-sub-ou').html(response['ssl_cert_issued_to_ou'] ? response['ssl_cert_issued_to_ou'] : '')
-
-                $('#security-tab-cert-issuer-cn').html(response['ssl_cert_issued_by_cn'] ? response['ssl_cert_issued_by_cn'] : '')
-                $('#security-tab-cert-issuer-o').html(response['ssl_cert_issued_by_o'] ? response['ssl_cert_issued_by_o'] : '')
-                $('#security-tab-cert-issuer-ou').html(response['ssl_cert_issued_by_ou'] ? response['ssl_cert_issued_by_ou'] : '')
-
-                $('#security-tab-cert-validity-beginson').html(response['ssl_cert_validity_begins_on'] ? response['ssl_cert_validity_begins_on'] : '')
-                $('#security-tab-cert-validity-expireson').html(response['ssl_cert_validity_expires_on'] ? response['ssl_cert_validity_expires_on'] : '')
-
-
-                $('#security-tab-cert-fingerprints-sha256').html(response['ssl_fingerprints_sha256'] ? response['ssl_fingerprints_sha256'] : '')
-                $('#security-tab-cert-fingerprints-sha1').html(response['ssl_fingerprints_sha1'] ? response['ssl_fingerprints_sha1'] : '')
-                $('#security-tab-cert-fingerprints-md5').html(response['ssl_fingerprints_md5'] ? response['ssl_fingerprints_md5'] : '')
-
-
-            },
-            headers_tab: function (response) {
-                req_ccounts = response['request_headers_map'] ? response['request_headers_map'].length : 0
-                $('#headers-tab-request-cnt').html(req_ccounts)
-
-                headers_general = ''
-                headers_raw = ''
-                if (req_ccounts) {
-                    headers_general = headers_general + '<table class="table table-responsive w-100 d-block d-md-table">'
-                    for (var i in response['request_headers_map']) {
-                        key = response['request_headers_map'][i][0]
-                        value = response['request_headers_map'][i][1]
-                        headers_general = headers_general + '<tr>'
-                        headers_general = headers_general + '<td width="30%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;"> ' + key + ':&nbsp;&nbsp;</td>'
-                        headers_general = headers_general + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;" > ' + value + '</td>'
-                        headers_general = headers_general + '</tr>'
-
-                    }
-                    headers_general = headers_general + '</table>'
-                    headers_general = '<div id="headers-tab-request-general">' + headers_general + '</div>'
-                    headers_general = headers_general + '<div id="headers-tab-request-general-raw">' + '<textarea  id="headers-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%; font-size:10px">' + (response['request_headers_raw'] ? response['request_headers_raw'] : '') + '</textarea></div>'
-                }
-                $('#headers-tab-request-all').html(headers_general)
-                $('#headers-tab-request-general').show()
-                $('#headers-tab-request-general-raw').hide()
-
-                $('#headers-tab-request-rawclk').unbind('click', this.headers_tab_request_toggle)
-                $('#headers-tab-request-rawclk').bind('click', this.headers_tab_request_toggle)
-
-
-                //
-                req_ccounts = response['response_headers_map'] ? response['response_headers_map'].length : 0
-                $('#headers-tab-response-cnt').html(req_ccounts)
-
-                headers_general = ''
-                headers_raw = ''
-                if (req_ccounts) {
-                    headers_general = headers_general + '<table class="table table-responsive w-100 d-block d-md-table">'
-                    for (var i in response['response_headers_map']) {
-                        key = response['response_headers_map'][i][0]
-                        value = response['response_headers_map'][i][1]
-                        headers_general = headers_general + '<tr>'
-                        headers_general = headers_general + '<td width="30%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;"> ' + key + ':&nbsp;&nbsp;</td>'
-                        headers_general = headers_general + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0; word-wrap: break-word;min-width: 160px;max-width: 160px;" > ' + value + '</td>'
-                        headers_general = headers_general + '</tr>'
-
-                    }
-                    headers_general = headers_general + '</table>'
-                    headers_general = '<div id="headers-tab-response-general">' + headers_general + '</div>'
-                    headers_general = headers_general + '<div id="headers-tab-response-general-raw">' + '<textarea  id="headers-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%; font-size:10px">' + (response['response_headers_raw'] ? response['response_headers_raw'] : '') + '</textarea></div>'
-                }
-
-                //alert(cookies_general)
-                $('#headers-tab-response-all').html(headers_general)
-                $('#headers-tab-response-general').show()
-                $('#header-tab-response-general-raw').hide()
-
-                $('#headers-tab-response-rawclk').unbind('click', this.headers_tab_response_toggle)
-                $('#headers-tab-response-rawclk').bind('click', this.headers_tab_response_toggle)
-                //
-
-
-            },
-            headers_tab_response_toggle: function () {
-                if ($('#headers-tab-response-general').css('display') == 'none') {
-                    $('#headers-tab-response-general').show()
-                    $('#headers-tab-response-general-raw').hide()
-                } else {
-                    $('#headers-tab-response-general').hide()
-                    $('#headers-tab-response-general-raw').show()
-                }
-
-            },
-            headers_tab_request_toggle: function () {
-                if ($('#headers-tab-request-general').css('display') == 'none') {
-                    $('#headers-tab-request-general').show()
-                    $('#headers-tab-request-general-raw').hide()
-                } else {
-                    $('#headers-tab-request-general').hide()
-                    $('#headers-tab-request-general-raw').show()
-                }
-
-            },
-            cookies_tab: function (response) {
-
-                req_ccounts = response['request_cookies'] ? response['request_cookies'].length : 0
-                $('#cookies-tab-request-cnt').html(req_ccounts)
-                $('#cookies-tab-request-size').html(response['request_cookies_size'] >= 0 ? this.human_size(response['request_cookies_size']) : '-')
-                cookies_general = ''
-                cookies_raw = ''
-                if (req_ccounts) {
-
-                    for (var i in response['request_cookies']) {
-                        cookies_general = cookies_general + '<table class="table table-responsive w-100 d-block d-md-table">'
-                        cookie = response['request_cookies'][i]
-                        j = 0
-                        Object.keys(cookie).forEach(function (key) {
-                            value = cookie[key]
-                            if (j == 0) {
-                                cookies_general = cookies_general + '<tr>'
-                                cookies_general = cookies_general + '<td width="20%" class="small pr-0 border-top-' + (i == 0 ? '0' : '1') + ' text-right" style="padding:0;margin: 0;"> ' + 'Key' + ':&nbsp;&nbsp;</td>'
-                                cookies_general = cookies_general + '<td class="small pr-0 text-muted border-top-' + (i == 0 ? '0' : '1') + ' text-left" style = "padding:0;margin: 0;" > ' + key + '</td>'
-                                cookies_general = cookies_general + '</tr>'
-                                value = cookie[key]
-                                key = 'Value'
-                            }
-
-                            cookies_general = cookies_general + '<tr>'
-                            cookies_general = cookies_general + '<td width="20%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;"> ' + key + ':&nbsp;&nbsp;</td>'
-                            cookies_general = cookies_general + '<td class="small pr-0 text-muted border-top-0 text-left" style = "padding:0;margin: 0;" > ' + value + '</td>'
-                            cookies_general = cookies_general + '</tr>'
-                            j = j + 1
-
-                        });
-                        cookies_general = cookies_general + '</table>'
-
-                    }
-                    cookies_general = '<div id="cookies-tab-request-general">' + cookies_general + '</div>'
-                    cookies_general = cookies_general + '<div id="cookies-tab-request-general-raw">' + '<textarea  id="cookies-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%">Cookie: ' + (response['get_params_raw'] ? response['request_cookies_raw'] : '') + '</textarea></div>'
-                    //cookies_general = cookies_general + '<div id="cookies-tab-request-general-raw">eee</div>'
-                }
-
-                $('#cookies-tab-request-all').html(cookies_general)
-                $('#cookies-tab-request-general').show()
-                $('#cookies-tab-request-general-raw').hide()
-
-                $('#cookies-tab-request-rawclk').unbind('click', this.cookie_tab_request_toggle)
-                $('#cookies-tab-request-rawclk').bind('click', this.cookie_tab_request_toggle)
-
-
-
-
-
-
-                //
-                req_ccounts = response['response_cookies'] ? response['response_cookies'].length : 0
-                $('#cookies-tab-response-cnt').html(req_ccounts)
-                $('#cookies-tab-response-size').html(response['response_cookies_size'] >= 0 ? this.human_size(response['response_cookies_size']) : '0 B')
-
-                cookies_general = ''
-                cookies_raw = ''
-                if (req_ccounts) {
-                    for (var i in response['response_cookies']) {
-                        cookies_general = cookies_general + '<table class="table table-responsive w-100 d-block d-md-table">'
-                        cookie = response['response_cookies'][i]
-                        j = 0
-                        Object.keys(cookie).forEach(function (key) {
-                            value = cookie[key]
-                            if (j == 0) {
-                                cookies_general = cookies_general + '<tr>'
-                                cookies_general = cookies_general + '<td width="20%" class="small pr-0 border-top-' + (i == 0 ? '0' : '1') + ' text-right" style="padding:0;margin: 0;"> ' + 'Key' + ':&nbsp;&nbsp;</td>'
-                                cookies_general = cookies_general + '<td class="small pr-0 text-muted border-top-' + (i == 0 ? '0' : '1') + ' text-left" style = "padding:0;margin: 0;" > ' + key + '</td>'
-                                cookies_general = cookies_general + '</tr>'
-                                value = cookie[key]
-                                key = 'Value'
-                            }
-
-                            cookies_general = cookies_general + '<tr>'
-                            cookies_general = cookies_general + '<td width="20%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;"> ' + key + ':&nbsp;&nbsp;</td>'
-                            cookies_general = cookies_general + '<td class="small pr-0 text-muted border-top-0 text-left" style = "padding:0;margin: 0;" > ' + value + '</td>'
-                            cookies_general = cookies_general + '</tr>'
-                            j = j + 1
-
-                        });
-                        cookies_general = cookies_general + '</table>'
-
-                    }
-                    cookies_general = '<div id="cookies-tab-response-general">' + cookies_general + '</div>'
-                    cookies_raw = response['response_cookies_raw']
-                    cookies_general = cookies_general + '<div id="cookies-tab-response-general-raw">' + '<textarea  id="cookies-tab-request-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%; font-size:10px">' + (cookies_raw) + '</textarea></div>'
-                }
-
-                //alert(cookies_general)
-                $('#cookies-tab-response-all').html(cookies_general)
-                $('#cookies-tab-response-general').show()
-                $('#cookies-tab-response-general-raw').hide()
-
-                $('#cookies-tab-response-rawclk').unbind('click', this.cookie_tab_response_toggle)
-                $('#cookies-tab-response-rawclk').bind('click', this.cookie_tab_response_toggle)
-                //
-
-
-            },
-            cookie_tab_response_toggle: function () {
-                if ($('#cookies-tab-response-general').css('display') == 'none') {
-                    $('#cookies-tab-response-general').show()
-                    $('#cookies-tab-response-general-raw').hide()
-                } else {
-                    $('#cookies-tab-response-general').hide()
-                    $('#cookies-tab-response-general-raw').show()
-                }
-
-            },
-
-            cookie_tab_request_toggle: function () {
-                if ($('#cookies-tab-request-general').css('display') == 'none') {
-                    $('#cookies-tab-request-general').show()
-                    $('#cookies-tab-request-general-raw').hide()
-                } else {
-                    $('#cookies-tab-request-general').hide()
-                    $('#cookies-tab-request-general-raw').show()
-                }
-
-            },
-
-            data_tab_post_raw_toggle: function () {
-
-                $('#data-tab-post-decode').hide()
-                $('#data-tab-post-encode').hide()
-                $('#data-tab-post-raw').show()
-
-            },
-            data_tab_post_endecode_toggle: function () {
-                if ($(this).html() == 'Encode') {
-                    $(this).html('Decode')
-                    $('#data-tab-post-decode').show()
-                    $('#data-tab-post-encode').hide()
-                    $('#data-tab-post-raw').hide()
-                } else {
-                    $(this).html('Encode')
-                    $('#data-tab-post-decode').hide()
-                    $('#data-tab-post-encode').show()
-                    $('#data-tab-post-raw').hide()
-                }
-            },
-
-            data_tab: function (response) {
-
-                $('#data-tab-get-all').html('')
-                table_decoded = ''
-                table_encoded = ''
-                data_raw = ''
-                if (response['get_params_decoded']) {
-                    table_decoded = '<div id="data-tab-get-decode"><table class="table table-responsive w-100 d-block d-md-table">'
-                    Object.keys(response['get_params_decoded']).forEach(function (key, v) {
-                        val = response['get_params_decoded'][key]
-                        table_decoded = table_decoded + '<tr>'
-                        table_decoded = table_decoded + '<td width="20%" class="small pr-0 border-top-0 text-right" style="padding:0;margin: 0;" > ' + val[0] + ':&nbsp;&nbsp;</td > '
-                        table_decoded = table_decoded + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0;">' + val[1] + '</td>'
-                        table_decoded = table_decoded + '</tr>'
-                    })
-                    table_decoded = table_decoded + '</table></div>'
-                }
-
-
-                if (response['get_params_encoded']) {
-                    table_encoded = '<div id="data-tab-get-encode"><table class="table table-responsive w-100 d-block d-md-table">'
-                    Object.keys(response['get_params_encoded']).forEach(function (key) {
-                        val = response['get_params_encoded'][key]
-                        table_encoded = table_encoded + '<tr>'
-                        table_encoded = table_encoded + '<td width="20%" class="small pr-0 border-top-0 text-right" style = "padding:0;margin: 0;" > ' + val[0] + ':&nbsp;&nbsp;</td > '
-                        table_encoded = table_encoded + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0;">' + val[1] + '</td>'
-                        table_encoded = table_encoded + '</tr>'
-                    })
-                    table_encoded = table_encoded + '</table></div>'
-                }
-
-
-                $('#data-tab-get-size').html(response['get_params_size'] >= 0 ? this.human_size(response['get_params_size']) : '-')
-                $('#data-tab-get-cnt').html(Object.keys(response['get_params_encoded']).length)
-                $('#data-tab-get-all').append(table_decoded)
-                $('#data-tab-get-all').append(table_encoded)
-                $('#data-tab-get-all').append('<textarea  id="data-tab-get-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%">' + (response['get_params_raw'] ? response['get_params_raw'] : '') + '</textarea>')
-                $('#data-tab-get-endecode').unbind('click', this.data_tab_get_endecode_toggle)
-                $('#data-tab-get-endecode').bind('click', this.data_tab_get_endecode_toggle)
-
-                $('#data-tab-get-rawclk').unbind('click', this.data_tab_get_raw_toggle)
-                $('#data-tab-get-rawclk').bind('click', this.data_tab_get_raw_toggle)
-
-
-                $('#data-tab-get-decode').show()
-                $('#data-tab-get-encode').hide()
-                $('#data-tab-get-raw').hide()
-
-
-
-                $('#data-tab-post-all').html('')
-                table_decoded = ''
-                table_encoded = ''
-                data_raw = ''
-                if (response['post_params']) {
-                    table_decoded = '<div id="data-tab-post-decode"><table class="table table-responsive w-100 d-block d-md-table">'
-                    Object.keys(response['post_params']).forEach(function (key) {
-                        table_decoded = table_decoded + '<tr>'
-                        table_decoded = table_decoded + '<td width="20%" class="small pr-0 border-top-0 text-right" style = "padding:0;margin: 0;" > ' + key + ':&nbsp;&nbsp;</td > '
-                        table_decoded = table_decoded + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0;">' + response['post_params'][key] + '</td>'
-                        table_decoded = table_decoded + '</tr>'
-                    })
-                    table_decoded = table_decoded + '</table></div>'
-                }
-
-
-                if (response['post_params_encoded']) {
-                    table_encoded = '<div id="data-tab-post-encode"><table class="table table-responsive w-100 d-block d-md-table">'
-                    Object.keys(response['post_params_encoded']).forEach(function (key) {
-                        table_encoded = table_encoded + '<tr>'
-                        table_encoded = table_encoded + '<td width="20%" class="small pr-0 border-top-0 text-right" style = "padding:0;margin: 0;" > ' + key + ':&nbsp;&nbsp;</td > '
-                        table_encoded = table_encoded + '<td class="small pr-0 text-muted border-top-0 text-left" style="padding:0;margin: 0;">' + response['post_params_encoded'][key] + '</td>'
-                        table_encoded = table_encoded + '</tr>'
-                    })
-                    table_encoded = table_encoded + '</table></div>'
-                }
-
-
-                $('#data-tab-post-cnt').html(Object.keys(response['post_params_encoded']).length)
-                $('#data-tab-post-all').append(table_decoded)
-                $('#data-tab-post-all').append(table_encoded)
-                $('#data-tab-post-all').append('<textarea  id="data-tab-post-raw" readonly class="form-control small pr-0 border-0 text-left" style="min-width: 100%">' + (response['post_params_raw'] ? response['post_params_raw'] : '') + '</textarea>')
-                $('#data-tab-post-endecode').unbind('click', this.data_tab_post_endecode_toggle)
-                $('#data-tab-post-endecode').bind('click', this.data_tab_post_endecode_toggle)
-
-                $('#data-tab-post-rawclk').unbind('click', this.data_tab_post_raw_toggle)
-                $('#data-tab-post-rawclk').bind('click', this.data_tab_post_raw_toggle)
-
-
-                $('#data-tab-post-decode').show()
-                $('#data-tab-post-encode').hide()
-                $('#data-tab-post-raw').hide()
-
-
-
-            },
-            data_tab_get_raw_toggle: function () {
-
-                $('#data-tab-get-decode').hide()
-                $('#data-tab-get-encode').hide()
-                $('#data-tab-get-raw').show()
-
-            },
-            data_tab_get_endecode_toggle: function () {
-                if ($(this).html() == 'Encode') {
-                    $(this).html('Decode')
-                    $('#data-tab-get-decode').show()
-                    $('#data-tab-get-encode').hide()
-                    $('#data-tab-get-raw').hide()
-                } else {
-                    $(this).html('Encode')
-                    $('#data-tab-get-decode').hide()
-                    $('#data-tab-get-encode').show()
-                    $('#data-tab-get-raw').hide()
-                }
-            },
-            human_size: function (bytes, si = false, dp = 1) {
-                const thresh = si ? 1000 : 1024;
-
-                if (Math.abs(bytes) < thresh) {
-                    return bytes + ' B';
-                }
-
-                const units = si
-                    ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-                    : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-                let u = -1;
-                const r = 10 ** dp;
-
-                do {
-                    bytes /= thresh;
-                    ++u;
-                } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
-
-
-                return bytes.toFixed(dp) + ' ' + units[u];
-            }
 
         }
 
@@ -2061,8 +1518,18 @@
     </script>
     <script>
         $(function () {
+            $('#SendNow').on('click', function () {
+                window.csapi.send.bind(window.csapi)()
+                return
 
-            $('#FetchNow').on('click', function () {
+
+
+
+
+
+
+
+
                 url = $('#Url').val()
                 if (!url) {
                     alert("Please enter url")
@@ -2073,15 +1540,18 @@
                 is = $('#Insecure').val()
                 //alert(url + "][" + ua + "][" + ip)
                 var posting = $.post('/ajaxify/fetch_header_response.json', { 'url': url, 'ua': ua, 'ip': ip, 'is': is });
-                $('#FetchNow').html("Please wait .....")
+                $('#SendNow').html("Please wait .....")
                 $('#FetchNow').attr('disabled', true)
                 posting.done(function (response) {
-                    $('#FetchNow').html("Fetch Now")
+                    $('#FetchNow').html("Send Now")
                     $('#FetchNow').attr('disabled', false)
 
                     // alert(response)
                     window.csapi.on_receive.bind(window.csapi)(response)
                 });
+
+
+
 
 
 
