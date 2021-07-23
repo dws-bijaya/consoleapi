@@ -4,6 +4,11 @@ from django.shortcuts import render
 
 
 class fast_tools:
+	def WebpageMalwareScanner(request):
+		context = {'meta_title': "Webpage Malware Scanner"}
+		context['meta_description'] = "Free fast tools to scan your webpage for malware, malicious redirects, malicious scripts, spam hacks and other bad stuff."
+		return render(request, 'fast_tools/WebpageMalwareScanner.html', context)
+
 	def HTTPServerHeaderTest(request):
 		IPAddress = '127.0.0.1'  # get_ip_address_from_request(request)
 		User_Agent = request.META['HTTP_USER_AGENT']

@@ -453,7 +453,7 @@
                                 <div class="form-group col-md-12">
                                     <div class="alert alert-warning mt-3" role="alert">
                                         Please whitelist our IP <b> 138.197.98.186 </b> if firewall is active on your
-                                        seerver.
+                                        server.
                                     </div>
                                     <button id="SendNow" type="button" class="btn btn-primary btn-lg btn-block">Send
                                         Now</button>
@@ -1360,9 +1360,9 @@
                         continue;
                     }
                     if (/^\d/.test(output[i])) {
-                        $('#console_output').append($('<div class="server">&lt;&lt; ' + output[i] + '</div>'));
+                        $('#console_output').append($('<div class="server">&lt;&lt; ' + output[i].replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'));
                     } else {
-                        $('#console_output').append($('<div class="client">&gt;&gt; ' + output[i] + '</div>'));
+                        $('#console_output').append($('<div class="client">&gt;&gt; ' + output[i].replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'));
                     }
 
                 }

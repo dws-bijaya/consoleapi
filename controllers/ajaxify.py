@@ -7,9 +7,28 @@ from django.views.decorators.csrf import csrf_exempt
 from bin.fast_tools_wa import WA
 from bin.fast_tools_smtp import Smtp
 import json
+from bin.fast_tools_malware_scanner import Malware_Scanner
 
 
 class ajaxify:
+	@csrf_exempt
+	def webpage_malware_scanner_response(request):
+		try:
+			params = json.loads(request.body.decode("utf-8"))
+		except:
+			params = {}
+			pass
+
+		params['_HTTP_USER_AGENT'] = request.META.get('HTTP_USER_AGENT', '')
+		with open('/tmp/wscan_resp.csv', 'a+') as p:
+			from datetime import datetime
+			format = "%Y-%m-%d %H:%M:%S %Z%z"
+			now_utc = datetime.now()
+			ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', '')).split(',')[0].strip()
+			p.write("{url}|{ip}|{time}\n".format(url=params['url'] if 'url' in params else '', ip=ip, time=now_utc.strftime(format)))
+		response = Malware_Scanner.Scann(params)
+		return JsonResponse(response)
+
 	@csrf_exempt
 	def whatsapp_direct_response(request):
 		params = {'wano': '919911033016', 'wamsg': "hello"}

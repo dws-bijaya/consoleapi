@@ -7,5 +7,4 @@ class default:
 		template = loader.get_template('default/index.html')
 		context = {'meta_title': 'Free tools for testing almost all eveythings on sweet single interface'}
 		context['meta_description'] = "Developer's single sweet single interface for testing"
-		return HttpResponse(template.render())
-		pass
+		return HttpResponse(template.render(context=context))
