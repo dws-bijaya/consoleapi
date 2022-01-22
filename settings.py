@@ -49,6 +49,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/bin/")
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/")
 COUNTRY_CACHE_FILE = os.path.dirname(os.path.abspath(__file__)) + "/bin/" + '/countries.json'
+PUTTYGEN_BIN = '/usr/bin/puttygen'
+TMP_DIR = sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/tmp/")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/

@@ -8,9 +8,52 @@ from bin.fast_tools_wa import WA
 from bin.fast_tools_smtp import Smtp
 import json
 from bin.fast_tools_malware_scanner import Malware_Scanner
+from bin.fast_tools_puttygen import PuttyGen
+from django.conf import settings
 
 
 class ajaxify:
+	@csrf_exempt
+	def convert_ppk_to_pem(request):
+		params = {
+		    'ppkdata': '''
+PuTTY-User-Key-File-2: ssh-rsa
+Encryption: none
+Comment: imported-openssh-key
+Public-Lines: 6
+AAAAB3NzaC1yc2EAAAADAQABAAABAQCEZoVdt1wr6k6KTLWgtJX6sOE0ruZPgtoc
+98IbusJYmnRHTssD4GqhYMxpuajG9Oon0MVUwByKO+BUESM7qHeGdqXW5v6gd7jx
+7i40DlzDZnjWle5HEDmoKyktUp7U2avXDZv3UBsaHsYwgcF4KxHGddMZ6Np2f4gp
+02YAdCBzjfNbXoxWqhfmmiY47gPL3W4L02g7iibHZp6aeVyloD62yOsuQDfUR1v1
+IOp6/iHGxzf+NdmHSM1dPqQlb1PTZH0YQM2ACOK9ERdw3LRoQqRRb2E0XECVjObO
+oZriQG59dd/mQZ3KATDfF2S1LR/PkZKSrdRV57SaKaUaTa/QSZQJ
+Private-Lines: 14
+AAABABOJqW6N600Ts2lXLoo7e9JVnbYPhS8AiT0zFnLPGXTHvhbzuqOkzzdnOGL1
+ocFSTOd5OFVsUAnaEh11tfRMxO6TvZ870SFO6XzSAAFwiSHQkk5gK5xS+Z8mV1o3
+0fZo9KG0gWp6aLVvCyIHU8xu1p2pr3AoW2yXHznE102D1XIXrNSm5Tg2CMvPlh1G
+E1X9CMEP33oPOnYfX1IMRdErsXgTvfrEEj07ESkr6SgCCSCAvrP7WaQOmTs0dSXJ
+QfYbsAUal/9vU+8XCv3lgSeF4+ZP+93AMlMCncmXQxVT4BIf3GI3SA9Eh+Mxu/ub
+3719MKFNUdXik6YIan6G4mwqHAEAAACBAPVhzP8L1PLv2RJxPo0Cnd5LOCnmn75n
+Tr+iIXwXh7hVjZ7AQXswMoJBa+NXjlIpedDtfDvP2pFPXJW8TF6EmiLz0D/F4ijs
+48ITKB9cU0Q6EJiwtMT6/P1/SAXBN3Ncujx89Ei3cGTlJpmhEKWgK1dCxUFDxnES
+Vke5io27NAeJAAAAgQCKIS0f8DCFj22d1FVeD4TKK8wD2/pbGqocZd028b7Fi6Hl
+8oiSGB8p5whFKXDJbreLoP1xymCe9GZZNgKyZ/k6iqds0rUn68luHjBHgzz6ES3c
+PfsuiqDU5ToQd8E7+0dJCaUnyvI7ZkvE4BLA04wU+CHhXcXYfhvvGgxn6UmIgQAA
+AIEAtoAxkjYIgicv7jTk/JdlRDBz8dinixugBIRe1gEjR4mFse2tld9Nok84T7pE
+vE11UtN55xGpgYRRxmbC2EDt3SuZTnyQvlHlUWwUwzutcNk0be6gsOUkh8OalupU
+uoaLsyXf9U+eyulgcnoS7i6NC9Bx/TXUFHfYJlAKFVqPemI=
+Private-MAC: ac2e87434317d6ee04b359c38903e40d8315a547
+		''',
+		    'oldpp': None,
+		    'newpp': "LAxmi"
+		}
+		params['ppkdata'] = request.POST.get("ppkdata", "")
+		params['oldpp'] = request.POST.get("oldpp", "")
+		params['newpp'] = request.POST.get("newpp", '')
+		response = PuttyGen.convert_ppk_2_pem(params['ppkdata'], params['oldpp'], params['newpp'])
+		#response = {}
+		return JsonResponse(response)
+
 	@csrf_exempt
 	def webpage_malware_scanner_response(request):
 		try:

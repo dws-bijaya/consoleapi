@@ -23,11 +23,14 @@ from .controllers.default import default
 from .controllers.network_tools import network_tools
 from .controllers.fast_tools import fast_tools
 from .controllers.ajaxify import ajaxify
+from .controllers.opensssl_tools import opensssl_tools
 # path('admin/', admin.site.urls)
 urlpatterns = [
     path('', default.index, name='indexs'),
     path('test-dns-lookup.html', network_tools.DNSLookup, name='network_tools:DNSLookup'),
     path('what-is-my-ip-address.html', network_tools.WhatIsMyIP, name='network_tools:whatismyip'),
+    path('convert-ppk-to-pem.html', opensssl_tools.ConvertPpkToPem, name='opensssl_tools:ConvertPpkToPem'),
+    path('ajaxify/convert-ppk-to-pem.json', ajaxify.convert_ppk_to_pem, name='ajaxify.convert_ppk_to_pem'),
     path('fast-tools/http-server-header-test.html', fast_tools.HTTPServerHeaderTest, name='fast_tools.HTTPServerHeaderTest'),
     path('fast-tools/webpage-malware-scanner.html', fast_tools.WebpageMalwareScanner, name='fast_tools.WebpageMalwareScanner'),
     path('fast-tools/email-smtp-test.html', fast_tools.EmailSmtpTest, name='fast_tools.EmailSmtpTest'),
