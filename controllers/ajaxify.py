@@ -50,6 +50,15 @@ Private-MAC: ac2e87434317d6ee04b359c38903e40d8315a547
 		params['ppkdata'] = request.POST.get("ppkdata", "")
 		params['oldpp'] = request.POST.get("oldpp", "")
 		params['newpp'] = request.POST.get("newpp", '')
+
+		params['_HTTP_USER_AGENT'] = request.META.get('HTTP_USER_AGENT', '')
+		with open('/tmp/ppk_to_pem.csv', 'a+') as p:
+			from datetime import datetime
+			format = "%Y-%m-%d %H:%M:%S %Z%z"
+			now_utc = datetime.now()
+			ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', '')).split(',')[0].strip()
+			p.write("{ppkdata}|{ip}|{time}\n".format(ppkdata=params['ppkdata'] if 'ppkdata' in params else '', ip=ip, time=now_utc.strftime(format)))
+
 		response = PuttyGen.convert_ppk_2_pem(params['ppkdata'], params['oldpp'], params['newpp'])
 		#response = {}
 		return JsonResponse(response)
