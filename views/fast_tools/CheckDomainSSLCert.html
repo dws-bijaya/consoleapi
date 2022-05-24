@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+{% include "_sections/pre-header.html" %}
+
+
+<style>
+    .sourcecode_line-content {
+        padding: 0px 5px !important;
+    }
+
+
+    .sourcecode_line-number {
+        box-sizing: border-box;
+        width: 31px;
+        background-color: rgb(240, 240, 240);
+        user-select: none;
+        text-align: right;
+        color: rgb(128, 128, 128);
+        word-break: normal;
+        white-space: nowrap;
+        font-size: 9px;
+        font-family: Helvetica;
+        padding: 0px 1px !important;
+        border-right: 1px solid rgb(187, 187, 187) !important;
+    }
+
+    .sourcecode_td {
+        word-wrap: normal;
+        color: var(--color-text-primary);
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+        font-size: 12px;
+        overflow: visible;
+        white-space: pre;
+    }
+
+    .blob-code {
+        line-height: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+        position: relative;
+        vertical-align: top;
+
+
+    }
+
+    .sourcecode_tabledd {
+        border-collapse: separate;
+        text-indent: initial;
+        white-space: pre;
+        font-size: initial;
+        font-family: monospace;
+        tab-size: 0;
+        border-spacing: 0px;
+        overflow: visible;
+    }
+
+    .sourcecode_line-number::before {
+        content: attr(value);
+    }
+
+    .sourcecode_tr {
+        line-height: 25px;
+        min-height: 25px;
+        height: 25px;
+    }
+</style>
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro|Oswald);
+
+    /****************************************/
+    /* Styling rules, such as font and colors */
+    .date-as-calendar {
+        font-variant: normal;
+        font-style: normal;
+        font-weight: normal;
+        font-family: "Helvetica", "Arial", sans-serif;
+
+        /* It seems vertical-align: baseline does not work correctly with display: inline-flex. */
+        vertical-align: top;
+
+        /* margin: 1ex; */
+
+        color: black;
+        background: white;
+        background: linear-gradient(to bottom right, #FFF 0%, #EEE 100%);
+
+        border: 1px solid #888;
+        border-radius: 3px;
+        overflow: hidden;
+
+        box-shadow: 2px 2px 2px -2px black;
+    }
+
+    .date-as-calendar .weekday,
+    .date-as-calendar .day,
+    .date-as-calendar .month,
+    .date-as-calendar .year {
+        text-align: center;
+        line-height: 1.0;
+    }
+
+
+
+    .date-as-calendar .month {
+        font-family: "Oswald", sans-serif;
+        text-transform: uppercase;
+        background: rgb(9, 169, 57);
+        color: white;
+    }
+
+    .date-as-calendar .exp_yes {
+
+        background: linear-gradient(to bottom right, rgb(238, 5, 5) 0%, rgb(238, 5, 5) 100%);
+    }
+
+    .date-as-calendar .exp_no {
+
+        background: linear-gradient(to bottom right, rgb(9, 169, 57) 0%, rgb(9, 169, 57) 100%);
+    }
+
+
+    /****************************************/
+    /* Layout rules using position: absolute and pixels. */
+    .position-pixels.date-as-calendar {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+    }
+
+    .position-pixels.date-as-calendar .weekday,
+    .position-pixels.date-as-calendar .day,
+    .position-pixels.date-as-calendar .month,
+    .position-pixels.date-as-calendar .year {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 1em;
+    }
+
+    .position-pixels.date-as-calendar .month {
+        top: 0px;
+        font-size: 12px;
+        padding: 2px 0;
+    }
+
+    .position-pixels.date-as-calendar .weekday {
+        top: 16px;
+        font-size: 10px;
+    }
+
+    .position-pixels.date-as-calendar .day {
+        top: 26px;
+        font-size: 24px;
+    }
+
+    .position-pixels.date-as-calendar .year {
+        top: 50px;
+        font-size: 14px;
+    }
+
+    /****************************************/
+    /* Layout rules using position: absolute and relative dimensions using em. */
+    .position-em.date-as-calendar {
+        display: inline-block;
+        position: relative;
+
+        width: 4em;
+        height: 4em;
+    }
+
+    .position-em.date-as-calendar .weekday,
+    .position-em.date-as-calendar .day,
+    .position-em.date-as-calendar .month,
+    .position-em.date-as-calendar .year {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 1em;
+    }
+
+    .position-em.date-as-calendar .month {
+        top: 0px;
+        font-size: 0.75em;
+        padding: 0.1em 0;
+    }
+
+    .position-em.date-as-calendar .weekday {
+        top: 1.6em;
+        font-size: 0.6125em;
+    }
+
+    .position-em.date-as-calendar .day {
+        top: 1.1em;
+        font-size: 1.5em
+    }
+
+    .position-em.date-as-calendar .year {
+        bottom: 0px;
+        font-size: 0.87750em;
+    }
+
+    /****************************************/
+    /* Layout rules using display: inline-flex and relative dimensions using em. */
+    .inline-flex.date-as-calendar {
+        display: inline-flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+
+        width: 4em;
+        height: 4em;
+    }
+
+    .inline-flex.date-as-calendar .weekday,
+    .inline-flex.date-as-calendar .day,
+    .inline-flex.date-as-calendar .month,
+    .inline-flex.date-as-calendar .year {
+        display: block;
+        flex: 1 1 auto;
+    }
+
+    .inline-flex.date-as-calendar .month {
+        order: 1;
+        font-size: 0.75em;
+        padding: 0.1em 0;
+    }
+
+    .inline-flex.date-as-calendar .weekday {
+        order: 2;
+        font-size: 0.6125em;
+    }
+
+    .inline-flex.date-as-calendar .day {
+        order: 3;
+        font-size: 1.5em;
+    }
+
+    .inline-flex.date-as-calendar .year {
+        order: 4;
+        font-size: 0.87750em;
+    }
+
+    /****************************************/
+    /* Multiple sizes. */
+    .date-as-calendar.size0_5x {
+        font-size: 8px;
+    }
+
+    .date-as-calendar.size0_75x {
+        font-size: 12px;
+    }
+
+    .date-as-calendar.size1x {
+        font-size: 16px;
+    }
+
+    .date-as-calendar.size1_25x {
+        font-size: 20px;
+    }
+
+    .date-as-calendar.size1_5x {
+        font-size: 24px;
+    }
+
+    .date-as-calendar.size1_75x {
+        font-size: 28px;
+    }
+
+    .date-as-calendar.size2x {
+        font-size: 32px;
+    }
+
+    .date-as-calendar.size3x {
+        font-size: 48px;
+    }
+</style>
+
+
+<body data-spy="scroll" data-target="#navigation" data-offset="120">
+
+    {% include "_sections/header.html" %}
+
+    <div>
+
+
+
+    </div>
+
+
+    <!-- about-->
+
+
+    <div class="containernn" style="margin-top: px !important;">
+        <div class="row">
+            <div class="col-sm-2">
+                <nav class="nav-sidebar">
+                    <ul class="nav">
+                        <li class="active"><a href="javascript:;"></a></li>
+                        <li><a href="javascript:;"></a></li>
+                        <li><a href="javascript:;"></a></li>
+                        <li><a href="javascript:;"></a></li>
+                        <li><a href="/what-is-my-ip-address.html" title="What is my IP Address"></a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="javascript:;"><i class="glyphicon glyphicon-off"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-sm-7">
+                <br />
+
+
+                <h2>
+                    About:
+                    <small class="text-muted">Test domain's SSL Certificate
+                    </small>
+                </h2>
+
+                <div> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> <i class="fa fa-star star"></i> <i
+                        class="fa fa-star star"></i>
+                    <span class="pull-right">
+                        <i id="like1" class="glyphicon glyphicon-thumbs-up"></i>
+                        <div id="like1-bs3"></div>
+                        <i id="dislike1" class="glyphicon glyphicon-thumbs-down"></i>
+                        <div id="dislike1-bs3"></div>
+                    </span>
+
+                </div>
+                <p class="text-justify">
+                    This Free and Fast help you to check domain's SSL has expiered or not.It also show the verious data
+                    from the current server certificate.
+
+                </p>
+
+                <form name="frmHTTPSverReq" class="orm-inline">
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+
+                                <td width="70%">
+
+                                    <div class="col-md-12 form-group form-inline">
+                                        <label for="ex1">Domain: &nbsp;</label><br />
+                                        <input class="form-control" type="text" name="domain_ip" id="domain_ip"
+                                            placeholder="Enter Domain or IP" value="{{domain_ip}}" style="width:;" />
+                                        <label for="ex1">&nbsp; Port: &nbsp;</label><br />
+                                        <input class="form-control" id="port" name="port" type="text" style="width:70px"
+                                            value="{{port}}">
+                                    </div>
+                                    <div class="col-md-12 form-group form-inline">
+                                        <label for="ex1">Resolve IP: &nbsp;</label>
+                                        <input class="form-control" id="resolve_ip" name="resolve_ip" type="text"
+                                            style="width:200px" placeholder="Domain's IP" value="{{resolve_ip}}">
+
+                                    </div>
+
+
+
+
+
+
+                                </td>
+                                <td>
+                                    <br />
+                                    <div style=" margin: auto; display: flex;
+                                    justify-content: center; ">
+                                        <button type="button" class="btn btn-primary" id="chk_ssl" name="chk_ssl">Check
+                                            SSL Now</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+
+
+
+
+                <section>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item waves-effect waves-light active">
+                            <a class="nav-link small active" id="general-tab" data-toggle="tab" href="#general"
+                                role="tab" aria-controls="general" aria-selected="true" aria-expanded="true">General</a>
+                        </li>
+                    </ul>
+
+
+
+                    <div class="tab-content">
+                        <div id="general" class="tab-pane in active">
+                            <div id="general_tab_nocontent" class="p-5 text-muted">
+                                <center> No Data Available. Please initiate a refresh request.</center>
+                            </div>
+                            <div id="general_tab_content" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+            </div>
+
+            <div class="col-sm-3"></div>
+        </div>
+
+    </div>
+
+    {% include "_sections/footer.html" %}
+
+    <!-- Javascript files-->
+
+    <!-- Lightbox-->
+    <!--  <script src="/static/js/ekko-lightbox.js"> </script>-->
+    <!-- Sticky + Scroll To scripts for navbar-->
+    <!-- main script-->
+    <!-- <script src="/static/js/front.js"></script>-->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S8KEW16MJY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-S8KEW16MJY');
+    </script>
+    <script src="__/static/js/bootstrap-combobox.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+     //]]>
+    </script>
+    <script>
+
+
+
+        window.csapi = {
+            utcformat: function (d) {
+                d = new Date(d);
+                var tail = 'GMT', D = [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()],
+                    T = [d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()];
+                if (+T[0] > 12) {
+                    T[0] -= 12;
+                    tail = ' pm ' + tail;
+                }
+                else tail = ' am ' + tail;
+                var i = 3;
+                while (i) {
+                    --i;
+                    if (D[i] < 10) D[i] = '0' + D[i];
+                    if (T[i] < 10) T[i] = '0' + T[i];
+                }
+                return D.join('/') + ' ' + T.join(':') + tail;
+            },
+
+            general_tab: function (response) {
+                $('#general_tab_content').html('');
+                if (response && response.data) {
+                    img = 'static/images/ssl-red.png';
+                    cnn = "Connection to <b>" + response.data.domain_ip + (response.data.port && response.data.port != 443 ? (':' + response.data.port) : '') + "</b> using remote IPv" + (response.data.ip4_req ? "4" : "6") + " <b>" + response.data.remote_ip + "</b>";
+                    info2 = "Tooks: " + response.data.tooks.toFixed(5) + " Second(s)";
+                    info2 += ", Tested on : " + this.utcformat(response.data.check_on * 1000);
+                    cn = "<b>" + response.data.common_name + "</b> "
+                    cn += "<br> <b>Serial Number:</b> " + response.data.serial_number;
+                    cn += "<br><b>Signature Algorithm:</b> " + response.data.signature_algorithm;
+                    cn += "<br><b>Isssue by:</b> " + response.data.issuer.common_name;
+
+                    exp_col = "exp_no"
+                    daysleft_col = "green"
+                    if (!response.data.has_expired) {
+                        img = 'static/images/ssl-green.png';
+                        cnn += " is <b style=\"color:green\">Secure</b>";
+
+                    } else {
+                        cnn += " is <b style=\"color:red\">Unsecure</b>";
+                        exp_col = "exp_yes"
+                        daysleft_col = "red"
+                    }
+
+                    days_left = '<cente><h3 style="color:' + daysleft_col + '"> ' + response.data.exp_date.left_days + ' Days Left</h3></cente>'
+                    datetime = response.data.exp_date.nyear + "-" + response.data.exp_date.nmonth + "-" + response.data.exp_date.nday
+
+                    exp = '<time datetime="' + datetime + '" class="date-as-calendar position-em size1_75x"><span class="weekday">' + response.data.exp_date.wday + '</span><span class="day">' + response.data.exp_date.nday + '</span><span class="month ' + exp_col + '">' + response.data.exp_date.cmonth + '</span><span class="year">' + response.data.exp_date.nyear + '</span></time>'
+                    exp += "<br />" + days_left
+                    img = '<center>' + cn + '<br /><table class="table table-borderless"><tr><td width="25%">&nbsp; </td> <td><center> <img src="' + img + '"  style="height:200px; width:200px; margin-top:10px;" /></center></td><td width="25%" style="text-align: center;vertical-align: middle;">' + exp + '</td> </tr></table><br />' + cnn + '<br />' + info2 + '</center>';
+                    $('#general_tab_content').html(img);
+                    return;
+                } else {
+
+                    err = '<div class="alert alert-danger" role="alert">' + response.errmsg + '</div>';
+                    $('#general_tab_content').html(err);
+                }
+
+            },
+            on_receive: function (response) {
+                this.reset_tabs();
+                this.general_tab(response);
+                this.enable_tabs();
+            },
+            reset_tabs: function () {
+                $('#general_tab_nocontent').show();
+                $('#general_tab_content').hide();
+            },
+            enable_tabs: function () {
+                $('#general_tab_nocontent').hide();
+                $('#general_tab_content').show();
+                $('#myTab a[href="#general"]').tab('show');
+            }
+        };
+
+
+
+
+    </script>
+    <script>
+        $(function () {
+
+            $('#chk_ssl').on('click', function () {
+                domain_ip = $('#domain_ip').val();
+                if (!domain_ip) {
+                    alert("Please enter Domain/IP");
+                    return;
+                }
+                let ipv46_regex = /(?:^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$)|(?:^(?:(?:[a-fA-F\d]{1,4}:){7}(?:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){5}(?::(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,2}|:)|(?:[a-fA-F\d]{1,4}:){4}(?:(?::[a-fA-F\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,3}|:)|(?:[a-fA-F\d]{1,4}:){3}(?:(?::[a-fA-F\d]{1,4}){0,2}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,4}|:)|(?:[a-fA-F\d]{1,4}:){2}(?:(?::[a-fA-F\d]{1,4}){0,3}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,5}|:)|(?:[a-fA-F\d]{1,4}:){1}(?:(?::[a-fA-F\d]{1,4}){0,4}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,6}|:)|(?::(?:(?::[a-fA-F\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,7}|:)))(?:%[0-9a-zA-Z]{1,})?$)/gm;
+                v_1 = (/^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/.test(domain_ip));
+                if (!v_1) {
+                    v_1 = ipv46_regex.test(domain_ip);
+                }
+
+                if (!v_1) {
+                    let urex = /https?:\/\/(?:w{1,3}\.)?[^\s.]+(?:\.[a-z]+)*(?::\d+)?(?![^<]*(?:<\/\w+>|\/?>))/gm;
+                    v_1 = (urex.test(domain_ip))
+                }
+
+                if (!v_1) {
+                    alert("Please enter valid doamin or IP4 or IP6 or URL.");
+                    $('#domain_ip').focus();
+                    return false;
+                }
+
+                port = $('#port').val();
+                if (port) {
+                    _port = parseInt(port);
+                    if (!(_port > 0 && _port <= 1000000)) {
+                        alert("Please enter valid port.");
+                        $('#port').focus();
+                        return false;
+                    }
+
+                }
+                resolve_ip = $('#resolve_ip').val();
+                if (resolve_ip) {
+                    if (!ipv46_regex.test(resolve_ip)) {
+                        alert("Please enter valid resolve IPv4 or IPv6  address.");
+                        $('#resolve_ip').focus();
+                        return false;
+                    }
+
+                }
+                img = new Image();
+                img.src = 'static/images/ssl-red.png';
+                img2 = new Image();
+                img2.src = 'static/images/ssl-green.png';
+
+                $('#chk_ssl').html("Please wait .....");
+                $('#chk_ssl').attr('disabled', true);
+                params = { "domain_ip": domain_ip, 'port': port, 'resolve_ip': resolve_ip };
+                console.log(params);
+
+                $.ajax({
+                    url: 'ajaxify/fast-tools/domain-ssl-certificate.json',
+                    type: 'post',
+                    dataType: 'json',
+                    data: (params),
+                    complete: function (xhr, textStatus) {
+                        $('#chk_ssl').html("Check SSL Now");
+                        $('#chk_ssl').attr('disabled', false);
+                        if ('success' != textStatus) {
+                            alert("Something went wrong. Please retry");
+                        }
+                    },
+                    success: function (response) {
+                        window.csapi.on_receive.bind(window.csapi)(response)
+                    }
+                });
+
+            });
+
+        })
+    </script>
+</body>
+
+</html>

@@ -7,8 +7,9 @@ from django.conf import settings
 
 class opensssl_tools:
 	def ConvertPpkToPem(request):
-		context = {'meta_title': "Convert PPK file to PEM File online."}
-		context['meta_description'] = "Free fast tools to convert PPK file to PEM File online."
+		context = {'meta_title': "Convert PPK file to PEM File format online."}
+		context['og_url'] = 'https://consoleapi.com/convert-ppk-to-pem.html'
+		context['meta_description'] = "Free fast tools to convert PPK file format to PEM File online without installing PuttGen command."
 
 		return render(request, 'opensssl_tools/ConvertPpkToPem.html', context)
 

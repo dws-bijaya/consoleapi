@@ -30,7 +30,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 ./bin/yb-admin --master_addresses 127.0.0.1:7100 setup_redis_table
 """
 
-import os, sys
+import os
+import sys
 import netifaces
 import mimetypes
 
@@ -48,9 +49,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/bin/")
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/")
-COUNTRY_CACHE_FILE = os.path.dirname(os.path.abspath(__file__)) + "/bin/" + '/countries.json'
+COUNTRY_CACHE_FILE = os.path.dirname(
+    os.path.abspath(__file__)) + "/bin/" + '/countries.json'
 PUTTYGEN_BIN = '/usr/bin/puttygen'
-TMP_DIR = sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/tmp/")
+TMP_DIR = sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "tmp/")
+
+TMP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tmp")
+
+BIN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin")
+
+NODEJS_BIN = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "../node-v17.5.0-linux-x64/bin/node")
+
+NODE_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "../node-v17.5.0-linux-x64/node_modules/")
+
+GGOGLE_INDEXAPI_JS = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "bin/google_indexing_api.js")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -65,16 +81,18 @@ DEBUG = True
 # Find out what the IP addresses are at run time
 # This is necessary because otherwise Gunicorn will reject the connections
 def ip_addresses():
-	ip_list = []
-	for interface in netifaces.interfaces():
-		addrs = netifaces.ifaddresses(interface)
-		for x in (netifaces.AF_INET, netifaces.AF_INET6):
-			if x in addrs:
-				ip_list.append(addrs[x][0]['addr'])
-	return ip_list
+    ip_list = []
+    for interface in netifaces.interfaces():
+        addrs = netifaces.ifaddresses(interface)
+        for x in (netifaces.AF_INET, netifaces.AF_INET6):
+            if x in addrs:
+                ip_list.append(addrs[x][0]['addr'])
+    return ip_list
 
 
 ALLOWED_HOSTS = ['consoleapi.com']
+
+#DEBUG = False
 
 # Application definition
 
